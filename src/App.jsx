@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import FloorPlan from "./FloorPlan.jsx";
 import FloorEditor from "./FloorEditor.jsx";
 import RowPlan from "./RowPlan.jsx";
+import Finance from "./Finance.jsx";
 import { ground, floor2, attic, groundP, floor2P, atticP } from "./plans.js";
 import { baseParams, rowMetrics, houseMetrics, PLOT } from "./model.js";
 
@@ -52,6 +53,7 @@ const TABS = [
   ["products", "Продукти"],
   ["layout", "Разпределение"],
   ["plans", "Етажни планове"],
+  ["finance", "Финанси 🔒"],
 ];
 
 // плъзгачи: ключ · етикет · min · max · стъпка · мярка
@@ -269,6 +271,7 @@ export default function App() {
             )}
           </section>
         )}
+        {tab === "finance" && <Finance />}
       </main>
 
       <footer className="ft">Брестник · работен модел по осите · не замества правоспособен проектант · [за потвърждение по виза/ПУП]</footer>

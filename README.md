@@ -1,10 +1,5 @@
 # Брестник — продуктов визуализатор
 
-Редови къщи, Брестник (Пловдив). Vite + React.
+Vite + React. Живо: https://h8inc.github.io/brestnik-app/
 
-Живо демо: https://h8inc.github.io/brestnik-app/
-
-```
-npm install
-npm run dev
-```
+Финансовата секция е криптирана (AES) — само шифърът е тук.

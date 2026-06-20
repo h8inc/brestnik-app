@@ -99,6 +99,26 @@ body { background: var(--paper); color: var(--ink); font-family: var(--serif); -
 .metric-big .metric-l { font-size: 13px; color: #fff; }
 .metric-note { font-family: var(--mono); font-size: 10.5px; line-height: 1.5; color: #7e8186; margin-top: 10px; }
 .metric-sep { height: 1px; background: #2e3236; margin: 8px 0; }
+
+/* finance lock + content */
+.lock { max-width: 360px; margin: 40px auto; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 28px 26px; text-align: center; }
+.lock-icon { font-size: 30px; margin-bottom: 6px; }
+.lock h3 { margin: 0 0 4px; font-family: var(--serif); }
+.lock p { color: var(--gray); font-size: 13px; margin: 0 0 16px; }
+.lock-in { display: block; width: 100%; box-sizing: border-box; padding: 10px 12px; margin-bottom: 10px; border: 1px solid #CFC9BB; border-radius: 5px; font-family: var(--mono); font-size: 13px; }
+.lock-btn { width: 100%; padding: 11px; border: none; background: var(--ink); color: #fff; border-radius: 5px; font-weight: 700; font-family: var(--mono); cursor: pointer; }
+.lock-btn:disabled { opacity: .6; }
+.lock-err { color: #B23A2E; font-family: var(--mono); font-size: 12px; margin-top: 12px; }
+.finance { max-width: 760px; }
+.finance h3 { font-family: var(--serif); margin: 0 0 4px; }
+.finance h4 { font-family: var(--serif); margin: 22px 0 8px; border-bottom: 1px solid var(--line); padding-bottom: 4px; }
+.finance .fin-sub { color: var(--accent); font-family: var(--mono); font-size: 12px; margin: 0 0 8px; }
+.finance .fin-note { color: var(--gray); font-size: 11.5px; font-family: var(--mono); line-height: 1.5; }
+.finance table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 12.5px; margin: 4px 0; }
+.finance th, .finance td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #ece8df; }
+.finance th { color: var(--gray); font-weight: 600; }
+.finance td:last-child, .finance th:last-child { text-align: right; font-weight: 700; }
+.finance b { color: var(--ink); }
 .rooms-note { font-family: var(--mono); font-size: 11px; color: var(--accent); margin-top: 12px; line-height: 1.4; }
 .rooms-gab { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
 .rooms-gab span { font-weight: 400; color: var(--gray); }
