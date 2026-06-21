@@ -24,6 +24,9 @@ function Tree({ x, y, r = 8 }) {
 export default function RowPlan({ units, leftMargin, rightMargin, params = baseParams, footer, vertical = false }) {
   const p = { ...baseParams, ...params };
   const ROAD = p.road, FRONT = p.front, PRIV = PLOT.W - p.road, OVER = p.over;
+  // при вертикален план групата е завъртяна +90°; контра-завъртаме всеки текст −90°
+  // около котвата му, за да остане хоризонтален (четим).
+  const tr = (x, y) => (vertical ? `rotate(-90 ${x} ${y})` : undefined);
 
   const totalW = leftMargin + units.reduce((s, u) => s + u.w, 0) + rightMargin;
   const W = PAD_L + totalW * PXM + PAD_R;
@@ -39,7 +42,7 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
 
   // улица (споделена)
   els.push(<rect key="road" x={xStart} y={yStreet} width={rowPx} height={ROAD * PXM} fill="#ededed" stroke="#bbb" />);
-  els.push(<text key="roadt" x={xStart + rowPx / 2} y={yStreet + ROAD * PXM / 2 + 4} fontSize="12" fill="#777" textAnchor="middle">Улица / достъп — север · {ROAD.toFixed(1)} м</text>);
+  els.push(<text key="roadt" x={xStart + rowPx / 2} y={yStreet + ROAD * PXM / 2 + 4} fontSize="12" fill="#777" textAnchor="middle" transform={tr(xStart + rowPx / 2, yStreet + ROAD * PXM / 2 + 4)}>Улица / достъп — север · {ROAD.toFixed(1)} м</text>);
 
   // странични дворове (крайни единици) — пълна частна дълбочина
   const sideTop = yFront, sideH = yBottom - yFront;
@@ -71,7 +74,7 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
       const gw = Math.min(w - 28, 6 * PXM);
       const gx = isLeftEnd ? cx + w - gw - 6 : cx + 6;
       els.push(<rect key={k + "g"} x={gx} y={yFront + 6} width={gw} height={FRONT * PXM - 12} fill={GARAGE} stroke="#999" />);
-      els.push(<text key={k + "gt"} x={gx + gw / 2} y={yFront + FRONT * PXM / 2 + 3} fontSize="9" fill="#444" textAnchor="middle">гараж</text>);
+      els.push(<text key={k + "gt"} x={gx + gw / 2} y={yFront + FRONT * PXM / 2 + 3} fontSize="9" fill="#444" textAnchor="middle" transform={tr(gx + gw / 2, yFront + FRONT * PXM / 2 + 3)}>гараж</text>);
       const px = isLeftEnd ? cx + 4 : cx + w - 16;
       els.push(<rect key={k + "p"} x={px} y={yFront} width={12} height={FRONT * PXM} fill={PATH} />);
     } else {
@@ -82,30 +85,37 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
     }
 
     // етикет ПРЕДЕН двор (пил върху апрона, чете се над колите/гаража)
-    els.push(<g key={k + "fl"}><rect x={cx + w / 2 - 33} y={yFront + 3} width={66} height={14} rx={2} fill="rgba(255,255,255,0.85)" stroke="#d9d2bf" strokeWidth="0.5" /><text x={cx + w / 2} y={yFront + 13} fontSize="9.5" fontWeight="700" fill="#6b5e44" textAnchor="middle">преден {hm.front} м²</text></g>);
+    els.push(<g key={k + "fl"} transform={tr(cx + w / 2, yFront + 10)}><rect x={cx + w / 2 - 33} y={yFront + 3} width={66} height={14} rx={2} fill="rgba(255,255,255,0.85)" stroke="#d9d2bf" strokeWidth="0.5" /><text x={cx + w / 2} y={yFront + 13} fontSize="9.5" fontWeight="700" fill="#6b5e44" textAnchor="middle">преден {hm.front} м²</text></g>);
 
     // къща (партер)
     els.push(<rect key={k + "h"} x={cx} y={yHouse} width={w} height={gD} fill={HOUSE} stroke={u.type === "P" ? "#0D7377" : INK} strokeWidth={u.type === "P" ? 2 : 1} />);
-    els.push(<text key={k + "hl"} x={cx + w / 2} y={yHouse + gD / 2 - 8} fontSize={u.type === "P" ? 12 : 11} fontWeight="700" fill="#fff" textAnchor="middle">{u.type === "P" ? "ПРЕМИУМ" : "СТАНДАРТ"}</text>);
-    els.push(<text key={k + "ha"} x={cx + w / 2} y={yHouse + gD / 2 + 5} fontSize="10" fontWeight="700" fill="#cfe3e2" textAnchor="middle">РЗП {hm.RZP}</text>);
+    // многоредови етикети: във вертикален режим стифваме по другата ос (за да не се припокриват)
+    const hC = cx + w / 2, hM = yHouse + gD / 2;
+    const hp = (off) => (vertical ? [hC + off, hM] : [hC, hM + off]);
+    const [hlx, hly] = hp(-8), [hax, hay] = hp(5), [htx, hty] = hp(17);
+    els.push(<text key={k + "hl"} x={hlx} y={hly} fontSize={u.type === "P" ? 12 : 11} fontWeight="700" fill="#fff" textAnchor="middle" transform={tr(hlx, hly)}>{u.type === "P" ? "ПРЕМИУМ" : "СТАНДАРТ"}</text>);
+    els.push(<text key={k + "ha"} x={hax} y={hay} fontSize="10" fontWeight="700" fill="#cfe3e2" textAnchor="middle" transform={tr(hax, hay)}>РЗП {hm.RZP}</text>);
     if (hm.attic > 0)
-      els.push(<text key={k + "ht"} x={cx + w / 2} y={yHouse + gD / 2 + 17} fontSize="8.5" fill="#e7c79a" textAnchor="middle">вкл. таван {hm.attic}</text>);
+      els.push(<text key={k + "ht"} x={htx} y={hty} fontSize="8.5" fill="#e7c79a" textAnchor="middle" transform={tr(htx, hty)}>вкл. таван {hm.attic}</text>);
 
     // двор (юг): открит + покрита тераса (под навеса, до къщата)
     els.push(<rect key={k + "y"} x={cx} y={yYardTop} width={w} height={yYardH} fill={GARDEN} stroke={TREE_S} />);
     if (terrH > 4) {
       els.push(<rect key={k + "tr"} x={cx + 2} y={yYardTop} width={w - 4} height={terrH} fill={TERR} stroke={AMBER} strokeWidth="1" strokeDasharray="4 3" />);
-      if (w > 70) els.push(<text key={k + "trl"} x={cx + w / 2} y={yYardTop + terrH / 2 + 3} fontSize="7.5" fill={AMBER} textAnchor="middle">навес {OVER}</text>);
+      if (w > 70) els.push(<text key={k + "trl"} x={cx + w / 2} y={yYardTop + terrH / 2 + 3} fontSize="7.5" fill={AMBER} textAnchor="middle" transform={tr(cx + w / 2, yYardTop + terrH / 2 + 3)}>навес {OVER}</text>);
     }
     els.push(<Tree key={k + "t1"} x={cx + w * 0.28} y={yYardTop + terrH + (yYardH - terrH) * 0.5} r={9} />);
     if (w > 90) els.push(<Tree key={k + "t2"} x={cx + w * 0.72} y={yYardTop + terrH + (yYardH - terrH) * 0.7} r={8} />);
     const yardCol = hm.yardOK ? GREEN : "#B23A2E";
     const sideYard = Math.round((isLeftEnd ? leftMargin : isRightEnd ? rightMargin : 0) * PRIV);
-    els.push(<text key={k + "yl"} x={cx + w / 2} y={yBottom - 18} fontSize="11" fontWeight="700" fill={yardCol} textAnchor="middle">ДВОР {hm.rear + hm.front + sideYard} м²{hm.yardOK ? "" : " ⚠"}</text>);
-    els.push(<text key={k + "yl2"} x={cx + w / 2} y={yBottom - 6} fontSize="8" fill={yardCol} textAnchor="middle">заден {hm.rear} · преден {hm.front}{sideYard ? ` · стр. ${sideYard}` : ""}</text>);
+    const yC2 = cx + w / 2;
+    const yp = (off) => (vertical ? [yC2 + off, yBottom - 12] : [yC2, yBottom - 12 + off]);
+    const [ylx, yly] = yp(-6), [yl2x, yl2y] = yp(6);
+    els.push(<text key={k + "yl"} x={ylx} y={yly} fontSize="11" fontWeight="700" fill={yardCol} textAnchor="middle" transform={tr(ylx, yly)}>ДВОР {hm.rear + hm.front + sideYard} м²{hm.yardOK ? "" : " ⚠"}</text>);
+    els.push(<text key={k + "yl2"} x={yl2x} y={yl2y} fontSize="8" fill={yardCol} textAnchor="middle" transform={tr(yl2x, yl2y)}>заден {hm.rear} · преден {hm.front}{sideYard ? ` · стр. ${sideYard}` : ""}</text>);
 
     // ширина (над улицата)
-    els.push(<text key={k + "w"} x={cx + w / 2} y={yStreet - 8} fontSize="10.5" fontWeight={u.type === "P" ? 700 : 400} fill={u.type === "P" ? "#0D7377" : "#555"} textAnchor="middle">{u.w}</text>);
+    els.push(<text key={k + "w"} x={cx + w / 2} y={yStreet - 8} fontSize="10.5" fontWeight={u.type === "P" ? 700 : 400} fill={u.type === "P" ? "#0D7377" : "#555"} textAnchor="middle" transform={tr(cx + w / 2, yStreet - 8)}>{u.w}</text>);
 
     cx += w;
   });
