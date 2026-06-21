@@ -122,7 +122,7 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
   els.push(<g key="cmp" transform={`translate(${W - 30},${PAD_T + 6})`}><line x1="0" y1="18" x2="0" y2="2" stroke={INK} strokeWidth="2" /><polygon points="-4,5 4,5 0,0" fill={INK} /><text x="0" y="30" fontSize="9" fill={INK} textAnchor="middle">С</text></g>);
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "100%" }}>
+    <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
       {els}
     </svg>
   );
