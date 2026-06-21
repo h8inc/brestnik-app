@@ -89,7 +89,7 @@ function ProductCard({ p, hm, accent, attic }) {
       <div className="card-big">~{hm.RZP}<span> РЗП{attic ? " с таван" : ""}</span></div>
       <div className="card-split">партер {hm.footprint} · <b>етаж 2 {hm.floor2}</b>{attic ? ` · таван ${hm.attic}` : ""} м²</div>
       <ul>{rows.map(([k, v], i) => <li key={i}><b>{k}</b><span>{v}</span></li>)}</ul>
-      <div className="card-ticket">Билет @€1450: <b>{attic ? p.ticket : p.ticket.replace(/\s*\+\s*таван/, "")}</b></div>
+      <div className="card-ticket">Билет на БДС @€1400/м²: <b>~€{Math.round(hm.RZP * 1.4)}K</b> · висок (€1900) ~€{Math.round(hm.RZP * 1.9)}K</div>
     </div>
   );
 }
