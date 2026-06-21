@@ -54,6 +54,7 @@ const NAV = [
   ["sec-products", "Продукти"],
   ["sec-plans", "Планове"],
   ["sec-finance", "Финанси"],
+  ["sec-archive", "Архив"],
 ];
 
 const SLIDERS = [
@@ -166,6 +167,12 @@ export default function App() {
   const planGab = isAttic ? atticUsable : Math.round(prodW * viewDepth);
   const planTitle = `${product === "S" ? "СТАНДАРТ" : "ПРЕМИУМ"} · ${fl.name} · ${planGab} м²${isAttic ? " изпол." : " габарит"}`;
 
+  // Вариант А — архив (по-сложен, само за справка; не пипа интерактивния модел)
+  const aV = VARIANTS.A, aDims = defaultsFor(aV);
+  const aUnits = aV.seq.map((t) => ({ type: t, w: t === "P" ? aV.wP : aV.wS }));
+  const aM = rowMetrics(aUnits, aV.leftMargin, aV.rightMargin, aDims);
+  const aHmS = houseMetrics(aDims.wS, "S", aDims);
+
   return (
     <div className="app">
       <header className="hdr">
@@ -182,22 +189,14 @@ export default function App() {
         {/* ——— РАЗПРЕДЕЛЕНИЕ — планът в центъра ——— */}
         <section id="sec-layout" className="sec sec-hero">
           <div className="sec-h">
-            <span className="eyebrow">Разпределение на реда</span>
-            <div className="seg">
-              {Object.entries(VARIANTS).map(([id, vv]) => (
-                <button key={id} className={"seg-b" + (variant === id ? " on" : "")} onClick={() => chooseVariant(id)}>{vv.label}</button>
-              ))}
-            </div>
+            <span className="eyebrow">Разпределение на реда · {v.label}</span>
           </div>
 
           <div className="chips">
             <Chip l="РЗП общо" v={`${M.totalRZP} м²`} big />
-            <Chip l="КИНТ" v={M.kint.toFixed(2)} accent={M.kint > 1.2 ? "red" : "green"} />
-            <Chip l="Плътност" v={`${M.density}%`} accent={M.density > 40 ? "red" : "green"} />
             {dims.attic && <Chip l="Таван" v={`${M.atticTotal} м²`} accent="amber" />}
             <Chip l="Двор стандарт" v={`${hmS.rear + hmS.front} м²`} accent={hmS.yardOK ? "green" : "red"} />
             <Chip l="Двор премиум (ъгъл)" v={`${cornerYard} м²`} accent="green" />
-            <Chip l="Събира се" v={`${M.slack >= 0 ? "+" : ""}${M.slack} м`} accent={Math.abs(M.slack) < 0.3 ? "green" : "red"} />
           </div>
 
           {/* ПЛАНЪТ — центърът на приложението */}
@@ -219,7 +218,7 @@ export default function App() {
                 </div>
               ))}
               <label className="chk"><input type="checkbox" checked={dims.attic} onChange={toggleAttic} /> Обитаем таван</label>
-              <div className="metric-note">{M.yardOK ? "✓ дворове ≥72" : "⚠ двор <72"} · ширините са свързани (лицето фиксирано){dims.front < 5 ? " · ⚠ преден <5 м" : ""}. [ЗА ПОТВЪРЖДЕНИЕ по виза/ПУП]</div>
+              <div className="metric-note">КИНТ {M.kint.toFixed(2)} · плътност {M.density}% · събира се {M.slack >= 0 ? "+" : ""}{M.slack} м · {M.yardOK ? "✓ дворове ≥72" : "⚠ двор <72"}{dims.front < 5 ? " · ⚠ преден <5 м" : ""}. [ЗА ПОТВЪРЖДЕНИЕ по виза/ПУП]</div>
             </div>
           )}
         </section>
@@ -279,6 +278,13 @@ export default function App() {
 
         {/* ——— ФИНАНСИ ——— */}
         <section id="sec-finance" className="sec"><Finance /></section>
+
+        {/* ——— АРХИВ ——— */}
+        <section id="sec-archive" className="sec">
+          <div className="sec-h"><span className="eyebrow">Архив · други планове</span><h2>Вариант А · 7 къщи (с таван)</h2></div>
+          <p className="sub">По-сложен вариант — задържан за справка. РЗП {aM.totalRZP} м² · КИНТ {aM.kint.toFixed(2)} · двор стандарт {aHmS.rear + aHmS.front} м² · с обитаем таван.</p>
+          <div className="plan-frame plan-frame-row hero-plan"><RowPlan units={aUnits} leftMargin={aV.leftMargin} rightMargin={aV.rightMargin} params={aDims} vertical={isMobile} /></div>
+        </section>
       </main>
 
       <footer className="ft">Брестник · работен модел по осите · не замества правоспособен проектант · [за потвърждение по виза/ПУП]</footer>

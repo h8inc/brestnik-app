@@ -7,7 +7,7 @@ import { houseMetrics, baseParams, PLOT } from "./model.js";
 // Размерите идват от `params` (model.js) → реагира наживо на плъзгачите.
 // Геометрия в МЕТРИ, мащаб PXM px/м.
 const PXM = 13;
-const PAD_L = 22, PAD_R = 22, PAD_T = 44, PAD_B = 82;
+const PAD_L = 12, PAD_R = 12, PAD_T = 30, PAD_B = 22;
 
 const GARDEN = "#dcebd2";
 const HOUSE = "#2f3640";
@@ -111,8 +111,8 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
     const yC2 = cx + w / 2;
     const yp = (off) => (vertical ? [yC2 + off, yBottom - 12] : [yC2, yBottom - 12 + off]);
     const [ylx, yly] = yp(-6), [yl2x, yl2y] = yp(6);
-    els.push(<text key={k + "yl"} x={ylx} y={yly} fontSize="11" fontWeight="700" fill={yardCol} textAnchor="middle" transform={tr(ylx, yly)}>ДВОР {hm.rear + hm.front + sideYard} м²{hm.yardOK ? "" : " ⚠"}</text>);
-    els.push(<text key={k + "yl2"} x={yl2x} y={yl2y} fontSize="8" fill={yardCol} textAnchor="middle" transform={tr(yl2x, yl2y)}>заден {hm.rear} · преден {hm.front}{sideYard ? ` · стр. ${sideYard}` : ""}</text>);
+    els.push(<text key={k + "yl"} x={ylx} y={yly} fontSize="11" fontWeight="700" fill={yardCol} textAnchor={vertical ? "start" : "middle"} transform={tr(ylx, yly)}>ДВОР {hm.rear + hm.front + sideYard} м²{hm.yardOK ? "" : " ⚠"}</text>);
+    els.push(<text key={k + "yl2"} x={yl2x} y={yl2y} fontSize="8" fill={yardCol} textAnchor={vertical ? "start" : "middle"} transform={tr(yl2x, yl2y)}>заден {hm.rear} · преден {hm.front}{sideYard ? ` · стр. ${sideYard}` : ""}</text>);
 
     // ширина (над улицата)
     els.push(<text key={k + "w"} x={cx + w / 2} y={yStreet - 8} fontSize="10.5" fontWeight={u.type === "P" ? 700 : 400} fill={u.type === "P" ? "#0D7377" : "#555"} textAnchor="middle" transform={tr(cx + w / 2, yStreet - 8)}>{u.w}</text>);

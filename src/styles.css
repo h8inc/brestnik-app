@@ -66,7 +66,7 @@ html { scroll-behavior: smooth; }
 
 /* plan frames */
 .plan-frame { background: #fff; border: 1px solid var(--line); padding: 18px; display: flex; align-items: center; justify-content: center; }
-.plan-frame-row { width: 100%; padding: clamp(8px, 2vw, 18px); }
+.plan-frame-row { width: 100%; padding: clamp(2px, 1vw, 8px); }
 .plan-frame-lg { height: 74vh; }
 .plan-row { display: grid; grid-template-columns: 1fr 250px; gap: 22px; align-items: stretch; }
 @media (max-width: 820px) { .plan-row { grid-template-columns: 1fr; } .plan-frame-lg { height: 60vh; } }
