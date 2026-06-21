@@ -50,8 +50,8 @@ const PRODUCTS = {
 };
 
 const NAV = [
-  ["sec-layout", "Разпределение"],
   ["sec-products", "Продукти"],
+  ["sec-layout", "Разпределение"],
   ["sec-plans", "Планове"],
   ["sec-finance", "Финанси"],
   ["sec-archive", "Архив"],
@@ -186,6 +186,15 @@ export default function App() {
       </header>
 
       <main className="main">
+        {/* ——— ПРОДУКТИ ——— */}
+        <section id="sec-products" className="sec">
+          <div className="sec-h"><span className="eyebrow">Двата продукта · мин. 3 спални горе{dims.attic ? " · + таван" : ""}</span><h2>Стандарт ~{hmS.RZP} м² · Премиум ~{hmP.RZP} м²{dims.attic ? " (вкл. таван)" : ""}</h2></div>
+          <div className="cards">
+            <ProductCard p={PRODUCTS.S} hm={hmS} attic={dims.attic} />
+            <ProductCard p={PRODUCTS.P} hm={hmP} accent attic={dims.attic} />
+          </div>
+        </section>
+
         {/* ——— РАЗПРЕДЕЛЕНИЕ — планът в центъра ——— */}
         <section id="sec-layout" className="sec sec-hero">
           <div className="sec-h">
@@ -199,7 +208,7 @@ export default function App() {
             <Chip l="Двор премиум (ъгъл)" v={`${cornerYard} м²`} accent="green" />
           </div>
 
-          {/* ПЛАНЪТ — центърът на приложението */}
+          {/* ПЛАНЪТ — централен елемент */}
           <div className="plan-frame plan-frame-row hero-plan">
             <RowPlan units={liveUnits} leftMargin={v.leftMargin} rightMargin={v.rightMargin} params={dims} vertical={isMobile} />
           </div>
@@ -221,15 +230,6 @@ export default function App() {
               <div className="metric-note">КИНТ {M.kint.toFixed(2)} · плътност {M.density}% · събира се {M.slack >= 0 ? "+" : ""}{M.slack} м · {M.yardOK ? "✓ дворове ≥72" : "⚠ двор <72"}{dims.front < 5 ? " · ⚠ преден <5 м" : ""}. [ЗА ПОТВЪРЖДЕНИЕ по виза/ПУП]</div>
             </div>
           )}
-        </section>
-
-        {/* ——— ПРОДУКТИ ——— */}
-        <section id="sec-products" className="sec">
-          <div className="sec-h"><span className="eyebrow">Двата продукта · мин. 3 спални горе{dims.attic ? " · + таван" : ""}</span><h2>Стандарт ~{hmS.RZP} м² · Премиум ~{hmP.RZP} м²{dims.attic ? " (вкл. таван)" : ""}</h2></div>
-          <div className="cards">
-            <ProductCard p={PRODUCTS.S} hm={hmS} attic={dims.attic} />
-            <ProductCard p={PRODUCTS.P} hm={hmP} accent attic={dims.attic} />
-          </div>
         </section>
 
         {/* ——— ЕТАЖНИ ПЛАНОВЕ ——— */}

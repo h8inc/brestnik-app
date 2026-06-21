@@ -19,12 +19,14 @@ html { scroll-behavior: smooth; }
 }
 .hdr-title h1 { font-size: clamp(20px, 3vw, 30px); font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
 .hdr-title span { font-family: var(--mono); font-size: 11px; color: var(--gray); }
-.navlinks { display: flex; gap: 2px; flex-wrap: wrap; }
+.navlinks { display: flex; gap: 8px; flex-wrap: wrap; }
 .navlinks a {
-  font-family: var(--mono); font-size: 12.5px; padding: 8px 14px; color: var(--gray);
-  text-decoration: none; border-radius: 6px; transition: 0.15s; white-space: nowrap;
+  font-family: var(--mono); font-size: 12.5px; font-weight: 600; padding: 9px 16px; color: var(--ink);
+  text-decoration: none; border: 1px solid var(--line); background: #fff; border-radius: 8px;
+  transition: 0.15s; white-space: nowrap;
 }
-.navlinks a:hover { color: var(--ink); background: #fff; }
+.navlinks a:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+.navlinks a:active { transform: translateY(1px); }
 
 .main { flex: 1; padding: clamp(20px, 4vw, 44px) clamp(16px, 5vw, 72px); }
 .sec { max-width: 1180px; margin: 0 auto; scroll-margin-top: 86px; }
