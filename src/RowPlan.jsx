@@ -44,12 +44,12 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
   // странични дворове (крайни единици) — пълна частна дълбочина
   const sideTop = yFront, sideH = yBottom - yFront;
   els.push(<rect key="sgL" x={xStart} y={sideTop} width={leftMargin * PXM} height={sideH} fill={GARDEN} stroke={TREE_S} />);
-  els.push(<text key="sgLt" x={xStart + leftMargin * PXM / 2} y={(sideTop + yBottom) / 2} fontSize="10.5" fill={GREEN} textAnchor="middle" transform={`rotate(-90 ${xStart + leftMargin * PXM / 2} ${(sideTop + yBottom) / 2})`}>страничен двор · {leftMargin} м</text>);
+  els.push(<text key="sgLt" x={xStart + leftMargin * PXM / 2} y={(sideTop + yBottom) / 2} fontSize="10.5" fill={GREEN} textAnchor="middle" transform={`rotate(-90 ${xStart + leftMargin * PXM / 2} ${(sideTop + yBottom) / 2})`}>страничен двор · {leftMargin} м · {Math.round(leftMargin * PRIV)} м²</text>);
   els.push(<Tree key="sgLa" x={xStart + leftMargin * PXM / 2} y={sideTop + sideH * 0.3} r={9} />);
   els.push(<Tree key="sgLb" x={xStart + leftMargin * PXM * 0.6} y={sideTop + sideH * 0.65} r={8} />);
   const xRightG = xStart + (leftMargin + units.reduce((s, u) => s + u.w, 0)) * PXM;
   els.push(<rect key="sgR" x={xRightG} y={sideTop} width={rightMargin * PXM} height={sideH} fill={GARDEN} stroke={TREE_S} />);
-  els.push(<text key="sgRt" x={xRightG + rightMargin * PXM / 2} y={(sideTop + yBottom) / 2} fontSize="9.5" fill={GREEN} textAnchor="middle" transform={`rotate(-90 ${xRightG + rightMargin * PXM / 2} ${(sideTop + yBottom) / 2})`}>стр. {rightMargin} м</text>);
+  els.push(<text key="sgRt" x={xRightG + rightMargin * PXM / 2} y={(sideTop + yBottom) / 2} fontSize="9.5" fill={GREEN} textAnchor="middle" transform={`rotate(-90 ${xRightG + rightMargin * PXM / 2} ${(sideTop + yBottom) / 2})`}>стр. двор · {rightMargin} м · {Math.round(rightMargin * PRIV)} м²</text>);
   els.push(<Tree key="sgRa" x={xRightG + rightMargin * PXM / 2} y={sideTop + sideH * 0.45} r={7} />);
 
   // единици
@@ -118,8 +118,8 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
   const rightCellW = (rightMargin + pN.w) * PXM;
   els.push(<rect key="pcL" x={xStart} y={yFront} width={leftCellW} height={yBottom - yFront} fill="none" stroke="#0D7377" strokeWidth="2" strokeDasharray="8 4" />);
   els.push(<rect key="pcR" x={W - PAD_R - rightCellW} y={yFront} width={rightCellW} height={yBottom - yFront} fill="none" stroke="#0D7377" strokeWidth="2" strokeDasharray="8 4" />);
-  els.push(<g key="bL"><rect x={xStart + 16} y={yBottom + 12} width={168} height={24} rx="4" fill="#0D7377" /><text x={xStart + 16 + 84} y={yBottom + 28} fontSize="12" fontWeight="700" fill="#fff" textAnchor="middle">К1 общ двор {totalLeft}</text></g>);
-  els.push(<g key="bR"><rect x={W - PAD_R - 184} y={yBottom + 12} width={168} height={24} rx="4" fill="#0D7377" /><text x={W - PAD_R - 184 + 84} y={yBottom + 28} fontSize="12" fontWeight="700" fill="#fff" textAnchor="middle">К{units.length} общ двор {totalRight}</text></g>);
+  els.push(<g key="bL"><rect x={xStart + 16} y={yBottom + 12} width={250} height={24} rx="4" fill="#0D7377" /><text x={xStart + 16 + 125} y={yBottom + 28} fontSize="11.5" fontWeight="700" fill="#fff" textAnchor="middle">К1 · ОБЩ ДВОР {totalLeft} м² (стр. {Math.round(leftMargin * PRIV)} + заден {hm0.rear})</text></g>);
+  els.push(<g key="bR"><rect x={W - PAD_R - 250} y={yBottom + 12} width={250} height={24} rx="4" fill="#0D7377" /><text x={W - PAD_R - 250 + 125} y={yBottom + 28} fontSize="11.5" fontWeight="700" fill="#fff" textAnchor="middle">К{units.length} · ОБЩ ДВОР {totalRight} м² (стр. {Math.round(rightMargin * PRIV)} + заден {hmN.rear})</text></g>);
   if (footer) els.push(<text key="ft" x={W / 2} y={yBottom + 60} fontSize="11" fill={GRAY} textAnchor="middle">{footer}</text>);
 
   // компас
