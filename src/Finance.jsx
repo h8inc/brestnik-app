@@ -1,63 +1,50 @@
-// Finance.jsx — ПОВЕРИТЕЛНА секция, защитена с парола.
-// В repo-то/бъндъла стои само шифърът (finance.enc.json). Текстът се разшифрова
-// в браузъра единствено при вярна парола (AES-256-GCM, ключ от PBKDF2). Грешна
-// парола → разшифроването се проваля. Потребителят е козметичен гейт.
-import React, { useState } from "react";
-import enc from "./finance.enc.json";
+// Finance.jsx — финансов модел, ОТВОРЕН (без парола/потребител).
+// Съдържанието е публично (сайтът е публичен). Данни от строител + текущ пазар.
+import React from "react";
 
-const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+const HTML = `
+<h3>Финансов модел (данни от строител)</h3>
+<p class="fin-sub">Цени на направа: реални оферти (строител). Продажба: текущ пазар на БДС.</p>
 
-async function decrypt(password) {
-  const km = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]);
-  const key = await crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt: b64(enc.salt), iterations: enc.iter, hash: "SHA-256" },
-    km, { name: "AES-GCM", length: 256 }, false, ["decrypt"]
-  );
-  const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(enc.iv) }, key, b64(enc.ct));
-  return new TextDecoder().decode(pt);
-}
+<h4>Цени на направа (СМР, €/м²)</h4>
+<table>
+<tr><th>Стадий</th><th>€/м² днес</th><th>+5 г (×1.276)</th></tr>
+<tr><td>Акт 14 — груб строеж</td><td>350–400</td><td>447–510</td></tr>
+<tr><td>До БДС (шпакловка/замазка)</td><td>600–700</td><td>766–893</td></tr>
+<tr><td>До ключ (справка)</td><td>~1 000–1 150</td><td>~1 276–1 467</td></tr>
+</table>
+<p class="fin-note">Схема: строиш до БДС, продаваш на БДС — купувачът завършва. Земята е твоя (отделно).</p>
+
+<h4>Продажба на БДС (текущ пазар)</h4>
+<p>Среден клас <b>€1 400/м²</b> · висок клас <b>€1 900/м²</b>.</p>
+
+<h4>Вариант Б · 6 къщи · РЗП 1 130 м² (без таван)</h4>
+<p class="fin-note">Разход до БДС при €650/м² = €735K (цял ред). Стандарт 177 м² · премиум 211 м².</p>
+<table>
+<tr><th>Сценарий</th><th>Приход</th><th>Разход БДС</th><th>Брутен марж</th></tr>
+<tr><td>Среден €1 400 · днес</td><td>€1.58M</td><td>€735K</td><td>€848K · 54%</td></tr>
+<tr><td>Висок €1 900 · днес</td><td>€2.15M</td><td>€735K</td><td>€1.41M · 66%</td></tr>
+<tr><td>Среден €1 786 · +5 г</td><td>€2.02M</td><td>€938K</td><td>€1.08M · 54%</td></tr>
+<tr><td>Висок €2 424 · +5 г</td><td>€2.74M</td><td>€938K</td><td>€1.80M · 66%</td></tr>
+</table>
+
+<h4>На къща (Вар. Б, продажба на БДС, днес)</h4>
+<p>Стандарт 177 м²: разход €115K · продажба €248K (среден) / €336K (висок) · <b>марж €133K / €221K</b>.<br/>
+Премиум 211 м²: разход €137K · продажба €295K / €401K · <b>марж €158K / €264K</b>.</p>
+
+<h4>Вариант А · 7 къщи · РЗП 1 339 (с таван) — за сравнение</h4>
+<p>Разход до БДС €870K. Приход на БДС: среден €1.87M / висок €2.54M. <b>Марж €1.00M / €1.67M</b> (днес).</p>
+
+<h4>Изводи</h4>
+<p>1) Цените на строителя (груб 350–400, БДС 600–700) са под пазарните оферти → маржът на „строй до БДС, продай на БДС" е голям: <b>54–66% бруто</b> (преди земя/меки/ДДС).<br/>
+2) 5% инфлация и на разход, и на цена → марж % стои; растат само абсолютните € (+27.6% за 5 г).<br/>
+3) Истинската стойност е <b>земята</b> (твоя). Изключено: проектиране ~3–5%, надзор, такси, ПСОВ ~30 ЕЖ, присъединявания, ДДС (±€250–375K).</p>
+`;
 
 export default function Finance() {
-  const [user, setUser] = useState("");
-  const [pass, setPass] = useState("");
-  const [html, setHtml] = useState(null);
-  const [err, setErr] = useState("");
-  const [busy, setBusy] = useState(false);
-
-  const submit = async (e) => {
-    e.preventDefault();
-    setErr("");
-    if (user.trim().toLowerCase() !== "наско") { setErr("Грешен потребител."); return; }
-    setBusy(true);
-    try {
-      setHtml(await decrypt(pass));
-    } catch {
-      setErr("Грешна парола.");
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  if (html) {
-    return (
-      <section className="sec">
-        <div className="finance" dangerouslySetInnerHTML={{ __html: html }} />
-        <button className="reset" style={{ marginTop: 16 }} onClick={() => { setHtml(null); setPass(""); }}>🔒 Заключи отново</button>
-      </section>
-    );
-  }
-
   return (
     <section className="sec">
-      <form className="lock" onSubmit={submit}>
-        <div className="lock-icon">🔒</div>
-        <h3>Поверително</h3>
-        <p>Финансовият модел е защитен. Влез с потребител и парола.</p>
-        <input className="lock-in" placeholder="потребител" autoComplete="username" value={user} onChange={(e) => setUser(e.target.value)} />
-        <input className="lock-in" type="password" placeholder="парола" autoComplete="current-password" value={pass} onChange={(e) => setPass(e.target.value)} />
-        <button className="lock-btn" type="submit" disabled={busy}>{busy ? "…" : "Отключи"}</button>
-        {err && <div className="lock-err">{err}</div>}
-      </form>
+      <div className="finance" dangerouslySetInnerHTML={{ __html: HTML }} />
     </section>
   );
 }
