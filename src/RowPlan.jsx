@@ -100,8 +100,8 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
     els.push(<Tree key={k + "t1"} x={cx + w * 0.28} y={yYardTop + terrH + (yYardH - terrH) * 0.5} r={9} />);
     if (w > 90) els.push(<Tree key={k + "t2"} x={cx + w * 0.72} y={yYardTop + terrH + (yYardH - terrH) * 0.7} r={8} />);
     const yardCol = hm.yardOK ? GREEN : "#B23A2E";
-    els.push(<text key={k + "yl"} x={cx + w / 2} y={yBottom - 17} fontSize="10.5" fontWeight="700" fill={yardCol} textAnchor="middle">заден {hm.rear} м²{hm.yardOK ? "" : " ⚠"}</text>);
-    els.push(<text key={k + "yl2"} x={cx + w / 2} y={yBottom - 6} fontSize="8" fill={yardCol} textAnchor="middle">откр {hm.open} · тер {hm.covered}</text>);
+    els.push(<text key={k + "yl"} x={cx + w / 2} y={yBottom - 18} fontSize="11" fontWeight="700" fill={yardCol} textAnchor="middle">ДВОР {hm.rear + hm.front} м²{hm.yardOK ? "" : " ⚠"}</text>);
+    els.push(<text key={k + "yl2"} x={cx + w / 2} y={yBottom - 6} fontSize="8.5" fill={yardCol} textAnchor="middle">заден {hm.rear} · преден {hm.front} м²</text>);
 
     // ширина (над улицата)
     els.push(<text key={k + "w"} x={cx + w / 2} y={yStreet - 8} fontSize="10.5" fontWeight={u.type === "P" ? 700 : 400} fill={u.type === "P" ? "#0D7377" : "#555"} textAnchor="middle">{u.w}</text>);
