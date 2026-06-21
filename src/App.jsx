@@ -78,17 +78,18 @@ const EXPORT_NAMES = { S: ["ground", "floor2", "attic"], P: ["groundP", "floor2P
 const EDITS_KEY = "brestnik-plan-edits-v1";
 const loadEdits = () => { try { return JSON.parse(localStorage.getItem(EDITS_KEY)) || {}; } catch { return {}; } };
 
-function ProductCard({ p, hm, accent }) {
+function ProductCard({ p, hm, accent, attic }) {
+  const rows = p.rows.filter(([k]) => attic || k !== "Таван");
   return (
     <div className={"card" + (accent ? " card-prem" : "")}>
       <div className="card-head">
         <h3>{p.name}</h3>
         <span className="card-ref">{p.ref}</span>
       </div>
-      <div className="card-big">~{hm.RZP}<span> РЗП с таван</span></div>
-      <div className="card-split">партер {hm.footprint} · <b>етаж 2 {hm.floor2}</b> · таван {hm.attic} м²</div>
-      <ul>{p.rows.map(([k, v], i) => <li key={i}><b>{k}</b><span>{v}</span></li>)}</ul>
-      <div className="card-ticket">Билет @€1800: <b>{p.ticket}</b></div>
+      <div className="card-big">~{hm.RZP}<span> РЗП{attic ? " с таван" : ""}</span></div>
+      <div className="card-split">партер {hm.footprint} · <b>етаж 2 {hm.floor2}</b>{attic ? ` · таван ${hm.attic}` : ""} м²</div>
+      <ul>{rows.map(([k, v], i) => <li key={i}><b>{k}</b><span>{v}</span></li>)}</ul>
+      <div className="card-ticket">Билет @€1450: <b>{attic ? p.ticket : p.ticket.replace(/\s*\+\s*таван/, "")}</b></div>
     </div>
   );
 }
@@ -168,12 +169,12 @@ export default function App() {
       <main className="main">
         {tab === "products" && (
           <section className="sec">
-            <div className="sec-h"><span className="eyebrow">Двата продукта · мин. 3 спални горе · + таван</span><h2>Стандарт ~{hmS.RZP} м² · Премиум ~{hmP.RZP} м² (вкл. таван)</h2></div>
+            <div className="sec-h"><span className="eyebrow">Двата продукта · мин. 3 спални горе{dims.attic ? " · + таван" : ""}</span><h2>Стандарт ~{hmS.RZP} м² · Премиум ~{hmP.RZP} м²{dims.attic ? " (вкл. таван)" : ""}</h2></div>
             <div className="cards">
-              <ProductCard p={PRODUCTS.S} hm={hmS} />
-              <ProductCard p={PRODUCTS.P} hm={hmP} accent />
+              <ProductCard p={PRODUCTS.S} hm={hmS} attic={dims.attic} />
+              <ProductCard p={PRODUCTS.P} hm={hmP} accent attic={dims.attic} />
             </div>
-            <p className="note"><b>Етаж 2 е по-голям от партера</b> — еркерът/конзолата на юг (навес {dims.over} м) надвисва над терасата, затова горе има повече м². 2 етажа + обитаем таван на гредоред (~{Math.round(dims.atticRatio * 100)}% от петното). Числата се менят с плъзгачите в „Разпределение". [за потвърждение по виза/ПУП].</p>
+            <p className="note"><b>Етаж 2 е по-голям от партера</b> — еркерът/конзолата на юг (навес {dims.over} м) надвисва над терасата, затова горе има повече м². 2 етажа{dims.attic ? ` + обитаем таван на гредоред (~${Math.round(dims.atticRatio * 100)}% от петното)` : ""}. Числата се менят с плъзгачите в „Разпределение". [за потвърждение по виза/ПУП].</p>
           </section>
         )}
 
