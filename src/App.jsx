@@ -11,14 +11,14 @@ const VARIANTS = {
     label: "Вариант А · 7 къщи",
     sub: "2 премиум (краища) + 5 стандарт · двор 72 · с таван · РЗП 1339",
     seq: ["P", "S", "S", "S", "S", "S", "P"],
-    wS: 7.0, wP: 8.73, dS: 9, dP: 9, attic: true,
+    wS: 7.0, wP: 8.73, dS: 9, dP: 9, attic: true, road: 4, front: 5.5,
     leftMargin: 5, rightMargin: 3,
   },
   B: {
     label: "Вариант Б · 6 къщи",
-    sub: "2 премиум (краища) + 4 стандарт · ИЗБРАН · по-широки · 2 етажа без таван · РЗП 1130",
+    sub: "2 премиум (краища) + 4 стандарт · ИЗБРАН · път 5 · преден 5.0 · 2 етажа без таван · РЗП 1130",
     seq: ["P", "S", "S", "S", "S", "P"],
-    wS: 8.21, wP: 9.8, dS: 9.5, dP: 9.5, attic: false,
+    wS: 8.21, wP: 9.8, dS: 9.5, dP: 9.5, attic: false, road: 5, front: 5.0,
     leftMargin: 5, rightMargin: 3,
   },
 };
@@ -68,7 +68,7 @@ const SLIDERS = [
   ["atticRatio", "Таван — използваемост", 0.3, 0.7, 0.05, "×петно"],
 ];
 
-const defaultsFor = (v) => ({ ...baseParams, wS: v.wS, wP: v.wP, dS: v.dS, dP: v.dP, attic: v.attic });
+const defaultsFor = (v) => ({ ...baseParams, wS: v.wS, wP: v.wP, dS: v.dS, dP: v.dP, attic: v.attic, road: v.road, front: v.front });
 
 // имена на export-ите в plans.js по продукт/етаж (за Export от редактора)
 const EXPORT_NAMES = { S: ["ground", "floor2", "attic"], P: ["groundP", "floor2P", "atticP"] };
@@ -133,7 +133,7 @@ export default function App() {
       return { ...d, wP: val, wS };
     });
   };
-  const chooseVariant = (id) => { setVariant(id); const V = VARIANTS[id]; setDims((d) => ({ ...d, wS: V.wS, wP: V.wP, dS: V.dS, dP: V.dP, attic: V.attic })); };
+  const chooseVariant = (id) => { setVariant(id); const V = VARIANTS[id]; setDims((d) => ({ ...d, wS: V.wS, wP: V.wP, dS: V.dS, dP: V.dP, attic: V.attic, road: V.road, front: V.front })); };
   const reset = () => setDims(defaultsFor(v));
   const dirty = JSON.stringify(dims) !== JSON.stringify(defaultsFor(v));
 
