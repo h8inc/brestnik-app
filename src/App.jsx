@@ -9,16 +9,16 @@ import { baseParams, rowMetrics, houseMetrics, PLOT } from "./model.js";
 const VARIANTS = {
   A: {
     label: "Вариант А · 7 къщи",
-    sub: "2 премиум (краища) + 5 стандарт · ИЗБРАН · двор отзад 72",
+    sub: "2 премиум (краища) + 5 стандарт · двор 72 · с таван · РЗП 1339",
     seq: ["P", "S", "S", "S", "S", "S", "P"],
-    wS: 7.0, wP: 8.73,
+    wS: 7.0, wP: 8.73, dS: 9, dP: 9, attic: true,
     leftMargin: 5, rightMargin: 3,
   },
   B: {
     label: "Вариант Б · 6 къщи",
-    sub: "2 премиум (краища) + 4 стандарт · по-широки къщи",
+    sub: "2 премиум (краища) + 4 стандарт · ИЗБРАН · по-широки · 2 етажа без таван · РЗП 1130",
     seq: ["P", "S", "S", "S", "S", "P"],
-    wS: 8.21, wP: 9.8,
+    wS: 8.21, wP: 9.8, dS: 9.5, dP: 9.5, attic: false,
     leftMargin: 5, rightMargin: 3,
   },
 };
@@ -68,7 +68,7 @@ const SLIDERS = [
   ["atticRatio", "Таван — използваемост", 0.3, 0.7, 0.05, "×петно"],
 ];
 
-const defaultsFor = (v) => ({ ...baseParams, wS: v.wS, wP: v.wP });
+const defaultsFor = (v) => ({ ...baseParams, wS: v.wS, wP: v.wP, dS: v.dS, dP: v.dP, attic: v.attic });
 
 // имена на export-ите в plans.js по продукт/етаж (за Export от редактора)
 const EXPORT_NAMES = { S: ["ground", "floor2", "attic"], P: ["groundP", "floor2P", "atticP"] };
@@ -95,11 +95,11 @@ function ProductCard({ p, hm, accent }) {
 
 export default function App() {
   const [tab, setTab] = useState("products");
-  const [variant, setVariant] = useState("A");
+  const [variant, setVariant] = useState("B");
   const [product, setProduct] = useState("S");
   const [floor, setFloor] = useState(0);
   const [editPlan, setEditPlan] = useState(false);
-  const [dims, setDims] = useState(() => defaultsFor(VARIANTS.A));
+  const [dims, setDims] = useState(() => defaultsFor(VARIANTS.B));
   const [planEdits, setPlanEdits] = useState(loadEdits);
   const saveRooms = (name, rms) => setPlanEdits((e) => {
     const next = { ...e };
@@ -132,7 +132,7 @@ export default function App() {
       return { ...d, wP: val, wS };
     });
   };
-  const chooseVariant = (id) => { setVariant(id); setDims((d) => ({ ...d, wS: VARIANTS[id].wS, wP: VARIANTS[id].wP })); };
+  const chooseVariant = (id) => { setVariant(id); const V = VARIANTS[id]; setDims((d) => ({ ...d, wS: V.wS, wP: V.wP, dS: V.dS, dP: V.dP, attic: V.attic })); };
   const reset = () => setDims(defaultsFor(v));
   const dirty = JSON.stringify(dims) !== JSON.stringify(defaultsFor(v));
 
