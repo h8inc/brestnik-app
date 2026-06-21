@@ -100,8 +100,9 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
     els.push(<Tree key={k + "t1"} x={cx + w * 0.28} y={yYardTop + terrH + (yYardH - terrH) * 0.5} r={9} />);
     if (w > 90) els.push(<Tree key={k + "t2"} x={cx + w * 0.72} y={yYardTop + terrH + (yYardH - terrH) * 0.7} r={8} />);
     const yardCol = hm.yardOK ? GREEN : "#B23A2E";
-    els.push(<text key={k + "yl"} x={cx + w / 2} y={yBottom - 18} fontSize="11" fontWeight="700" fill={yardCol} textAnchor="middle">ДВОР {hm.rear + hm.front} м²{hm.yardOK ? "" : " ⚠"}</text>);
-    els.push(<text key={k + "yl2"} x={cx + w / 2} y={yBottom - 6} fontSize="8.5" fill={yardCol} textAnchor="middle">заден {hm.rear} · преден {hm.front} м²</text>);
+    const sideYard = Math.round((isLeftEnd ? leftMargin : isRightEnd ? rightMargin : 0) * PRIV);
+    els.push(<text key={k + "yl"} x={cx + w / 2} y={yBottom - 18} fontSize="11" fontWeight="700" fill={yardCol} textAnchor="middle">ДВОР {hm.rear + hm.front + sideYard} м²{hm.yardOK ? "" : " ⚠"}</text>);
+    els.push(<text key={k + "yl2"} x={cx + w / 2} y={yBottom - 6} fontSize="8" fill={yardCol} textAnchor="middle">заден {hm.rear} · преден {hm.front}{sideYard ? ` · стр. ${sideYard}` : ""}</text>);
 
     // ширина (над улицата)
     els.push(<text key={k + "w"} x={cx + w / 2} y={yStreet - 8} fontSize="10.5" fontWeight={u.type === "P" ? 700 : 400} fill={u.type === "P" ? "#0D7377" : "#555"} textAnchor="middle">{u.w}</text>);
@@ -109,17 +110,12 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
     cx += w;
   });
 
-  // пунктирани парцели на крайните + общ двор баджове
+  // пунктирани парцели на крайните (маркер на ъгловия парцел: премиум + страничен двор)
   const p0 = units[0], pN = units[units.length - 1];
-  const hm0 = houseMetrics(p0.w, p0.type, p), hmN = houseMetrics(pN.w, pN.type, p);
-  const totalLeft = hm0.rear + Math.round(leftMargin * PRIV);
-  const totalRight = hmN.rear + Math.round(rightMargin * PRIV);
   const leftCellW = (leftMargin + p0.w) * PXM;
   const rightCellW = (rightMargin + pN.w) * PXM;
   els.push(<rect key="pcL" x={xStart} y={yFront} width={leftCellW} height={yBottom - yFront} fill="none" stroke="#0D7377" strokeWidth="2" strokeDasharray="8 4" />);
   els.push(<rect key="pcR" x={W - PAD_R - rightCellW} y={yFront} width={rightCellW} height={yBottom - yFront} fill="none" stroke="#0D7377" strokeWidth="2" strokeDasharray="8 4" />);
-  els.push(<g key="bL"><rect x={xStart + 16} y={yBottom + 12} width={250} height={24} rx="4" fill="#0D7377" /><text x={xStart + 16 + 125} y={yBottom + 28} fontSize="11.5" fontWeight="700" fill="#fff" textAnchor="middle">К1 · ОБЩ ДВОР {totalLeft} м² (стр. {Math.round(leftMargin * PRIV)} + заден {hm0.rear})</text></g>);
-  els.push(<g key="bR"><rect x={W - PAD_R - 250} y={yBottom + 12} width={250} height={24} rx="4" fill="#0D7377" /><text x={W - PAD_R - 250 + 125} y={yBottom + 28} fontSize="11.5" fontWeight="700" fill="#fff" textAnchor="middle">К{units.length} · ОБЩ ДВОР {totalRight} м² (стр. {Math.round(rightMargin * PRIV)} + заден {hmN.rear})</text></g>);
   if (footer) els.push(<text key="ft" x={W / 2} y={yBottom + 60} fontSize="11" fill={GRAY} textAnchor="middle">{footer}</text>);
 
   // компас
