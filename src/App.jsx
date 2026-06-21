@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import FloorPlan from "./FloorPlan.jsx";
 import FloorEditor from "./FloorEditor.jsx";
 import RowPlan from "./RowPlan.jsx";
@@ -107,6 +107,13 @@ export default function App() {
   const [editPlan, setEditPlan] = useState(false);
   const [showDims, setShowDims] = useState(false);   // плъзгачите са скрити по подразбиране
   const [dims, setDims] = useState(() => defaultsFor(VARIANTS.B));
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 700px)").matches);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 700px)");
+    const h = (e) => setIsMobile(e.matches);
+    mq.addEventListener("change", h);
+    return () => mq.removeEventListener("change", h);
+  }, []);
   const [planEdits, setPlanEdits] = useState(loadEdits);
   const saveRooms = (name, rms) => setPlanEdits((e) => {
     const next = { ...e };
@@ -195,7 +202,7 @@ export default function App() {
 
           {/* ПЛАНЪТ — центърът на приложението */}
           <div className="plan-frame plan-frame-row hero-plan">
-            <RowPlan units={liveUnits} leftMargin={v.leftMargin} rightMargin={v.rightMargin} params={dims} />
+            <RowPlan units={liveUnits} leftMargin={v.leftMargin} rightMargin={v.rightMargin} params={dims} vertical={isMobile} />
           </div>
 
           <div className="dims-bar">

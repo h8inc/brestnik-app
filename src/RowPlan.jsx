@@ -21,7 +21,7 @@ function Tree({ x, y, r = 8 }) {
   return <circle cx={x} cy={y} r={r} fill={TREE} stroke={TREE_S} strokeWidth="1.2" />;
 }
 
-export default function RowPlan({ units, leftMargin, rightMargin, params = baseParams, footer }) {
+export default function RowPlan({ units, leftMargin, rightMargin, params = baseParams, footer, vertical = false }) {
   const p = { ...baseParams, ...params };
   const ROAD = p.road, FRONT = p.front, PRIV = PLOT.W - p.road, OVER = p.over;
 
@@ -122,8 +122,8 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
   els.push(<g key="cmp" transform={`translate(${W - 30},${PAD_T + 6})`}><line x1="0" y1="18" x2="0" y2="2" stroke={INK} strokeWidth="2" /><polygon points="-4,5 4,5 0,0" fill={INK} /><text x="0" y="30" fontSize="9" fill={INK} textAnchor="middle">С</text></g>);
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
-      {els}
+    <svg viewBox={`0 0 ${vertical ? H : W} ${vertical ? W : H}`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "auto" }}>
+      {vertical ? <g transform={`translate(${H}, 0) rotate(90)`}>{els}</g> : els}
     </svg>
   );
 }
