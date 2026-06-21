@@ -64,9 +64,8 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
     const terrH = Math.min(OVER * PXM, yYardH);   // покрита тераса под навеса
     const k = "u" + i;
 
-    // преден двор (паваж)
+    // преден двор (паваж) — етикетът се рисува НАКРАЯ, върху колите/гаража
     els.push(<rect key={k + "f"} x={cx} y={yFront} width={w} height={FRONT * PXM} fill={PAVE} stroke="#ccc" />);
-    els.push(<text key={k + "fl"} x={cx + w / 2} y={yFront + 11} fontSize="8.5" fontWeight="700" fill="#8a7d63" textAnchor="middle">преден {hm.front} м²</text>);
 
     if (u.type === "P") {
       const gw = Math.min(w - 28, 6 * PXM);
@@ -81,6 +80,9 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
       els.push(<rect key={k + "c2"} x={cx + 10 + cw} y={cy} width={cw} height={ch} rx="4" fill="#f4f4f2" stroke="#b0b0b0" />);
       els.push(<rect key={k + "p"} x={cx + w - 16} y={yFront} width={12} height={FRONT * PXM} fill={PATH} />);
     }
+
+    // етикет ПРЕДЕН двор (пил върху апрона, чете се над колите/гаража)
+    els.push(<g key={k + "fl"}><rect x={cx + w / 2 - 33} y={yFront + 3} width={66} height={14} rx={2} fill="rgba(255,255,255,0.85)" stroke="#d9d2bf" strokeWidth="0.5" /><text x={cx + w / 2} y={yFront + 13} fontSize="9.5" fontWeight="700" fill="#6b5e44" textAnchor="middle">преден {hm.front} м²</text></g>);
 
     // къща (партер)
     els.push(<rect key={k + "h"} x={cx} y={yHouse} width={w} height={gD} fill={HOUSE} stroke={u.type === "P" ? "#0D7377" : INK} strokeWidth={u.type === "P" ? 2 : 1} />);
@@ -98,7 +100,7 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
     els.push(<Tree key={k + "t1"} x={cx + w * 0.28} y={yYardTop + terrH + (yYardH - terrH) * 0.5} r={9} />);
     if (w > 90) els.push(<Tree key={k + "t2"} x={cx + w * 0.72} y={yYardTop + terrH + (yYardH - terrH) * 0.7} r={8} />);
     const yardCol = hm.yardOK ? GREEN : "#B23A2E";
-    els.push(<text key={k + "yl"} x={cx + w / 2} y={yBottom - 17} fontSize="10.5" fontWeight="700" fill={yardCol} textAnchor="middle">двор {hm.rear}{hm.yardOK ? "" : " ⚠"}</text>);
+    els.push(<text key={k + "yl"} x={cx + w / 2} y={yBottom - 17} fontSize="10.5" fontWeight="700" fill={yardCol} textAnchor="middle">заден {hm.rear} м²{hm.yardOK ? "" : " ⚠"}</text>);
     els.push(<text key={k + "yl2"} x={cx + w / 2} y={yBottom - 6} fontSize="8" fill={yardCol} textAnchor="middle">откр {hm.open} · тер {hm.covered}</text>);
 
     // ширина (над улицата)
