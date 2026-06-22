@@ -4,7 +4,54 @@ import React from "react";
 
 const HTML = `
 <h3>Финансов модел (данни от строител)</h3>
-<p class="fin-sub">Цени на направа: реални оферти (строител). Продажба: текущ пазар на БДС.</p>
+<p class="fin-sub">Цени на направа: реални оферти (строител). Продажба: текущ пазар на БДС. Активен продукт: <b>Вариант Б · 6 къщи · плосък покрив (2 етажа)</b>.</p>
+
+<h4>Покрив: плосък (2 етажа) срещу скатен + обитаем таван — кое е по-евтино?</h4>
+<p class="fin-note">Един и същ ред (Вар. Б, 6 къщи), две покривни решения. Числата са работни <b>[за потвърждение по виза/ПУП и оферта]</b>. Среден пазар €1 400/м².</p>
+<svg viewBox="0 0 580 320" style="width:100%;max-width:580px;height:auto;display:block;margin:8px 0 4px;font-family:ui-monospace,monospace">
+  <line x1="40" y1="250" x2="540" y2="250" stroke="#9a9a93" stroke-width="1"/>
+  <!-- ПЛОСЪК -->
+  <rect x="50" y="211" width="124" height="39" fill="#e7e7e3" stroke="#1A1C1E" stroke-width="1.2"/>
+  <rect x="50" y="172" width="156" height="39" fill="#eef0ee" stroke="#1A1C1E" stroke-width="1.2"/>
+  <rect x="50" y="164" width="156" height="9" fill="#cfd3cf" stroke="#1A1C1E" stroke-width="1.2"/>
+  <text x="112" y="235" font-size="9" fill="#555" text-anchor="middle">партер</text>
+  <text x="128" y="196" font-size="9" fill="#555" text-anchor="middle">етаж 2</text>
+  <text x="128" y="155" font-size="8.5" fill="#0D7377" text-anchor="middle" font-weight="700">плосък покрив</text>
+  <line x1="174" y1="211" x2="206" y2="211" stroke="#B8762A" stroke-width="2"/>
+  <text x="206" y="208" font-size="7.5" fill="#B8762A" text-anchor="end">еркер +2.5</text>
+  <line x1="36" y1="164" x2="36" y2="250" stroke="#555" stroke-width="0.8"/>
+  <text x="30" y="210" font-size="9" fill="#1A1C1E" text-anchor="middle" transform="rotate(-90 30 210)">~6.5 м</text>
+  <text x="128" y="278" font-size="10" fill="#1A1C1E" text-anchor="middle" font-weight="700">ПЛОСЪК ПОКРИВ</text>
+  <text x="128" y="293" font-size="8.5" fill="#555" text-anchor="middle">РЗП 1130 · разход €733K · КИНТ 0.65</text>
+  <text x="128" y="306" font-size="8.5" fill="#2F7D4F" text-anchor="middle" font-weight="700">марж €846K · 54%</text>
+  <!-- СКАТЕН + ТАВАН -->
+  <rect x="330" y="211" width="124" height="39" fill="#e7e7e3" stroke="#1A1C1E" stroke-width="1.2"/>
+  <rect x="330" y="172" width="156" height="39" fill="#eef0ee" stroke="#1A1C1E" stroke-width="1.2"/>
+  <polygon points="330,172 330,162 408,124 486,162 486,172" fill="#f0e6d4" stroke="#1A1C1E" stroke-width="1.2"/>
+  <rect x="356" y="150" width="104" height="22" fill="none" stroke="#B8762A" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="408" y="165" font-size="8" fill="#B8762A" text-anchor="middle">таван 274 м²</text>
+  <text x="392" y="235" font-size="9" fill="#555" text-anchor="middle">партер</text>
+  <text x="408" y="196" font-size="9" fill="#555" text-anchor="middle">етаж 2</text>
+  <line x1="454" y1="211" x2="486" y2="211" stroke="#B8762A" stroke-width="2"/>
+  <line x1="316" y1="124" x2="316" y2="250" stroke="#555" stroke-width="0.8"/>
+  <text x="310" y="190" font-size="9" fill="#1A1C1E" text-anchor="middle" transform="rotate(-90 310 190)">~9.5 м</text>
+  <text x="408" y="278" font-size="10" fill="#1A1C1E" text-anchor="middle" font-weight="700">СКАТЕН + ОБИТАЕМ ТАВАН</text>
+  <text x="408" y="293" font-size="8.5" fill="#555" text-anchor="middle">РЗП 1401 · разход €856K · КИНТ 0.81</text>
+  <text x="408" y="306" font-size="8.5" fill="#2F7D4F" text-anchor="middle" font-weight="700">марж €1.11M · 56%</text>
+  <text x="44" y="246" font-size="8" fill="#999">С</text>
+  <text x="534" y="246" font-size="8" fill="#999" text-anchor="end">Ю</text>
+</svg>
+<table>
+<tr><th>Показател (Вар. Б, 6 къщи, днес)</th><th>Плосък покрив (2 ет.)</th><th>Скатен + таван</th><th>Разлика</th></tr>
+<tr><td>РЗП общо</td><td>1 130 м²</td><td>1 401 м²</td><td>+271 м²</td></tr>
+<tr><td>Височина / силует</td><td>~6.5 м (нисък, кубичен)</td><td>~9.5 м (висок, традиционен)</td><td>+3 м</td></tr>
+<tr><td>КИНТ</td><td>0.65</td><td>0.81</td><td>+0.16</td></tr>
+<tr><td>Разход до БДС</td><td><b>€733K</b></td><td>€856K <span class="fin-note">(таван @€450)</span></td><td>+€123K</td></tr>
+<tr><td>Приход (среден €1 400)</td><td>€1.58M</td><td>€1.96M</td><td>+€384K</td></tr>
+<tr><td>Брутен марж (среден)</td><td>€846K · 54%</td><td><b>€1.11M · 56%</b></td><td>+€260K</td></tr>
+</table>
+<p class="fin-note"><b>Кое е по-евтино:</b> в абсолют — <b>плоският покрив</b> (~€733K срещу ~€856K, −€123K разход, −271 м² РЗП). Но самият плосък покрив НЕ е драматично по-евтин <i>като покрив</i> (стб. плоча + хидроизолация + наклон + отводняване ≈ дървен скатен + керемиди). Икономията идва от това, че <b>не довършваш таван</b>. А точно таванът добавя 271 м² при ~€450/м² (под покрива, гредоред) и се продава ~€1 400/м² → <b>+€260K марж</b> — това са най-евтините и най-печеливши м².</p>
+<p class="fin-note"><b>Как стои / кога кое:</b> плосък → по-малко капитал и риск, по-бързо, силует ~6.5 м (по-добре за височинни ограничения, съседи и източните гледки на К6), модерен вид, опция за покривна тераса. Скатен+таван → +€260K печалба и традиционен вид (пазарът в Брестник предпочита скатни покриви). <b>Решаващи [за потвърждение]:</b> височинно ограничение по виза/ПУП и пазарно предпочитание. Не се брои двойно с икономията от калкани (раздел 5 в КСС).</p>
 
 <h4>Цени на направа (СМР, €/м²)</h4>
 <table>

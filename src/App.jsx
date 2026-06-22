@@ -4,29 +4,13 @@ import FloorEditor from "./FloorEditor.jsx";
 import RowPlan from "./RowPlan.jsx";
 import Finance from "./Finance.jsx";
 import { ground, floor2, attic, groundP, floor2P, atticP } from "./plans.js";
-import { baseParams, rowMetrics, houseMetrics, PLOT } from "./model.js";
-
-const VARIANTS = {
-  A: {
-    label: "Вариант А · 7 къщи",
-    sub: "2 премиум (краища) + 5 стандарт · двор 72 · с таван · РЗП 1339",
-    seq: ["P", "S", "S", "S", "S", "S", "P"],
-    wS: 7.0, wP: 8.73, dS: 9, dP: 9, attic: true, road: 4, front: 5.5,
-    leftMargin: 5, rightMargin: 3,
-  },
-  B: {
-    label: "Вариант Б · 6 къщи",
-    sub: "2 премиум (краища) + 4 стандарт · ИЗБРАН · път 5 · преден 5.0 · 2 етажа без таван · РЗП 1130",
-    seq: ["P", "S", "S", "S", "S", "P"],
-    wS: 8.21, wP: 9.8, dS: 9.5, dP: 9.5, attic: false, road: 5, front: 5.0,
-    leftMargin: 5, rightMargin: 3,
-  },
-};
+import { rowMetrics, houseMetrics, PLOT } from "./model.js";
+import { VARIANTS, defaultsFor } from "./variants.js";
 
 const FLOORS = {
   S: [
     { name: "Партер", data: ground },
-    { name: "Етаж 2 · 3 спални", data: floor2 },
+    { name: "Етаж 2 · мастър + 2 спални", data: floor2 },
     { name: "Таван", data: attic, attic: true },
   ],
   P: [
@@ -38,13 +22,13 @@ const FLOORS = {
 
 const PRODUCTS = {
   S: {
-    name: "Стандарт", ref: "≈ референтен Тип 3",
-    rows: [["Партер", "дневна+кухня, WC, килер"], ["Етаж 2", "3 спални + 2 бани (по-голям, еркер)"],
+    name: "Стандарт", ref: "≈ Option C (отворен юг)",
+    rows: [["Партер", "дневна+кухня отворена на юг, кът/кабинет, WC, котелно"], ["Етаж 2", "мастър + 2 спални (3 спални), обща баня + en-suite"],
       ["Таван", "обитаем (гредоред, скосен)"], ["Паркинг", "открито 2 коли"]],
   },
   P: {
-    name: "Премиум", ref: "краища · ≈ уголемен Тип 2",
-    rows: [["Партер", "дневна + спалня/кабинет"], ["Етаж 2", "3–4 спални + дрешник (по-голям)"],
+    name: "Премиум", ref: "краища · офис с отделен вход",
+    rows: [["Партер", "ОФИС с отделен вход (СЗ) + дневна/кухня отворени на юг"], ["Етаж 2", "мастър suite + 2–3 спални + дрешник"],
       ["Таван", "обитаем (гредоред, скосен)"], ["Паркинг", "двоен гараж"]],
   },
 };
@@ -67,8 +51,6 @@ const SLIDERS = [
   ["road", "Вътрешен път", 3, 6, 0.5, "м"],
   ["atticRatio", "Таван — използваемост", 0.3, 0.7, 0.05, "×петно"],
 ];
-
-const defaultsFor = (v) => ({ ...baseParams, wS: v.wS, wP: v.wP, dS: v.dS, dP: v.dP, attic: v.attic, road: v.road, front: v.front });
 
 const EXPORT_NAMES = { S: ["ground", "floor2", "attic"], P: ["groundP", "floor2P", "atticP"] };
 
@@ -124,7 +106,8 @@ export default function App() {
   });
 
   const v = VARIANTS[variant];
-  const floors = FLOORS[product];
+  // Плосък покрив (по подразбиране) → таванът е скрит (в Архив). Скатен+таван се връща с тогъла.
+  const floors = FLOORS[product].filter((f) => dims.attic || !f.attic);
   const flIdx = Math.min(floor, floors.length - 1);
   const fl = floors[flIdx];
   const exportName = EXPORT_NAMES[product][flIdx];
@@ -182,13 +165,14 @@ export default function App() {
         </div>
         <nav className="navlinks">
           {NAV.map(([id, label]) => <a key={id} href={"#" + id}>{label}</a>)}
+          <a href="./gallery.html">Галерия ↗</a>
         </nav>
       </header>
 
       <main className="main">
         {/* ——— ПРОДУКТИ ——— */}
         <section id="sec-products" className="sec">
-          <div className="sec-h"><span className="eyebrow">Двата продукта · мин. 3 спални горе{dims.attic ? " · + таван" : ""}</span><h2>Стандарт ~{hmS.RZP} м² · Премиум ~{hmP.RZP} м²{dims.attic ? " (вкл. таван)" : ""}</h2></div>
+          <div className="sec-h"><span className="eyebrow">Двата продукта · спални + кабинет горе · {dims.attic ? "скатен покрив + таван" : "плосък покрив (2 етажа)"}</span><h2>Стандарт ~{hmS.RZP} м² · Премиум ~{hmP.RZP} м²{dims.attic ? " (вкл. таван)" : ""}</h2></div>
           <div className="cards">
             <ProductCard p={PRODUCTS.S} hm={hmS} attic={dims.attic} />
             <ProductCard p={PRODUCTS.P} hm={hmP} accent attic={dims.attic} />
@@ -226,7 +210,7 @@ export default function App() {
                     onChange={(e) => (k === "wS" || k === "wP") ? setWidthCoupled(k, parseFloat(e.target.value)) : setDim(k, parseFloat(e.target.value))} />
                 </div>
               ))}
-              <label className="chk"><input type="checkbox" checked={dims.attic} onChange={toggleAttic} /> Обитаем таван</label>
+              <label className="chk"><input type="checkbox" checked={dims.attic} onChange={toggleAttic} /> Скатен покрив + обитаем таван <span style={{ color: "#777" }}>(изкл. = плосък покрив)</span></label>
               <div className="metric-note">КИНТ {M.kint.toFixed(2)} · плътност {M.density}% · събира се {M.slack >= 0 ? "+" : ""}{M.slack} м · {M.yardOK ? "✓ дворове ≥72" : "⚠ двор <72"}{dims.front < 5 ? " · ⚠ преден <5 м" : ""}. [ЗА ПОТВЪРЖДЕНИЕ по виза/ПУП]</div>
             </div>
           )}
@@ -281,9 +265,14 @@ export default function App() {
 
         {/* ——— АРХИВ ——— */}
         <section id="sec-archive" className="sec">
-          <div className="sec-h"><span className="eyebrow">Архив · други планове</span><h2>Вариант А · 7 къщи (с таван)</h2></div>
-          <p className="sub">По-сложен вариант — задържан за справка. РЗП {aM.totalRZP} м² · КИНТ {aM.kint.toFixed(2)} · двор стандарт {aHmS.rear + aHmS.front} м² · с обитаем таван.</p>
+          <div className="sec-h"><span className="eyebrow">Архив · други планове</span><h2>Скатен покрив + обитаем таван · Вариант А</h2></div>
+          <p className="sub">Активният продукт е <b>плосък покрив (2 етажа)</b>. Скатеният покрив с обитаем таван е тук за справка — връща се с тогъла „Скатен покрив + обитаем таван" в Разпределение. Сравнението на разходите е във <b>Финанси</b>.</p>
+          <p className="sub">Вариант А · 7 къщи: РЗП {aM.totalRZP} м² · КИНТ {aM.kint.toFixed(2)} · двор стандарт {aHmS.rear + aHmS.front} м² · с обитаем таван.</p>
           <div className="plan-frame plan-frame-row hero-plan"><RowPlan units={aUnits} leftMargin={aV.leftMargin} rightMargin={aV.rightMargin} params={aDims} vertical={isMobile} /></div>
+          <div className="plan-row" style={{ marginTop: 16 }}>
+            <div className="plan-frame plan-frame-lg"><FloorPlan data={attic} scale={40} title="ТАВАН · СТАНДАРТ (скатен покрив) — за справка" /></div>
+            <div className="plan-frame plan-frame-lg"><FloorPlan data={atticP} scale={40} title="ТАВАН · ПРЕМИУМ (скатен покрив) — за справка" /></div>
+          </div>
         </section>
       </main>
 

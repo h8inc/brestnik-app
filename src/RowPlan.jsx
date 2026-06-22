@@ -56,6 +56,7 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
   els.push(<Tree key="sgRa" x={xRightG + rightMargin * PXM / 2} y={sideTop + sideH * 0.45} r={7} />);
 
   // единици
+  const seam = [];                 // геометрия за преградните стени между съседите
   let cx = xStart + leftMargin * PXM;
   units.forEach((u, i) => {
     const isLeftEnd = i === 0, isRightEnd = i === units.length - 1;
@@ -65,6 +66,7 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
     const yYardTop = yHouse + gD;
     const yYardH = Math.max(0, yBottom - yYardTop);
     const terrH = Math.min(OVER * PXM, yYardH);   // покрита тераса под навеса
+    seam.push({ xR: cx + w, yTop: yYardTop, terrB: yYardTop + terrH });
     const k = "u" + i;
 
     // преден двор (паваж) — етикетът се рисува НАКРАЯ, върху колите/гаража
@@ -119,6 +121,19 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
 
     cx += w;
   });
+
+  // ПРЕГРАДНИ (шумо/визуални) стени между съседите — продължение на калкана по верандите + ~3.5 м в двора (зона за сядане)
+  const GARD = 3.5;   // дължина на стената навътре в двора, м
+  for (let i = 0; i < seam.length - 1; i++) {
+    const x = seam[i].xR;
+    const y0 = Math.min(seam[i].yTop, seam[i + 1].yTop);
+    const y1 = Math.min(Math.max(seam[i].terrB, seam[i + 1].terrB) + GARD * PXM, yBottom - 4);
+    els.push(<line key={"sw" + i} x1={x} y1={y0} x2={x} y2={y1} stroke={INK} strokeWidth="3.4" strokeLinecap="round" />);
+  }
+  if (seam.length > 1) {
+    const lx = seam[0].xR, ly = Math.min(Math.max(seam[0].terrB, seam[1].terrB) + GARD * PXM, yBottom - 4) + 8;
+    els.push(<text key="swl" x={lx} y={ly} fontSize="7.5" fontWeight="700" fill={INK} textAnchor="middle" transform={tr(lx, ly)}>шумо-преграда (тераса + двор)</text>);
+  }
 
   // пунктирани парцели на крайните (маркер на ъгловия парцел: премиум + страничен двор)
   const p0 = units[0], pN = units[units.length - 1];
