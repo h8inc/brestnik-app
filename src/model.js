@@ -24,28 +24,37 @@ const R1 = (n) => Math.round(n * 10) / 10;
 
 export const typeDepth = (type, p = baseParams) => (type === "P" ? p.dP : p.dS);
 
-// метрики на ЕДНА къща (ширина w, тип 'S'|'P')
-export function houseMetrics(w, type, p = baseParams) {
+// метрики на ЕДНА къща (ширина на СГРАДАТА w, тип 'S'|'P').
+// yardW = ширина на ЗАДНИЯ ДВОР (по подразбиране = w). Различава се само в черновите
+// с обслужващ път, където прорезът се взима от СГРАДАТА, а дворът остава непокътнат
+// (по-широк от партера). За Вар. А/Б yardW=w → числата са идентични.
+export function houseMetrics(w, type, p = baseParams, yardW = w) {
   const d = typeDepth(type, p);
   const priv = PLOT.W - p.road;                 // частна дълбочина (без пътя)
-  const footprint = R1(w * d);                  // ЗП партер
+  const footprint = R1(w * d);                  // ЗП партер (по ширина на СГРАДАТА)
   const floor2 = R(w * (d + p.over));           // горен етаж (+ еркер на юг)
   const attic = p.attic ? R(footprint * p.atticRatio) : 0;
-  const RZP = R(footprint + floor2 + attic);
+  const RZP = R(footprint + floor2 + attic);    // РЗП → от ширината на сградата
   const yardD = R1(priv - p.front - d);         // дълбочина заден двор
-  const covered = R(p.over * w);                // покрита тераса (под навеса)
-  const open = R(Math.max(0, yardD - p.over) * w);
+  const covered = R(p.over * yardW);            // покрита тераса (под навеса) — по ширина на ДВОРА
+  const open = R(Math.max(0, yardD - p.over) * yardW);
   const rear = open + covered;                  // заден двор ОБЩО (вкл. терасата)
-  const front = R(p.front * w);                 // преден апрон (паркинг/гараж зона)
+  const front = R(p.front * w);                 // преден апрон (паркинг/гараж зона) — по сграда
   // премиум: гараж ~6×5 яде от предния; стандарт: 2 коли на открито
   const frontOpen = type === "P" ? Math.max(0, front - 30) : front;
   const yardOK = rear >= 72;                    // работен минимум 72 м²/къща (вкл. тераса)
-  return { w: R1(w), type, d, footprint, floor2, attic, RZP, yardD, open, covered, rear, front, frontOpen, yardOK };
+  return { w: R1(w), yardW: R1(yardW), type, d, footprint, floor2, attic, RZP, yardD, open, covered, rear, front, frontOpen, yardOK };
 }
 
 // метрики на ЦЯЛА редица (units = [{type,w}] + margins)
 export function rowMetrics(units, leftMargin, rightMargin, p = baseParams) {
-  const hm = units.map((u) => houseMetrics(u.w, u.type, p));
+  // ефективна ширина на двора = ширина на сградата + по ½ от обслужващия път от всяка страна
+  // (пътят спира на задната линия → дворът поема земята под него). Без път → = ширината (Вар. А/Б).
+  const hm = units.map((u, i) => {
+    const gapBefore = i > 0 ? (units[i - 1].gapAfter || 0) : 0;
+    const effYW = u.w + gapBefore / 2 + (u.gapAfter || 0) / 2;
+    return houseMetrics(u.w, u.type, p, effYW);
+  });
   const totalRZP = R(hm.reduce((s, h) => s + h.RZP, 0));
   const totalZP = R(hm.reduce((s, h) => s + h.footprint, 0));
   const atticTotal = R(hm.reduce((s, h) => s + h.attic, 0));
@@ -59,7 +68,8 @@ export function rowMetrics(units, leftMargin, rightMargin, p = baseParams) {
   const yardOK = hm.every((h) => h.yardOK);
   // запълване на лицето: лява граница + сумата ширини + дясна граница ≤ PLOT.D
   const rowLen = R1(hm.reduce((s, h) => s + h.w, 0));
-  const used = R1(leftMargin + rowLen + rightMargin);
+  const gapSum = R1(units.reduce((s, u) => s + (u.gapAfter || 0), 0)); // обслужващи пътища (чернови); 0 при Вар. А/Б
+  const used = R1(leftMargin + rowLen + gapSum + rightMargin);
   const slack = R1(PLOT.D - used);                // + = разполагаемо · − = надхвърля лицето
-  return { hm, totalRZP, totalZP, atticTotal, kint, density, avgRearS, stagger, minRear, yardOK, rowLen, used, slack, upi: UPI_AREA, units: units.length };
+  return { hm, totalRZP, totalZP, atticTotal, kint, density, avgRearS, stagger, minRear, yardOK, rowLen, gapSum, used, slack, upi: UPI_AREA, units: units.length };
 }

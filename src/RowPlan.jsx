@@ -28,7 +28,8 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
   // около котвата му, за да остане хоризонтален (четим).
   const tr = (x, y) => (vertical ? `rotate(-90 ${x} ${y})` : undefined);
 
-  const totalW = leftMargin + units.reduce((s, u) => s + u.w, 0) + rightMargin;
+  const sumUnits = units.reduce((s, u) => s + u.w + (u.gapAfter || 0), 0); // ширини + обслужващи пътища (чернови)
+  const totalW = leftMargin + sumUnits + rightMargin;
   const W = PAD_L + totalW * PXM + PAD_R;
   const yStreet = PAD_T;
   const yFront = yStreet + ROAD * PXM;
@@ -50,23 +51,31 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
   els.push(<text key="sgLt" x={xStart + leftMargin * PXM / 2} y={(sideTop + yBottom) / 2} fontSize="10.5" fill={GREEN} textAnchor="middle" transform={`rotate(-90 ${xStart + leftMargin * PXM / 2} ${(sideTop + yBottom) / 2})`}>страничен двор · {leftMargin} м · {Math.round(leftMargin * PRIV)} м²</text>);
   els.push(<Tree key="sgLa" x={xStart + leftMargin * PXM / 2} y={sideTop + sideH * 0.3} r={9} />);
   els.push(<Tree key="sgLb" x={xStart + leftMargin * PXM * 0.6} y={sideTop + sideH * 0.65} r={8} />);
-  const xRightG = xStart + (leftMargin + units.reduce((s, u) => s + u.w, 0)) * PXM;
+  const xRightG = xStart + (leftMargin + units.reduce((s, u) => s + u.w + (u.gapAfter || 0), 0)) * PXM;
   els.push(<rect key="sgR" x={xRightG} y={sideTop} width={rightMargin * PXM} height={sideH} fill={GARDEN} stroke={TREE_S} />);
   els.push(<text key="sgRt" x={xRightG + rightMargin * PXM / 2} y={(sideTop + yBottom) / 2} fontSize="9.5" fill={GREEN} textAnchor="middle" transform={`rotate(-90 ${xRightG + rightMargin * PXM / 2} ${(sideTop + yBottom) / 2})`}>стр. двор · {rightMargin} м · {Math.round(rightMargin * PRIV)} м²</text>);
   els.push(<Tree key="sgRa" x={xRightG + rightMargin * PXM / 2} y={sideTop + sideH * 0.45} r={7} />);
 
-  // единици
+  // единици — ЕДИН курсор за всичко (сграда И двор подравнени по вертикала, без зъб/процепи).
+  // Пътят е прорез САМО през сградната лента; под задната линия дворът на всеки съсед поема
+  // ПОЛОВИНАТА от пътя от всяка страна → задната градина е НЕПРЕКЪСНАТА (пътят спира на къщата).
   const seam = [];                 // геометрия за преградните стени между съседите
   let cx = xStart + leftMargin * PXM;
   units.forEach((u, i) => {
     const isLeftEnd = i === 0, isRightEnd = i === units.length - 1;
     const w = u.w * PXM;
-    const hm = houseMetrics(u.w, u.type, p);
+    const gapBeforeM = i > 0 ? (units[i - 1].gapAfter || 0) : 0;   // път преди тази къща (м)
+    const gapAfterM = u.gapAfter || 0;                            // път след тази къща (м)
+    const effYW = u.w + gapBeforeM / 2 + gapAfterM / 2;           // ефективна ширина на двора (поема по ½ път от всяка страна)
+    const hm = houseMetrics(u.w, u.type, p, effYW);              // РЗП по ширината на СГРАДАТА; двор по effYW
     const gD = hm.d * PXM;                        // дълбочина партер ПО ТИП (стандарт ≠ премиум → стъпало)
     const yYardTop = yHouse + gD;
     const yYardH = Math.max(0, yBottom - yYardTop);
-    const terrH = Math.min(OVER * PXM, yYardH);   // покрита тераса под навеса
-    seam.push({ xR: cx + w, yTop: yYardTop, terrB: yYardTop + terrH });
+    const terrH = Math.min(OVER * PXM, yYardH);   // покрита тераса под навеса (по ширина на КЪЩАТА)
+    // задната градина се простира до средата на пътя от всяка страна → непрекъсната
+    const yardX = cx - (gapBeforeM / 2) * PXM;
+    const yardW = w + (gapBeforeM / 2 + gapAfterM / 2) * PXM;
+    seam.push({ xR: cx + w, yTop: yYardTop, terrB: yYardTop + terrH, gapAfter: u.gapAfter || 0 });
     const k = "u" + i;
 
     // преден двор (паваж) — етикетът се рисува НАКРАЯ, върху колите/гаража
@@ -100,17 +109,17 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
     if (hm.attic > 0)
       els.push(<text key={k + "ht"} x={htx} y={hty} fontSize="8.5" fill="#e7c79a" textAnchor="middle" transform={tr(htx, hty)}>вкл. таван {hm.attic}</text>);
 
-    // двор (юг): открит + покрита тераса (под навеса, до къщата)
-    els.push(<rect key={k + "y"} x={cx} y={yYardTop} width={w} height={yYardH} fill={GARDEN} stroke={TREE_S} />);
+    // двор (юг): открита градина (непрекъсната, поема ½ път от всяка страна) + покрита тераса (по къщата)
+    els.push(<rect key={k + "y"} x={yardX} y={yYardTop} width={yardW} height={yYardH} fill={GARDEN} stroke={TREE_S} />);
     if (terrH > 4) {
       els.push(<rect key={k + "tr"} x={cx + 2} y={yYardTop} width={w - 4} height={terrH} fill={TERR} stroke={AMBER} strokeWidth="1" strokeDasharray="4 3" />);
       if (w > 70) els.push(<text key={k + "trl"} x={cx + w / 2} y={yYardTop + terrH / 2 + 3} fontSize="7.5" fill={AMBER} textAnchor="middle" transform={tr(cx + w / 2, yYardTop + terrH / 2 + 3)}>навес {OVER}</text>);
     }
-    els.push(<Tree key={k + "t1"} x={cx + w * 0.28} y={yYardTop + terrH + (yYardH - terrH) * 0.5} r={9} />);
-    if (w > 90) els.push(<Tree key={k + "t2"} x={cx + w * 0.72} y={yYardTop + terrH + (yYardH - terrH) * 0.7} r={8} />);
+    els.push(<Tree key={k + "t1"} x={yardX + yardW * 0.28} y={yYardTop + terrH + (yYardH - terrH) * 0.5} r={9} />);
+    if (yardW > 90) els.push(<Tree key={k + "t2"} x={yardX + yardW * 0.72} y={yYardTop + terrH + (yYardH - terrH) * 0.7} r={8} />);
     const yardCol = hm.yardOK ? GREEN : "#B23A2E";
     const sideYard = Math.round((isLeftEnd ? leftMargin : isRightEnd ? rightMargin : 0) * PRIV);
-    const yC2 = cx + w / 2;
+    const yC2 = yardX + yardW / 2;
     const yp = (off) => (vertical ? [yC2 + off, yBottom - 12] : [yC2, yBottom - 12 + off]);
     const [ylx, yly] = yp(-6), [yl2x, yl2y] = yp(6);
     els.push(<text key={k + "yl"} x={ylx} y={yly} fontSize="11" fontWeight="700" fill={yardCol} textAnchor={vertical ? "start" : "middle"} transform={tr(ylx, yly)}>ДВОР {hm.rear + hm.front + sideYard} м²{hm.yardOK ? "" : " ⚠"}</text>);
@@ -119,12 +128,22 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
     // ширина (над улицата)
     els.push(<text key={k + "w"} x={cx + w / 2} y={yStreet - 8} fontSize="10.5" fontWeight={u.type === "P" ? 700 : 400} fill={u.type === "P" ? "#0D7377" : "#555"} textAnchor="middle" transform={tr(cx + w / 2, yStreet - 8)}>{u.w}</text>);
 
-    cx += w;
+    // обслужващ път (чернови): прорез САМО през СГРАДНАТА лента (преден апрон + партер),
+    // спира на задната строителна линия → задните дворове остават непокътнати.
+    if (u.gapAfter) {
+      const gpx = u.gapAfter * PXM, gx = cx + w;
+      els.push(<rect key={k + "path"} x={gx} y={yFront} width={gpx} height={yYardTop - yFront} fill={PATH} stroke="#c9c0a8" />);
+      els.push(<text key={k + "pathl"} x={gx + gpx / 2} y={(yFront + yYardTop) / 2} fontSize="8" fontWeight="700" fill="#8a7d5e" textAnchor="middle" transform={`rotate(-90 ${gx + gpx / 2} ${(yFront + yYardTop) / 2})`}>обсл. път {u.gapAfter} м</text>);
+      cx += w + gpx;
+    } else {
+      cx += w;
+    }
   });
 
   // ПРЕГРАДНИ (шумо/визуални) стени между съседите — продължение на калкана по верандите + ~3.5 м в двора (зона за сядане)
   const GARD = 3.5;   // дължина на стената навътре в двора, м
   for (let i = 0; i < seam.length - 1; i++) {
+    if (seam[i].gapAfter) continue;   // на този шев има обслужващ път, не споделен калкан
     const x = seam[i].xR;
     const y0 = Math.min(seam[i].yTop, seam[i + 1].yTop);
     const y1 = Math.min(Math.max(seam[i].terrB, seam[i + 1].terrB) + GARD * PXM, yBottom - 4);

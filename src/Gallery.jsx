@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FloorPlan from "./FloorPlan.jsx";
 import RowPlan from "./RowPlan.jsx";
 import { rowMetrics } from "./model.js";
 import { VARIANT_LIST, defaultsFor as variantDims, variantUnits } from "./variants.js";
+import { DRAFT_LIST, draftDims, draftUnits } from "./variants.draft.js";
 import * as gen1 from "./gallery/gen1.js";
 import * as gen2 from "./gallery/gen2.js";
 import * as gen3 from "./gallery/gen3.js";
@@ -59,6 +60,45 @@ function RepoBadge({ src }) {
   );
 }
 
+// Клик-за-уголемяване: RowPlan в карта се отваря голям в центриран оверлей.
+// Затваря се с клик извън плана или с Esc. Планът скалира до ширината на модала.
+function ZoomModal({ open, title, children, onClose }) {
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+  if (!open) return null;
+  return (
+    <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(18,19,21,0.74)", zIndex: 1000,
+      display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
+      <div onClick={(e) => e.stopPropagation()} style={{ background: "#fff", borderRadius: 10, padding: "14px 16px 18px",
+        width: "min(96vw, 1500px)", maxHeight: "94vh", overflow: "auto", boxShadow: "0 16px 50px rgba(0,0,0,.45)" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 16, marginBottom: 10 }}>
+          <h3 style={{ margin: 0, fontSize: 17, fontFamily: "ui-serif, Georgia, serif" }}>{title}</h3>
+          <button onClick={onClose} style={{ ...btn(false), fontSize: 13 }}>затвори ✕</button>
+        </div>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+// RowPlan + бутон за уголемяване (click-to-expand). onZoom получава реквизитите за модала.
+function ZoomableRow({ title, units, leftMargin, rightMargin, params, onZoom }) {
+  const open = () => onZoom({ title, units, leftMargin, rightMargin, params });
+  return (
+    <div style={{ position: "relative", cursor: "zoom-in" }} onClick={open} title="Клик за уголемяване">
+      <RowPlan units={units} leftMargin={leftMargin} rightMargin={rightMargin} params={params} />
+      <button onClick={(e) => { e.stopPropagation(); open(); }}
+        style={{ position: "absolute", top: 4, right: 4, fontFamily: "ui-monospace, monospace", fontSize: 11,
+          padding: "3px 8px", borderRadius: 6, border: "1px solid #C9C2AE", background: "rgba(255,255,255,0.9)",
+          color: "#1A1C1E", cursor: "zoom-in" }}>⛶ уголеми</button>
+    </div>
+  );
+}
+
 const COLS = [
   { key: "ground", label: "Партер · Стандарт", grp: "Стандарт" },
   { key: "floor2", label: "Етаж 2 · Стандарт", grp: "Стандарт" },
@@ -73,6 +113,7 @@ const wrap = { maxWidth: 1400, margin: "0 auto", padding: "24px 20px 80px", font
 export default function Gallery() {
   const [only, setOnly] = useState("all"); // all | S | P
   const [view, setView] = useState("matrix"); // matrix (по поколение) | compare (по план)
+  const [zoom, setZoom] = useState(null);     // {title, units, leftMargin, rightMargin, params} за модала
   const cols = COLS.filter((c) => only === "all" || (only === "S" ? c.grp === "Стандарт" : c.grp === "Премиум"));
 
   const planCard = (gen, col) => {
@@ -121,7 +162,7 @@ export default function Gallery() {
                   <span style={{ fontFamily: "ui-monospace, monospace", fontSize: 12, color: v.id === "B" ? "#2F7D4F" : "#B8762A" }}>{v.date}</span>
                 </div>
                 <p style={{ fontFamily: "ui-monospace, monospace", fontSize: 11.5, color: "#666", margin: "2px 0 8px" }}>{v.sub}</p>
-                <RowPlan units={variantUnits(v)} leftMargin={v.leftMargin} rightMargin={v.rightMargin} params={variantDims(v)} />
+                <ZoomableRow title={v.label} units={variantUnits(v)} leftMargin={v.leftMargin} rightMargin={v.rightMargin} params={variantDims(v)} onZoom={setZoom} />
                 <div style={{ fontFamily: "ui-monospace, monospace", fontSize: 12, color: "#1A1C1E", marginTop: 8 }}>
                   РЗП {m.totalRZP} м² · КИНТ {m.kint.toFixed(2)} · плътност {m.density}% · {m.yardOK ? "✓ дворове ≥72" : "⚠ двор <72"} <span style={{ color: "#999" }}>[за потвърждение]</span>
                 </div>
@@ -129,6 +170,49 @@ export default function Gallery() {
             );
           })}
         </div>
+      </section>
+
+      <section style={{ marginBottom: 44, borderBottom: "1px dashed #C9C2AE", paddingBottom: 28 }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap", marginBottom: 4 }}>
+          <span style={{ fontFamily: "ui-monospace, monospace", fontSize: 11, fontWeight: 600, color: "#fff", background: "#6B4E8C", padding: "2px 8px", borderRadius: 4 }}>ЧЕРНОВА · работна площ</span>
+          <h2 style={{ margin: 0, fontSize: 19 }}>Чернови · обслужващ път между къщите</h2>
+        </div>
+        <p style={{ fontFamily: "ui-monospace, monospace", fontSize: 12.5, color: "#555", margin: "8px 0 4px" }}>
+          Идея: <b>обслужващ път 1.5 м</b> между станд. 1↔2 и станд. 3↔4 (база Вар. Б, П С С С С П). Редицата става три залепени двойки: П–С | път | С–С | път | С–П. Пътят е <b>само между сградите</b> и спира на задната линия → <b>задните дворове остават непокътнати</b>.
+        </p>
+        <p style={{ fontFamily: "ui-monospace, monospace", fontSize: 12, color: "#777", margin: "0 0 14px", padding: "6px 10px", background: "#F2EEF6", borderRadius: 6, borderLeft: "3px solid #6B4E8C" }}>
+          Лицето е <b>запълнено</b> (≈60.45 м, slack ≈ 0) → 2× път = <b>3.0 м</b> трябва да дойдат отнякъде. Изток/запад са <b>правни граници на двора</b> (не се пипат), затова 3.0 м идват <b>само от ширината на къщите</b>, по <b>0.5 м на всичките 6</b> (стандартите страдат по-малко): станд. 8.21 → 7.71 м, прем. 9.8 → 9.3 м. <b>Сплит:</b> премиумът връща своите 0.5 м в <b>дълбочина</b> (9.5 → 10.1 м) → РЗП на премиума <b>остава 211</b>; смалява се само неговият <b>заден двор</b> (91 → 80 м², има резерв). Стандартите поемат цялата загуба: 177 → 166 → <b>ред 1130 → 1086 (−44 м² ≈ €62K)</b>; задните им дворове се запазват (≈78 м²). Прорезът е <b>само през сградната лента</b> (преден апрон + партер) и спира на задната линия → <b>задната градина е непрекъсната</b> (пътят не влиза в дворовете), терасите подравнени под къщите. Допълнително: 2 загубени калкан-шева → +4 външни фасади; 1.5 м е реален сервиз (≥1.2–1.5 м); прорез между сгради → ПБ-отстояния освен ако фасадите към него са глухи REI калкани <span style={{ color: "#999" }}>[за потвърждение по Наредба Iз-1971]</span>. <b>Не е активен продукт.</b> <span style={{ color: "#6B4E8C" }}>Клик върху план за уголемяване.</span>
+        </p>
+        {(() => {
+          const baseB = VARIANT_LIST.find((v) => v.id === "B");
+          const baseRZP = baseB ? rowMetrics(variantUnits(baseB), baseB.leftMargin, baseB.rightMargin, variantDims(baseB)).totalRZP : 1130;
+          return (
+            <div style={grid(DRAFT_LIST.length)}>
+              {DRAFT_LIST.map((v) => {
+                const m = rowMetrics(draftUnits(v), v.leftMargin, v.rightMargin, draftDims(v));
+                const dRZP = m.totalRZP - baseRZP;
+                const eur = Math.round(Math.abs(dRZP) * 1400 / 1000);
+                return (
+                  <div key={v.id} style={{ background: "#fff", border: "1px solid #E3DECE", borderRadius: 8, padding: 12, boxShadow: "0 1px 3px rgba(0,0,0,.05)" }}>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
+                      <h3 style={{ margin: 0, fontSize: 16 }}>{v.label}</h3>
+                      <span style={{ fontFamily: "ui-monospace, monospace", fontSize: 12, color: "#6B4E8C" }}>{v.date}</span>
+                    </div>
+                    <p style={{ fontFamily: "ui-monospace, monospace", fontSize: 11.5, color: "#666", margin: "2px 0 8px" }}>{v.sub}</p>
+                    <ZoomableRow title={v.label} units={draftUnits(v)} leftMargin={v.leftMargin} rightMargin={v.rightMargin} params={draftDims(v)} onZoom={setZoom} />
+                    <div style={{ fontFamily: "ui-monospace, monospace", fontSize: 12, color: "#1A1C1E", marginTop: 8 }}>
+                      РЗП {m.totalRZP} м² · КИНТ {m.kint.toFixed(2)} · плътност {m.density}% · {m.yardOK ? "✓ дворове ≥72" : "⚠ двор <72"}
+                    </div>
+                    <div style={{ fontFamily: "ui-monospace, monospace", fontSize: 12, fontWeight: 700, color: dRZP < 0 ? "#B23A2E" : "#2F7D4F", marginTop: 2 }}>
+                      спрямо Вар. Б ({baseRZP}): {dRZP === 0 ? "± 0 м² РЗП" : `${dRZP > 0 ? "+" : "−"}${Math.abs(dRZP)} м² РЗП ≈ €${eur}K`}
+                    </div>
+                    <p style={{ fontFamily: "ui-monospace, monospace", fontSize: 11, color: "#777", margin: "6px 0 0" }}>{v.note}</p>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })()}
       </section>
 
       <section style={{ marginBottom: 44, borderBottom: "1px dashed #C9C2AE", paddingBottom: 28 }}>
@@ -193,6 +277,10 @@ export default function Gallery() {
           </section>
         ))
       )}
+
+      <ZoomModal open={!!zoom} title={zoom?.title} onClose={() => setZoom(null)}>
+        {zoom && <RowPlan units={zoom.units} leftMargin={zoom.leftMargin} rightMargin={zoom.rightMargin} params={zoom.params} />}
+      </ZoomModal>
     </div>
   );
 }
