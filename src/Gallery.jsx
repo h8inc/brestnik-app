@@ -207,6 +207,11 @@ export default function Gallery() {
                       спрямо Вар. Б ({baseRZP}): {dRZP === 0 ? "± 0 м² РЗП" : `${dRZP > 0 ? "+" : "−"}${Math.abs(dRZP)} м² РЗП ≈ €${eur}K`}
                     </div>
                     <p style={{ fontFamily: "ui-monospace, monospace", fontSize: 11, color: "#777", margin: "6px 0 0" }}>{v.note}</p>
+                    {v.legal && (
+                      <p style={{ fontFamily: "ui-monospace, monospace", fontSize: 11, color: "#7A2E2E", background: "#FBEFEC", border: "1px solid #E6C9C0", borderLeft: "3px solid #B23A2E", borderRadius: 6, padding: "7px 10px", margin: "8px 0 0" }}>
+                        ⚖️ {v.legal}
+                      </p>
+                    )}
                   </div>
                 );
               })}
