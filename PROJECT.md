@@ -85,11 +85,39 @@ Limits of this check: Басейнова дирекция's site could not be re
 | Кинт | 0.65 | 1.0 or 1.2 | OK |
 | Пзастр | 29% | 60% | OK |
 | Height | ~6.5 m | 10 m | OK |
-| Позел | ~31% (rough estimate) | 40% = 694 m² | **Likely short** |
+| Позел | 45.8% (794 m²) with the current defaults | 40% = 694 m² | OK, on two assumptions (see below) |
 | Layout | Connected row | Free-standing | **Conflict with the filing** |
 | Number of houses | 6 | 3 declared | **Conflict with the filing** |
 
-The green-area estimate counts the open rear yards (~351 m²) and the side strips (~190 m²), about 541 m². The internal road (~302 m²), front aprons (~262 m²) and covered terraces (~131 m²) are treated as paved.
+### Green area (озеленяване)
+
+Rules, from the texts on lex.bg:
+
+- П озел. is the area under vegetation ("под естествена растителна покривка") divided by the УПИ area (Наредба № 7, чл. 11). Decking, paving, gravel and pools count as zero. Planting over underground or semi-underground construction counts; a green roof on an above-ground building is not mentioned.
+- Жм: minimum 40–60%, and one third of the required green area must be planted with trees — about 231 m² here (Наредба № 7, чл. 19).
+- It is checked three times: the ПУП-ПРЗ fixes the number, the building permit project must show it, and the building is not commissioned until the landscaping in the approved project is carried out (ЗУТ, чл. 178, ал. 3, т. 2).
+- Ground-level surfaces do not affect РЗП or плътност (ЗУТ, ДР § 5, т. 15 and т. 18).
+
+The model (`rowMetrics().green` in `src/model.js`) counts rear yards, side yards and the planted part of the front yards. Road, parking paving, entry paths and buildings count as zero.
+
+| Layout (road 5 m, 6 houses, 2 cars each) | Green | Result |
+|---|---|---|
+| As first drawn: paved front yards, paved terrace under the overhang | 542 m² (31.2%) | 152 m² short |
+| Planted front yards around two paved stalls, 1.2 m entry path | 608 m² (35.0%) | 86 m² short |
+| Grass driveway (paved wheel strips only), entry path, terrace kept | 660 m² (38.0%) | 34 m² short |
+| Same, road narrowed to 4 m | 718 m² (41.4%) | 24 m² spare |
+| **Current default: grass driveway, entry path, no terrace or decking under the overhang** | **794 m² (45.8%)** | **100 m² spare** |
+
+The current default depends on two things the municipality has to accept:
+
+- Planting under the first-floor overhang counts as green (134 m² of the total). Without it the figure is 660 m² (38.0%).
+- Grass under parked cars counts as green. Without it the total is about 742 m² (42.8%), which still passes.
+
+The 100 m² spare is the budget for any other hard surface in the yards, about 16 m² per house.
+
+Keep the row on one УПИ. ЗУТ чл. 19, ал. 5 lets the ПУП set plot sizes freely for low connected housing in more than two plots, so six plots are possible, but the indicators then apply per plot and each middle house falls below 40% on its own.
+
+Not counted in the model: the premium garages (about 30 m² each) are left out of footprint and РЗП. If they are built garages, footprint is about 558 m² (32%) and РЗП about 1,190 m² (Кинт 0.69).
 
 ## Question: a separate flat on a third floor of each house
 
@@ -104,7 +132,7 @@ The green-area estimate counts the open rear yards (~351 m²) and the side strip
 
 1. **The filing.** Three single-family houses are declared. Flats make the buildings multi-family, which changes the РИОСВ assessment, the well regime (notification applies to single-family houses), and sewage sizing.
 2. **Height.** Three flat-roof floors come to about 9.5–10 m against a 10 m cap.
-3. **Green area.** Already tight at two floors; more dwellings need more parking.
+3. **Green area.** Passes at two floors with 100 m² spare; more dwellings need more parking, which uses that up.
 4. **Access.** One internal stair per house today; a separate flat needs a common stairwell.
 
 ## Open items
@@ -114,11 +142,14 @@ The green-area estimate counts the open rear yards (~351 m²) and the side strip
 - Confirm whether a чл. 124а request has been filed with Общински съвет „Родопи", and its number.
 - Confirm the Кинт to be used (1.0 or 1.2).
 - Get the text of the council norms decision (number, date, any dwelling or parking rules).
-- Measure green area properly on the site plan.
+- Ask the architect or the главен архитект of Родопи whether planting under the overhang and grass under parked cars count as green area.
+- Decide whether the premium garages are built garages (they then count in footprint and РЗП).
 - `brestnik-homes` quotes 1,170 m² / Кинт 0.67 and calls the 6-house layout "Variant A"; this repo says 1,130 m² / 0.65 and "Variant B". Align them.
 
 ## Sources
 
+- [ЗУТ (lex.bg)](https://lex.bg/laws/ldoc/2135163904) — чл. 19, чл. 43, чл. 178, ДР § 5
+- [Наредба № 7 (lex.bg)](https://lex.bg/laws/ldoc/2135476546) — чл. 9–11, чл. 19–20, чл. 55
 - [РИОСВ Пловдив — reply to the notification, ОВОС-1125 (copy in `docs/`)](https://plovdiv.riew.gov.bg/files/_documents/otgovor_OVOS_2026_1125.docx)
 - [РИОСВ Пловдив — Приложение № 2 filing for ОВОС-1125](https://plovdiv.riew.gov.bg/files/_documents/dostap_pril_2_2026_1125.docx)
 - [РИОСВ Пловдив — screening decisions list](https://plovdiv.riew.gov.bg/documents/12/1)
