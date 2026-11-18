@@ -49,6 +49,7 @@ const SLIDERS = [
   ["front", "Преден двор (апрон)", 4.5, 7, 0.1, "м"],
   ["over", "Навес/конзола юг (= +етаж 2)", 0, 3, 0.5, "м"],
   ["road", "Вътрешен път", 3, 6, 0.5, "м"],
+  ["entryPathW", "Пътека към входа", 0, 1.5, 0.1, "м"],
   ["atticRatio", "Таван — използваемост", 0.3, 0.7, 0.05, "×петно"],
 ];
 
@@ -129,12 +130,14 @@ export default function App() {
       return { ...d, wP: val, wS };
     });
   };
-  const chooseVariant = (id) => { setVariant(id); const V = VARIANTS[id]; setDims((d) => ({ ...d, wS: V.wS, wP: V.wP, dS: V.dS, dP: V.dP, attic: V.attic, road: V.road, front: V.front })); };
+  const chooseVariant = (id) => { setVariant(id); const V = VARIANTS[id]; setDims((d) => ({ ...d, ...defaultsFor(V), over: d.over, atticRatio: d.atticRatio })); };
   const reset = () => setDims(defaultsFor(v));
   const dirty = JSON.stringify(dims) !== JSON.stringify(defaultsFor(v));
 
   const liveUnits = v.seq.map((type) => ({ type, w: type === "P" ? dims.wP : dims.wS }));
   const M = useMemo(() => rowMetrics(liveUnits, v.leftMargin, v.rightMargin, dims), [variant, dims]);
+  const G = M.green;
+  const greenPreset = () => setDims((d) => ({ ...d, road: 4, frontGreen: true }));
   const hmS = houseMetrics(dims.wS, "S", dims);
   const hmP = houseMetrics(dims.wP, "P", dims);
   const priv = PLOT.W - dims.road;
@@ -190,6 +193,10 @@ export default function App() {
             {dims.attic && <Chip l="Таван" v={`${M.atticTotal} м²`} accent="amber" />}
             <Chip l="Двор стандарт" v={`${hmS.rear + hmS.front} м²`} accent={hmS.yardOK ? "green" : "red"} />
             <Chip l="Двор премиум (ъгъл)" v={`${cornerYard} м²`} accent="green" />
+            <Chip l={`Озеленяване (мин. ${G.minPct}%)`} v={`${G.pct}% · ${G.total} м²`} accent={G.ok ? "green" : "red"} />
+          </div>
+          <div className="metric-note">
+            Озеленяване: заден двор {G.rear} + странични {G.side} + преден {G.front} = <b>{G.total} м²</b> при минимум {G.need} м² ({G.minPct}% от УПИ) → {G.ok ? `✓ +${G.diff} м² резерв` : `⚠ не достигат ${-G.diff} м²`}. С дървета: поне {G.treesNeed} м². Път {dims.road} м, паркоместа, пътеки към входа ({dims.entryPathW} м), сгради{dims.terracePaved ? " и покрити тераси" : ""} не се броят. [ЗА ПОТВЪРЖДЕНИЕ по ПУП]
           </div>
 
           {/* ПЛАНЪТ — централен елемент */}
@@ -211,6 +218,10 @@ export default function App() {
                 </div>
               ))}
               <label className="chk"><input type="checkbox" checked={dims.attic} onChange={toggleAttic} /> Скатен покрив + обитаем таван <span style={{ color: "#777" }}>(изкл. = плосък покрив)</span></label>
+              <label className="chk"><input type="checkbox" checked={dims.frontGreen} onChange={() => setDims((d) => ({ ...d, frontGreen: !d.frontGreen }))} /> Озеленен преден двор <span style={{ color: "#777" }}>(настилка само за {dims.stallsS} паркоместа; премиум — гараж)</span></label>
+              <label className="chk"><input type="checkbox" checked={dims.driveway === "tracks"} onChange={() => setDims((d) => d.driveway === "tracks" ? { ...d, driveway: "paved" } : { ...d, driveway: "tracks", frontGreen: true })} /> Тревна алея <span style={{ color: "#777" }}>(настилка само под коловозите, 2 × {dims.trackW} м на кола) [приемането като озеленяване — за потвърждение]</span></label>
+              <label className="chk"><input type="checkbox" checked={!dims.terracePaved} onChange={() => setDims((d) => ({ ...d, terracePaved: !d.terracePaved }))} /> Без тераса/декинг под навеса <span style={{ color: "#777" }}>(ивицата {dims.over} м е озеленена)</span></label>
+              {!G.ok && <button className="reset" onClick={greenPreset}>Покажи вариант за {G.minPct}%: път 4 м + озеленен преден двор</button>}
               <div className="metric-note">КИНТ {M.kint.toFixed(2)} · плътност {M.density}% · събира се {M.slack >= 0 ? "+" : ""}{M.slack} м · {M.yardOK ? "✓ дворове ≥72" : "⚠ двор <72"}{dims.front < 5 ? " · ⚠ преден <5 м" : ""}. [ЗА ПОТВЪРЖДЕНИЕ по виза/ПУП]</div>
             </div>
           )}

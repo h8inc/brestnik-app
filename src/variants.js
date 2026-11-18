@@ -16,6 +16,7 @@ export const VARIANTS = {
     sub: "2 премиум (краища) + 4 стандарт · ИЗБРАН · път 5 · преден 5.0 · 2 етажа без таван · РЗП 1130",
     seq: ["P", "S", "S", "S", "S", "P"],
     wS: 8.21, wP: 9.8, dS: 9.5, dP: 9.5, attic: false, road: 5, front: 5.0,
+    frontGreen: true, driveway: "tracks", terracePaved: false,   // тревна алея по подразбиране (озеленен преден двор, настилка само под коловозите) · без тераса/декинг под навеса
     leftMargin: 5, rightMargin: 3,
   },
 };
@@ -23,7 +24,7 @@ export const VARIANTS = {
 export const VARIANT_LIST = Object.values(VARIANTS);
 
 // dims по подразбиране за даден вариант (за плъзгачите/модела)
-export const defaultsFor = (v) => ({ ...baseParams, wS: v.wS, wP: v.wP, dS: v.dS, dP: v.dP, attic: v.attic, road: v.road, front: v.front });
+export const defaultsFor = (v) => ({ ...baseParams, wS: v.wS, wP: v.wP, dS: v.dS, dP: v.dP, attic: v.attic, road: v.road, front: v.front, frontGreen: v.frontGreen ?? baseParams.frontGreen, driveway: v.driveway ?? baseParams.driveway, terracePaved: v.terracePaved ?? baseParams.terracePaved });
 
 // единиците на реда [{type, w}] за даден вариант
 export const variantUnits = (v) => v.seq.map((t) => ({ type: t, w: t === "P" ? v.wP : v.wS }));

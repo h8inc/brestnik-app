@@ -79,7 +79,8 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
     const k = "u" + i;
 
     // преден двор (паваж) — етикетът се рисува НАКРАЯ, върху колите/гаража
-    els.push(<rect key={k + "f"} x={cx} y={yFront} width={w} height={FRONT * PXM} fill={PAVE} stroke="#ccc" />);
+    const FG = !!p.frontGreen, TRACKS = FG && p.driveway === "tracks";
+    els.push(<rect key={k + "f"} x={cx} y={yFront} width={w} height={FRONT * PXM} fill={FG ? GARDEN : PAVE} stroke={FG ? TREE_S : "#ccc"} />);
 
     if (u.type === "P") {
       const gw = Math.min(w - 28, 6 * PXM);
@@ -87,7 +88,33 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
       els.push(<rect key={k + "g"} x={gx} y={yFront + 6} width={gw} height={FRONT * PXM - 12} fill={GARAGE} stroke="#999" />);
       els.push(<text key={k + "gt"} x={gx + gw / 2} y={yFront + FRONT * PXM / 2 + 3} fontSize="9" fill="#444" textAnchor="middle" transform={tr(gx + gw / 2, yFront + FRONT * PXM / 2 + 3)}>гараж</text>);
       const px = isLeftEnd ? cx + 4 : cx + w - 16;
-      els.push(<rect key={k + "p"} x={px} y={yFront} width={12} height={FRONT * PXM} fill={PATH} />);
+      if (!FG) els.push(<rect key={k + "p"} x={px} y={yFront} width={12} height={FRONT * PXM} fill={PATH} />);
+      else {
+        const pw = p.entryPathW * PXM;
+        if (pw > 0) els.push(<rect key={k + "p"} x={isLeftEnd ? cx : cx + w - pw} y={yFront} width={pw} height={FRONT * PXM} fill={PATH} stroke="#c9c1ac" strokeWidth="0.5" />);
+        const fx0 = isLeftEnd ? cx + pw : cx + 6 + gw, fx1 = isLeftEnd ? cx + w - gw - 6 : cx + w - pw;
+        els.push(<Tree key={k + "ft"} x={(fx0 + fx1) / 2} y={yFront + FRONT * PXM / 2} r={7} />);
+      }
+    } else if (FG) {
+      // озеленен преден двор: 2 паркоместа 2.5 м в средата, лехи с дървета отстрани
+      const sw = 2.5 * PXM, fh = FRONT * PXM, x0 = cx + (w - p.stallsS * sw) / 2;
+      for (let s = 0; s < p.stallsS; s++) {
+        const sx = x0 + s * sw;
+        if (TRACKS) {
+          const tw = p.trackW * PXM;
+          [0.2, 0.8].forEach((f, j) => els.push(<rect key={k + "tk" + s + j} x={sx + sw * f - tw / 2} y={yFront} width={tw} height={fh} fill={PAVE} stroke="#bdbdb6" strokeWidth="0.6" />));
+          els.push(<rect key={k + "c" + s} x={sx + 3} y={yFront + 4} width={sw - 6} height={fh - 8} rx="4" fill="none" stroke="#8a8a84" strokeDasharray="3 3" />);
+        } else {
+          els.push(<rect key={k + "st" + s} x={sx} y={yFront} width={sw} height={fh} fill={PAVE} stroke="#bdbdb6" strokeWidth="0.6" />);
+          els.push(<rect key={k + "c" + s} x={sx + 3} y={yFront + 4} width={sw - 6} height={fh - 8} rx="4" fill="#f4f4f2" stroke="#b0b0b0" />);
+        }
+      }
+      const bed = (w - p.stallsS * sw) / 2, pw = p.entryPathW * PXM;
+      if (pw > 0) els.push(<rect key={k + "p"} x={cx + w - pw} y={yFront} width={pw} height={fh} fill={PATH} stroke="#c9c1ac" strokeWidth="0.5" />);
+      if (bed > 10) {
+        els.push(<Tree key={k + "ftl"} x={cx + bed / 2} y={yFront + fh * 0.3} r={Math.min(7, bed / 2 - 1)} />);
+        if (bed - pw > 10) els.push(<Tree key={k + "ftr"} x={cx + w - pw - (bed - pw) / 2} y={yFront + fh * 0.7} r={Math.min(7, (bed - pw) / 2 - 1)} />);
+      }
     } else {
       const cw = 2.5 * PXM, ch = Math.min(4.8 * PXM, FRONT * PXM - 6), cy = yFront + (FRONT * PXM - ch) / 2;
       els.push(<rect key={k + "c1"} x={cx + 6} y={cy} width={cw} height={ch} rx="4" fill="#f4f4f2" stroke="#b0b0b0" />);
@@ -96,7 +123,7 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
     }
 
     // етикет ПРЕДЕН двор (пил върху апрона, чете се над колите/гаража)
-    els.push(<g key={k + "fl"} transform={tr(cx + w / 2, yFront + 10)}><rect x={cx + w / 2 - 33} y={yFront + 3} width={66} height={14} rx={2} fill="rgba(255,255,255,0.85)" stroke="#d9d2bf" strokeWidth="0.5" /><text x={cx + w / 2} y={yFront + 13} fontSize="9.5" fontWeight="700" fill="#6b5e44" textAnchor="middle">преден {hm.front} м²</text></g>);
+    els.push(<g key={k + "fl"} transform={tr(cx + w / 2, yFront + 10)}><rect x={cx + w / 2 - (FG ? 50 : 33)} y={yFront + 3} width={FG ? 100 : 66} height={14} rx={2} fill="rgba(255,255,255,0.85)" stroke="#d9d2bf" strokeWidth="0.5" /><text x={cx + w / 2} y={yFront + 13} fontSize="9.5" fontWeight="700" fill="#6b5e44" textAnchor="middle">преден {hm.front} м²{FG ? ` · зел. ${hm.frontPlantable}` : ""}</text></g>);
 
     // къща (партер)
     els.push(<rect key={k + "h"} x={cx} y={yHouse} width={w} height={gD} fill={HOUSE} stroke={u.type === "P" ? "#0D7377" : INK} strokeWidth={u.type === "P" ? 2 : 1} />);
@@ -112,7 +139,7 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
     // двор (юг): открита градина (непрекъсната, поема ½ път от всяка страна) + покрита тераса (по къщата)
     els.push(<rect key={k + "y"} x={yardX} y={yYardTop} width={yardW} height={yYardH} fill={GARDEN} stroke={TREE_S} />);
     if (terrH > 4) {
-      els.push(<rect key={k + "tr"} x={cx + 2} y={yYardTop} width={w - 4} height={terrH} fill={TERR} stroke={AMBER} strokeWidth="1" strokeDasharray="4 3" />);
+      els.push(<rect key={k + "tr"} x={cx + 2} y={yYardTop} width={w - 4} height={terrH} fill={p.terracePaved ? TERR : "none"} stroke={AMBER} strokeWidth="1" strokeDasharray="4 3" />);
       if (w > 70) els.push(<text key={k + "trl"} x={cx + w / 2} y={yYardTop + terrH / 2 + 3} fontSize="7.5" fill={AMBER} textAnchor="middle" transform={tr(cx + w / 2, yYardTop + terrH / 2 + 3)}>навес {OVER}</text>);
     }
     els.push(<Tree key={k + "t1"} x={yardX + yardW * 0.28} y={yYardTop + terrH + (yYardH - terrH) * 0.5} r={9} />);
