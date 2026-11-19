@@ -203,7 +203,16 @@ export default function App() {
 
           {dims.showUtil && (
             <div className="metric-note">
-              Инфраструктура (вход от запад): <b>сондаж</b> в ЮЗ ъгъл, {dims.edgeMin + 0.5} м от границите{M.util.well.ok ? "" : " ⚠ страничният двор е тесен"} · <b>пречиствателно съоръжение</b> под пътя в източния край, {dims.edgeMin} м от границите{M.util.wwtp.ok ? "" : " ⚠ пътят е тесен, влиза под предния двор"} · между тях ≈ {M.util.wellToWwtp} м · <b>ПП резервоар</b> под пътя при входа.
+              Инфраструктура (общинският път е на запад, вляво от Премиум 1):{" "}
+              {dims.well === "house"
+                ? <><b>сондаж във всяка къща</b>, в задния двор, {dims.edgeMin + 0.5} м от дъното{M.util.perHouse.sideOK ? "" : " ⚠ къщите са по-тесни от 6 м"}</>
+                : <><b>общ сондаж</b> в ЮЗ ъгъл, {dims.edgeMin + 0.5} м от границите</>}
+              {" · "}
+              {dims.wwtp === "shared"
+                ? <><b>общо пречиствателно</b> под пътя в източния край · до сондажа ≈ {dims.well === "house" ? M.util.perHouse.ownDist : M.util.wellToWwtp} м</>
+                : <><b>{dims.wwtp === "pits" ? "водоплътна яма" : "локално пречиствателно съоръжение (ЛПС)"} във всяка къща</b>, под предния двор до пътя · до {dims.well === "house" ? "собствения" : "най-близкия"} сондаж ≈ {dims.well === "house" ? M.util.perHouse.ownDist : Math.round(Math.hypot(v.leftMargin + dims.wP / 2 - M.util.well.x, M.util.perHouse.unit.y - M.util.well.y))} м</>}
+              {" · "}<b>ПП резервоар</b> под пътя при входа. Всичко е подземно → не влиза в ЗП, РЗП и плътност и не намалява озеленяването.
+              {" "}От общинския път до най-далечната стена ≈ {M.util.hoseRoad} м по трасето на шланга (допустими 90 м) → {M.util.hoseRoadOK ? "✓ и без пожарен път в имота" : "⚠ трябва пожарен път в имота"}.
               {dims.laneStreet
                 ? <> Пътят е задънена улица по чл. 81 ЗУТ: без площадка за обръщане до 100 м; УПИ = {M.upi} м². Ако всяка къща е отделен УПИ: средна {M.perPlot.mid.area} м² (Кинт {M.perPlot.mid.kint.toFixed(2)}, плътност {M.perPlot.mid.density}%, озеленяване {M.perPlot.mid.greenPct}%), крайни {M.perPlot.endL.area} / {M.perPlot.endR.area} м² (озел. {M.perPlot.endL.greenPct}% / {M.perPlot.endR.greenPct}%).</>
                 : <> Пожарен път {M.util.fireRoad.len} м от входа: най-далечната стена е на ≈ {M.util.fireRoad.hose} м по трасето на шланга (допустими 90 м) → {M.util.fireRoad.padNeeded ? "⚠ над 45 м: трябва площадка" : M.util.fireRoad.ok ? "✓ без площадка за обръщане" : "⚠ над 90 м"}.</>}
@@ -243,6 +252,19 @@ export default function App() {
               <label className="chk"><input type="checkbox" checked={dims.driveway === "tracks"} onChange={() => setDims((d) => d.driveway === "tracks" ? { ...d, driveway: "paved" } : { ...d, driveway: "tracks", frontGreen: true })} /> Тревна алея <span style={{ color: "#777" }}>(настилка само под коловозите, 2 × {dims.trackW} м на кола) [приемането като озеленяване — за потвърждение]</span></label>
               <label className="chk"><input type="checkbox" checked={!dims.terracePaved} onChange={() => setDims((d) => ({ ...d, terracePaved: !d.terracePaved }))} /> Без тераса/декинг под навеса <span style={{ color: "#777" }}>(ивицата {dims.over} м е озеленена)</span></label>
               <label className="chk"><input type="checkbox" checked={dims.showUtil} onChange={() => setDims((d) => ({ ...d, showUtil: !d.showUtil }))} /> Покажи инфраструктурата <span style={{ color: "#777" }}>(сондаж, пречиствателно, пожарен път)</span></label>
+              <label className="chk">Пречистване:&nbsp;
+                <select value={dims.wwtp} onChange={(e) => setDims((d) => ({ ...d, wwtp: e.target.value }))}>
+                  <option value="house">съоръжение във всяка къща (ЛПС)</option>
+                  <option value="shared">едно общо под пътя</option>
+                  <option value="pits">водоплътна яма във всяка къща (както е заявено)</option>
+                </select>
+              </label>
+              <label className="chk">Вода:&nbsp;
+                <select value={dims.well} onChange={(e) => setDims((d) => ({ ...d, well: e.target.value }))}>
+                  <option value="shared">един общ сондаж</option>
+                  <option value="house">сондаж във всяка къща</option>
+                </select>
+              </label>
               <label className="chk"><input type="checkbox" checked={dims.laneStreet} onChange={() => setDims((d) => ({ ...d, laneStreet: !d.laneStreet, fireTurn: false }))} /> Пътят е задънена улица по чл. 81 ЗУТ <span style={{ color: "#777" }}>(общинска, извън УПИ → без площадка до 100 м) [за потвърждение]</span></label>
               <label className="chk"><input type="checkbox" checked={dims.fireTurn} onChange={() => setDims((d) => ({ ...d, fireTurn: !d.fireTurn }))} /> Пожарна площадка за обръщане {dims.turnSize} × {dims.turnSize} м <span style={{ color: "#777" }}>(ако вътрешният път е задънен над 45 м) [за потвърждение]</span></label>
               {dims.fireTurn && <label className="chk">Къде е площадката:&nbsp;

@@ -192,7 +192,7 @@ Neither element is a building, so РЗП (1,130 m²), Кинт (0.65) and плъ
 
 ### Where the well, treatment plant, reservoir and turning area go
 
-Drawn on the row plan (switch "Покажи инфраструктурата", on by default; `util` in `rowMetrics()`). Coordinates assume the entrance is at the west end.
+Drawn on the row plan (switch "Покажи инфраструктурата", on by default; `util` in `rowMetrics()`). The public road runs along the west boundary, left of Premium 1 (confirmed by the owner, 19.11.2026). The plan's "north" is a drawing convention and does not match the plot's real orientation. Today's parcel is 1,800 m²; the model's 1,735 m² is the УПИ after the 2.25 m strip on the west.
 
 | Element | Place | Why |
 |---|---|---|
@@ -205,11 +205,32 @@ The turning area is avoidable three ways:
 
 1. **Fire road of 45 m.** Only dead ends over 45 m need a turning area (чл. 27, ал. 7). With the first 45 m of the lane as the fire road, the farthest ground-floor wall is about 38 m away along the hose route, against 90 m allowed. Nothing else in the model changes. This is our reading.
 2. **The lane as a dead-end street under ЗУТ, чл. 81.** Чл. 27, ал. 7 exempts such streets up to 100 m, and чл. 81 itself asks for a turning widening only above 100 m; minimum width 3.5 m. The street leaves the УПИ (the municipality acquires it), so the УПИ becomes 1,433 m²: Кинт 0.79, плътност 35%, green 794 m² = 55.4%. Each house can then be its own УПИ with frontage on the street: a middle house gets 194 m² (Кинт 0.91, плътност 40%, green 51%), the end houses 351 and 303 m² (green 64% and 58%). All pass the Жм limits per plot, which the earlier one-УПИ note did not expect; that note was written before the grass driveway and with the lane inside the plot.
-3. **Access from the municipal road.** If the road runs along the long north side rather than touching only the north-west corner, no internal fire road is needed at all. The cadastral sketch settles this; we could not determine it from public maps.
+3. **Access from the municipal road on the west.** From that road the farthest ground-floor wall is about 83 m along the hose route, inside the 90 m allowed, so the row may need no fire road inside the plot at all. The margin is thin (7 m) and depends on the road qualifying as a fire road (3.5 m wide, paved for 100 kN per axle).
 
 If a turning area is imposed anyway, the cheapest version is at the east end with the end house moved back 2 m and built without a garage (РЗП unchanged, 20 m² less rear yard, 2 parking spaces lost).
 
 Not found: a national figure for the minimum distance between a well and a treatment plant or pit; the designer and РЗИ set it. Not known: groundwater flow direction; the well should be upstream of the treatment plant, so the two may need to swap ends. A treatment plant instead of watertight pits is another departure from the РИОСВ filing. Option 2 changes Кинт against a 1.0 cap for the 12-dwelling variant (1,628 / 1,433 = 1.14).
+
+### One system per house, and how to stay out of sampling regimes
+
+Switches "Пречистване" and "Вода" in the layout controls (`wwtp`, `well` in `src/model.js`). Default: a treatment unit in each house, one shared well.
+
+**Do they count in РЗП?** No. Застроена площ is measured from the walls of the first above-ground floor, and РЗП is the sum of above-ground floors (ЗУТ, ДР § 5, т. 15 and 18). A borehole, a buried treatment unit and a buried reservoir add nothing to ЗП, РЗП or плътност, and planted ground above them still counts as green. Only an above-ground pump or plant room would count.
+
+| | One per house | One shared |
+|---|---|---|
+| Treatment unit | Under each front yard next to the lane, 2.2 × 1.5 m (assumed size for a 4–6 person unit); lorry reaches it from the lane | Under the lane at the east end, 6 × 2 m |
+| Well | In each rear yard, 3.5 m from the rear boundary, centred (houses must be at least 6 m wide to keep 3 m from side boundaries) | South-west corner |
+| Well to treatment distance | About 18 m on the same plot, 20 m to a neighbour's unit | About 55 m |
+| Who owns and maintains | Each buyer, from day one | A common part; needs an owners' agreement |
+
+What triggers sampling, and how the design stays below it:
+
+- **Drinking water.** Наредба № 9/2001 does not apply to water from individual sources unless it is used for commercial or social activity for drinking (чл. 2, ал. 1, т. 4). A household's own well is outside the monitoring regime. The protection-zone regime starts above 10 m³/day or 50 people (Закон за водите, чл. 119).
+- **The well.** Free and by notification only, up to 10 m³/day, for an individual's own needs (Закон за водите, чл. 43, ал. 2; чл. 44, ал. 4). One well per house, owned by the buyer, is the clearest fit. A shared well operated by the developer for houses being sold is the weak point: it can be read as supply to others.
+- **Wastewater.** No discharge permit, and so no permit-based monitoring, for domestic wastewater outside settlements up to 10 m³/day and 50 equivalent inhabitants with at least primary treatment (Закон за водите, чл. 46, ал. 4, т. 1); inside settlements without a sewer ЗУТ applies, which allows either watertight pits or on-plot treatment (чл. 87). Six units of about 4 people each stay far below the threshold, alone or together.
+
+Trade-offs: six wells and six infiltration points 8 m apart are hygienically worse than one well 55 m from one plant, so per-house treatment with one shared well is the middle option; the wells count against the village's quota for citizens' wells (чл. 43, ал. 4); per-house treatment units replace the watertight pits declared to РИОСВ, which is one more change to the filing. Not found: who checks a household unit after commissioning, and where the treated water may go (soakaway, irrigation). Those are questions for the designer.
 
 ## Open questions for the permit consultant
 
@@ -220,7 +241,7 @@ The same 32 questions are on the site in Bulgarian (section „Въпроси", 
 1. Is there a screening decision on ОВОС-1125 yet? If not, has РИОСВ asked for more information, and what date is expected? (Public access opened 03.09.2026; nothing in the decisions list through 17.11.2026.)
 2. The filing declares 3 free-standing single-family houses; the design is 6 connected row houses. Can the proposal be amended before the decision, or is a new notification needed, and what does that do to the timeline?
 3. Has a чл. 124а ЗУТ request been filed with Общински съвет „Родопи" for the ПУП-ПРЗ? Number and date?
-4. Where exactly does the municipal road touch the plot on the cadastral sketch: only at the north-west corner, or along the whole long north side?
+4. With a treatment unit in each house and one well (or a well in each house), are any regular water or wastewater samples required from the owners, by РЗИ, Басейнова дирекция or РИОСВ?
 
 **Filing versus design**
 

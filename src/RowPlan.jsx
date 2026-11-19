@@ -30,7 +30,8 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
 
   const sumUnits = units.reduce((s, u) => s + u.w + (u.gapAfter || 0), 0); // ширини + обслужващи пътища (чернови)
   const totalW = leftMargin + sumUnits + rightMargin;
-  const W = PAD_L + totalW * PXM + PAD_R;
+  const PADL = p.showUtil ? 34 : PAD_L;   // място за общинския път вляво (запад)
+  const W = PADL + totalW * PXM + PAD_R;
   const yStreet = PAD_T;
   const yFront = yStreet + ROAD * PXM;
   const yHouse = yFront + FRONT * PXM;
@@ -38,7 +39,7 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
   const H = yBottom + PAD_B;
 
   const rowPx = totalW * PXM;
-  const xStart = PAD_L;
+  const xStart = PADL;
   const els = [];
 
   // улица (споделена)
@@ -185,7 +186,7 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
   const FIRE = "#B23A2E";
   const turnLeft = p.fireTurnSide === "W";
   if (p.fireTurn || p.fireTank > 0 || p.showUtil) {
-    els.push(<g key="entry" transform={tr(xStart + 4, yStreet + ROAD * PXM / 2)}><text x={xStart + 4} y={yStreet + ROAD * PXM / 2 + 4} fontSize="9.5" fontWeight="700" fill={FIRE} textAnchor="start">→ вход (запад)</text></g>);
+    els.push(<g key="entry" transform={tr(xStart + 4, yStreet + ROAD * PXM / 2)}><text x={xStart + 4} y={yStreet + ROAD * PXM / 2 + 4} fontSize="9.5" fontWeight="700" fill={FIRE} textAnchor="start">→ вход</text></g>);
   }
   if (p.fireTurn) {
     const ts = p.turnSize * PXM, tx = turnLeft ? xStart : xStart + rowPx - ts;
@@ -213,13 +214,35 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
   // ИНФРАСТРУКТУРА: сондаж (ЮЗ), пречиствателно съоръжение (под пътя, изток), пожарен път до 45 м
   if (p.showUtil) {
     const BLUE = "#1f5f99", BROWN = "#7a4b1e", e = p.edgeMin;
-    const wx = xStart + (e + 0.5) * PXM, wy = yBottom - (e + 0.5) * PXM;
-    els.push(<circle key="ut-w" cx={wx} cy={wy} r={6} fill="#fff" stroke={BLUE} strokeWidth="2" />);
-    els.push(<circle key="ut-w2" cx={wx} cy={wy} r={2} fill={BLUE} />);
-    els.push(<g key="ut-wl" transform={tr(wx + 10, wy + 3)}><text x={wx + 10} y={wy + 3} fontSize="9" fontWeight="700" fill={BLUE} textAnchor="start">сондаж</text></g>);
-    const tl = 6 * PXM, tw = 2 * PXM, ttx = xStart + rowPx - (e + 6) * PXM, tty = yStreet + e * PXM;
-    els.push(<rect key="ut-t" x={ttx} y={tty} width={tl} height={tw} rx="3" fill="rgba(122,75,30,0.14)" stroke={BROWN} strokeWidth="1.5" strokeDasharray="4 3" />);
-    els.push(<text key="ut-tl" x={ttx + tl / 2} y={tty + tw / 2 + 3} fontSize="8.5" fontWeight="700" fill={BROWN} textAnchor="middle" transform={tr(ttx + tl / 2, tty + tw / 2 + 3)}>пречиствателно</text>);
+    // общинският път е на запад (вляво от Премиум 1) — оттам са входът и пожарният достъп
+    els.push(<rect key="ut-pr" x={2} y={yStreet} width={PADL - 6} height={yBottom - yStreet} fill="#dedede" stroke="#aaa" />);
+    els.push(<text key="ut-prl" x={PADL / 2 - 1} y={(yStreet + yBottom) / 2} fontSize="9.5" fontWeight="700" fill="#666" textAnchor="middle" transform={`rotate(-90 ${PADL / 2 - 1} ${(yStreet + yBottom) / 2})`}>ОБЩИНСКИ ПЪТ (запад)</text>);
+    const wellMark = (key, wx, wy, label) => {
+      els.push(<circle key={key} cx={wx} cy={wy} r={5} fill="#fff" stroke={BLUE} strokeWidth="2" />);
+      els.push(<circle key={key + "d"} cx={wx} cy={wy} r={1.8} fill={BLUE} />);
+      if (label) els.push(<g key={key + "l"} transform={tr(wx + 9, wy + 3)}><text x={wx + 9} y={wy + 3} fontSize="9" fontWeight="700" fill={BLUE} textAnchor="start">{label}</text></g>);
+    };
+    if (p.well === "house") {
+      let ux = xStart + leftMargin * PXM;
+      units.forEach((u, i) => { wellMark("ut-w" + i, ux + u.w * PXM / 2, yBottom - (e + 0.5) * PXM, i === 0 ? "сондаж" : null); ux += (u.w + (u.gapAfter || 0)) * PXM; });
+    } else {
+      wellMark("ut-w", xStart + (e + 0.5) * PXM, yBottom - (e + 0.5) * PXM, "общ сондаж");
+    }
+    if (p.wwtp === "shared") {
+      const tl = 6 * PXM, tw = 2 * PXM, ttx = xStart + rowPx - (e + 6) * PXM, tty = yStreet + e * PXM;
+      els.push(<rect key="ut-t" x={ttx} y={tty} width={tl} height={tw} rx="3" fill="rgba(122,75,30,0.14)" stroke={BROWN} strokeWidth="1.5" strokeDasharray="4 3" />);
+      els.push(<text key="ut-tl" x={ttx + tl / 2} y={tty + tw / 2 + 3} fontSize="8.5" fontWeight="700" fill={BROWN} textAnchor="middle" transform={tr(ttx + tl / 2, tty + tw / 2 + 3)}>общо пречиствателно</text>);
+    } else {
+      // по едно съоръжение (или яма) под предния двор на всяка къща, до пътя
+      const ul = 2.2 * PXM, uw = 1.5 * PXM;
+      let ux = xStart + leftMargin * PXM;
+      units.forEach((u, i) => {
+        const ucx = ux + u.w * PXM / 2, uy = yFront + 1.2 * PXM;
+        els.push(<rect key={"ut-u" + i} x={ucx - ul / 2} y={uy} width={ul} height={uw} rx="3" fill="rgba(122,75,30,0.22)" stroke={BROWN} strokeWidth="1.5" strokeDasharray={p.wwtp === "pits" ? undefined : "4 3"} />);
+        els.push(<text key={"ut-ul" + i} x={ucx} y={uy + uw / 2 + 3} fontSize="7.5" fontWeight="700" fill={BROWN} textAnchor="middle" transform={tr(ucx, uy + uw / 2 + 3)}>{p.wwtp === "pits" ? "яма" : "ЛПС"}</text>);
+        ux += (u.w + (u.gapAfter || 0)) * PXM;
+      });
+    }
     if (!p.laneStreet) {
       const fl = Math.min(p.fireRoadLen, totalW) * PXM, fy = yStreet + 5;
       els.push(<line key="ut-f" x1={xStart} y1={fy} x2={xStart + fl} y2={fy} stroke={FIRE} strokeWidth="2.2" />);

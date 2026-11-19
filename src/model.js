@@ -29,6 +29,8 @@ export const baseParams = {
   garageP: 30,       // двоен гараж на премиум (взима от предния двор)
   // — противопожарни (Наредба № Iз-1971: чл. 27, ал. 7 и табл. 17а) — изключени по подразбиране [ЗА ПОТВЪРЖДЕНИЕ] —
   laneStreet: false,     // true = пътят е задънена улица по чл. 81 ЗУТ (общинска, ИЗВЪН УПИ) → без площадка до 100 м
+  wwtp: "house",         // пречистване: "house" = съоръжение във всяка къща · "shared" = едно общо · "pits" = водоплътни ями
+  well: "shared",        // вода: "shared" = един общ сондаж · "house" = сондаж във всяка къща
   showUtil: true,        // чертае сондажа, пречиствателното съоръжение, ПП резервоара и пожарния път
   fireRoadLen: 45,       // дължина на пожарния път от входа, м (задънен до 45 м → без площадка, чл. 27, ал. 7)
   edgeMin: 3,            // мин. отстояние на кладенци и ями от границите на имота, м (ЗУТ, чл. 47, ал. 2)
@@ -150,7 +152,16 @@ export function rowMetrics(units, leftMargin, rightMargin, p = baseParams) {
   // (по пътя до източния страничен двор, надолу покрай калкана, по задната фасада на крайната къща)
   const last = hm[hm.length - 1];
   const hose = hm.length ? R(Math.max(0, PLOT.D - rightMargin / 2 - Math.min(p.fireRoadLen, PLOT.D)) + p.front + last.d + last.w) : 0;
-  const util = { well, wwtp, wellToWwtp, fireRoad: { len: Math.min(p.fireRoadLen, PLOT.D), hose, ok: hose <= 90, padNeeded: !p.laneStreet && p.fireRoadLen > 45 } };
+  // от общинския път (запад) без вътрешен пожарен път: цялата дължина + покрай крайната къща
+  const hoseRoad = hm.length ? R(PLOT.D - rightMargin / 2 + p.front + last.d + last.w) : 0;
+  // по къщи: съоръжение 2.2 × 1.5 м под предния двор (достъп за цистерна от пътя), сондаж в задния двор
+  const unitY = R1(p.road + 1.2 + 0.75), wellY = R1(PLOT.W - e - 0.5);
+  const perHouse = {
+    unit: { l: 2.2, w: 1.5, y: unitY }, wellY,
+    ownDist: R(wellY - unitY),                                   // сондаж ↔ собственото съоръжение
+    sideOK: hm.every((h) => h.w / 2 >= e),                        // ≥ edgeMin от страничните граници, ако са отделни УПИ
+  };
+  const util = { well, wwtp, wellToWwtp, perHouse, hoseRoad, hoseRoadOK: hoseRoad <= 90, fireRoad: { len: Math.min(p.fireRoadLen, PLOT.D), hose, ok: hose <= 90, padNeeded: !p.laneStreet && p.fireRoadLen > 45 } };
   // ако пътят е улица, всяка къща може да е отделен УПИ с лице към нея → показатели на парцел
   const plotOf = (h, margin) => {
     const area = R((h.w + margin) * priv);
