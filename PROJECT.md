@@ -232,6 +232,22 @@ What triggers sampling, and how the design stays below it:
 
 Trade-offs: six wells and six infiltration points 8 m apart are hygienically worse than one well 55 m from one plant, so per-house treatment with one shared well is the middle option; the wells count against the village's quota for citizens' wells (чл. 43, ал. 4); per-house treatment units replace the watertight pits declared to РИОСВ, which is one more change to the filing. Not found: who checks a household unit after commissioning, and where the treated water may go (soakaway, irrigation). Those are questions for the designer.
 
+### A treatment unit in each house: what the law requires
+
+It is allowed either way. Which rule applies depends on whether the plot is inside the village boundary, which is still unconfirmed.
+
+| | Inside the boundary, no sewer | Outside the boundary |
+|---|---|---|
+| Rule | ЗУТ, чл. 87, ал. 1: watertight pits **or** treatment units on the plot. Закон за водите, чл. 46, ал. 4, т. 2: no discharge permit, ЗУТ applies | Закон за водите, чл. 46, ал. 4, т. 1: no discharge permit up to 10 m³/day and 50 equivalent inhabitants, with at least primary treatment |
+| Conditions | 3 m from plot boundaries (чл. 47, ал. 2), sanitary rules, and the Наредба № 4/2005 on building plumbing (it has no chapter on household units) | Same 3 m; one house is about 4 people and 0.6 m³/day, and all six together are about 24 people and 3.6 m³/day, both far below the limits |
+| Permit and sampling | None: no permit means no permit-based monitoring | None |
+
+- **The unit.** A factory unit, CE-marked to БДС EN 12566-3, is part of the "ВиК" design in the building permit.
+- **Fit in the front yard.** A 2.2 × 1.5 m unit fits even if each house becomes its own plot. A middle front yard is 8.21 m wide, which leaves a 2.2 m band 3 m from each side, and 5.5 m deep. If the lane becomes a street, the unit sits 3–4.5 m from the street line.
+- **Where the treated water goes.** The Закон за водите bans direct discharge into groundwater and the indirect discharge of priority substances (чл. 118а). Soaking household effluent through soil is not banned outright, and discharge to ground needs no permit. With the wells now going 30 m deep, the safe choice is a sealed tank that feeds garden irrigation, not a soakaway next to the house.
+- **Who checks it after commissioning.** Nobody on a schedule. The owner keeps it serviced, and РИОСВ or the municipality act on complaints.
+- **The filing.** It declares watertight pits. Switching to units is a change to tell РИОСВ about (question 4).
+
 ### Six wells and six treatment units: cost and upkeep
 
 Rough figures from Bulgarian price lists and listings, November 2026. None is a quote.
