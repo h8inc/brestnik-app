@@ -164,7 +164,7 @@ The same 25 questions are on the site in Bulgarian (section „Въпроси", 
 
 **Filing versus design**
 
-4. If the decision is issued for 3 houses, does it bind the ПУП-ПРЗ and the building permit to that number and to free-standing layout?
+4. We know the change from 3 to 6 houses can be made through a new procedure after the ПУП, at a cost of about 12 more months. Can that change start now: commission the ПУП-ПРЗ directly for 6 connected houses and amend the РИОСВ proposal in parallel? (The ПУП-ПРЗ is not drawn yet and no чл. 124а request was found, so the brief could be written for the final layout.)
 5. Are 6 connected houses in one УПИ allowed in Жм, or does it need separate УПИ or комплексно застрояване? (The row only passes the green minimum as one УПИ.)
 6. With 12 dwellings (ground-floor flat plus a two-floor home above in each house), do the buildings become multi-family, and what does that change for РИОСВ, the well and the pits? (РЗП 1,628 m², Кинт 0.94, height about 9.6 m.)
 7. Does „комплексен проект за ново строителство" in the filing mean a чл. 150 ЗУТ project (ПУП and investment project together)?
