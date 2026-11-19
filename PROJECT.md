@@ -2,7 +2,7 @@
 
 Housing development in с. Брестник, община Родопи, област Пловдив.
 This file records the plot, the zoning limits, where the ПУП procedure stands, and how the current design sits against all of it.
-Last updated 2026-11-18. Nothing here replaces the approved ПУП-ПРЗ, the виза, or a licensed architect.
+Last updated 2026-11-19. Nothing here replaces the approved ПУП-ПРЗ, the виза, or a licensed architect.
 
 ## The plot
 
@@ -29,6 +29,23 @@ The project description filed with РИОСВ in August 2026 (Информаци
 | Water | One 22 m well, up to 3.6 m³/day, notification regime for single-family houses | Not modelled |
 
 Six row houses, and more so twelve dwellings, are not what the authorities are currently assessing. Before the ПУП-ПРЗ is drawn, either the design goes back to three detached houses or the filings are amended to match the design. This is a question for the consultant who prepared the filing and the architect.
+
+### Contradictions inside the filing itself
+
+Found on re-reading the Приложение № 2 text (ОВОС-1125-8/21.08.2026):
+
+| Topic | What the filing says | Problem |
+|---|---|---|
+| Кинт | 1.0 in point „а) Размер…", 1.2 in point 3 | Two values |
+| Well, yearly volume | „до 800 куб. м" and „до 1600 куб. м/год." | Two values; 3.6 m³/day would be about 1,314 m³/year |
+| Well, flow | 0.45 l/s design flow, 1.45 l/s peak, „средногодишно 1,47 л/сек" | The yearly average is higher than the peak |
+| Sewage | „водоплътни ями към всяка къща" once, „водоплътна яма в имота" twice | One pit or one per house |
+| Planning basis | „За територията на община Пловдив има действащ ОУП" | The plot is in община Родопи, which has no ОУП in force |
+| Land status | „урбанизирана земя", „с отреждане за жилищно строителство" | It is a нива, 4-та категория, before change of use |
+| Натура 2000 | „Река Марица" and „Марица Пловдив" in one place, „Брестовица" in another | РИОСВ named only „Брестовица" |
+| Construction period | 6 months, one to two seasons, up to 1 year | Three values |
+| Other permits (point 12) | Only the РИОСВ decision and the building permit | ПУП-ПРЗ, change of use and well registration are not listed |
+| Drinking water | Bottled mineral water with a dispenser, by subscription | Not confirmed as acceptable for commissioning or for houses built for sale |
 
 ## Zoning limits
 
@@ -135,15 +152,55 @@ Not counted in the model: the premium garages (about 30 m² each) are left out o
 3. **Green area.** Passes at two floors with 100 m² spare; more dwellings need more parking, which uses that up.
 4. **Access.** One internal stair per house today; a separate flat needs a common stairwell.
 
-## Open items
+## Open questions for the permit consultant
 
-- Decide: three detached houses as filed, or amend the filings to the row-house design.
-- Ask the consultant for the status of the РИОСВ screening decision on ОВОС-1125.
-- Confirm whether a чл. 124а request has been filed with Общински съвет „Родопи", and its number.
-- Confirm the Кинт to be used (1.0 or 1.2).
-- Get the text of the council norms decision (number, date, any dwelling or parking rules).
-- Ask the architect or the главен архитект of Родопи whether planting under the overhang and grass under parked cars count as green area.
-- Decide whether the premium garages are built garages (they then count in footprint and РЗП).
+The same 25 questions are on the site in Bulgarian (section „Въпроси", `src/Questions.jsx`), with a button that copies them as plain text.
+
+**First: the three everything depends on**
+
+1. Is there a screening decision on ОВОС-1125 yet? If not, has РИОСВ asked for more information, and what date is expected? (Public access opened 03.09.2026; nothing in the decisions list through 17.11.2026.)
+2. The filing declares 3 free-standing single-family houses; the design is 6 connected row houses. Can the proposal be amended before the decision, or is a new notification needed, and what does that do to the timeline?
+3. Has a чл. 124а ЗУТ request been filed with Общински съвет „Родопи" for the ПУП-ПРЗ? Number and date?
+
+**Filing versus design**
+
+4. If the decision is issued for 3 houses, does it bind the ПУП-ПРЗ and the building permit to that number and to free-standing layout?
+5. Are 6 connected houses in one УПИ allowed in Жм, or does it need separate УПИ or комплексно застрояване? (The row only passes the green minimum as one УПИ.)
+6. With 12 dwellings (ground-floor flat plus a two-floor home above in each house), do the buildings become multi-family, and what does that change for РИОСВ, the well and the pits? (РЗП 1,628 m², Кинт 0.94, height about 9.6 m.)
+7. Does „комплексен проект за ново строителство" in the filing mean a чл. 150 ЗУТ project (ПУП and investment project together)?
+
+**Contradictions in the filing** (table above)
+
+8. Which Кинт goes into the ПУП-ПРЗ: 1.0 or 1.2?
+9. Which well volumes and flows are correct, and what exactly was declared to Басейнова дирекция?
+10. One watertight pit for the plot or one per house, and of what volume?
+11. Do the factual errors (община Пловдив ОУП, land status, Натура 2000 zones, construction period) need correcting, and can they delay the decision?
+12. Is it an omission that point 12 does not list the ПУП-ПРЗ, the change of use and the well registration?
+
+**Water, sewage, electricity**
+
+13. Does one shared well for 3, 6 or 12 households stay under the notification regime, and what happens once the houses have different owners? (12 households need roughly 5.4 m³/day against 3.6 declared.)
+14. Is drinking water from a dispenser accepted at commissioning and by РЗИ, including for houses built for sale?
+15. What clearances apply to the pits (from the well, the boundaries, the buildings), and can they sit under planted yard?
+16. Can Електроразпределение Юг be asked now for an opinion for 6 (or 12) connections, before the виза?
+
+**Procedure**
+
+17. Has the ЗОЗЗ procedure before the commission at ОД „Земеделие" Пловдив started, what stage is it at, and roughly what is the fee for 1.8 дка of 4-та категория?
+18. What is a realistic schedule to a building permit, and which steps can run in parallel?
+19. Can you send the text of the Общински съвет „Родопи" decision with the Жм norms (number, date)? Does it set a minimum УПИ size, dwellings per УПИ, or parking?
+
+**Indicators for the ПУП-ПРЗ and the design**
+
+20. Do you confirm the 2.25 m strip taken on the west (УПИ about 1,735 m² of 1,800 m²) and the minimum setbacks from the side and rear boundaries?
+21. Does planted ground under the floor-2 overhang (134 m²) count as green area? Does a grass driveway with two paved wheel strips?
+22. How many parking spaces are required per dwelling, and are open spaces in the front yard accepted? (12 spaces today.)
+23. Is a 5 m internal lane enough (fire access, passing), and does it stay part of the УПИ?
+24. Do the two premium garages (about 30 m² each) count in footprint and РЗП?
+25. How is height measured for a flat roof: to the top of the parapet?
+
+Other open items, not for the consultant:
+
 - `brestnik-homes` quotes 1,170 m² / Кинт 0.67 and calls the 6-house layout "Variant A"; this repo says 1,130 m² / 0.65 and "Variant B". Align them.
 
 ## Sources

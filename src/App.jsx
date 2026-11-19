@@ -3,6 +3,7 @@ import FloorPlan from "./FloorPlan.jsx";
 import FloorEditor from "./FloorEditor.jsx";
 import RowPlan from "./RowPlan.jsx";
 import Finance from "./Finance.jsx";
+import Questions from "./Questions.jsx";
 import { ground, floor2, attic, groundP, floor2P, atticP } from "./plans.js";
 import { rowMetrics, houseMetrics, PLOT } from "./model.js";
 import { VARIANTS, defaultsFor } from "./variants.js";
@@ -38,6 +39,7 @@ const NAV = [
   ["sec-layout", "Разпределение"],
   ["sec-plans", "Планове"],
   ["sec-finance", "Финанси"],
+  ["sec-questions", "Въпроси"],
   ["sec-archive", "Архив"],
 ];
 
@@ -273,6 +275,9 @@ export default function App() {
 
         {/* ——— ФИНАНСИ ——— */}
         <section id="sec-finance" className="sec"><Finance /></section>
+
+        {/* ——— ВЪПРОСИ КЪМ КОНСУЛТАНТА ——— */}
+        <section id="sec-questions" className="sec"><Questions /></section>
 
         {/* ——— АРХИВ ——— */}
         <section id="sec-archive" className="sec">
