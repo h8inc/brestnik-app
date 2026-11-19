@@ -198,8 +198,18 @@ export default function App() {
             <Chip l={`Озеленяване (мин. ${G.minPct}%)`} v={`${G.pct}% · ${G.total} м²`} accent={G.ok ? "green" : "red"} />
           </div>
           <div className="metric-note">
-            Озеленяване: заден двор {G.rear} + странични {G.side} + преден {G.front} = <b>{G.total} м²</b> при минимум {G.need} м² ({G.minPct}% от УПИ) → {G.ok ? `✓ +${G.diff} м² резерв` : `⚠ не достигат ${-G.diff} м²`}. С дървета: поне {G.treesNeed} м². Път {dims.road} м, паркоместа, пътеки към входа ({dims.entryPathW} м), сгради{dims.terracePaved ? " и покрити тераси" : ""} не се броят. [ЗА ПОТВЪРЖДЕНИЕ по ПУП]
+            Озеленяване: заден двор {G.rear} + странични {G.side} + преден {G.front}{G.fire ? ` − противопожарни ${G.fire}` : ""} = <b>{G.total} м²</b> при минимум {G.need} м² ({G.minPct}% от УПИ) → {G.ok ? `✓ +${G.diff} м² резерв` : `⚠ не достигат ${-G.diff} м²`}. С дървета: поне {G.treesNeed} м². Път {dims.road} м, паркоместа, пътеки към входа ({dims.entryPathW} м), сгради{dims.terracePaved ? " и покрити тераси" : ""} не се броят. [ЗА ПОТВЪРЖДЕНИЕ по ПУП]
           </div>
+
+          {(M.fire.turn || M.fire.tank) && (
+            <div className="metric-note fire-note">
+              {M.fire.turn && <>Площадка за обръщане {M.fire.turn.size} × {M.fire.turn.size} м: взима {M.fire.turn.greenLoss} м² озеленяване и {M.fire.turn.paved} м² настилка извън пътя. {M.fire.turn.intoHouse > 0
+                ? <b>⚠ Не се побира: влиза {M.fire.turn.intoHouse} м в крайната къща по {M.fire.turn.houseW} м от фасадата ѝ и покрива предния ѝ двор{M.fire.turn.type === "P" ? " и гаража" : ""}. Трябват път + преден двор ≥ {M.fire.turn.size} м или достъп от общинския път.</b>
+                : <>Побира се в пътя и предния двор, но заема {M.fire.turn.houseW} м от предния двор на крайната къща.</>} </>}
+              {M.fire.tank && <>Противопожарен резервоар {M.fire.tank.vol} м³ ≈ {M.fire.tank.area} м² при дълбочина {dims.tankDepth} м: {M.fire.tank.buried ? "подземен, озеленен отгоре → 0 м² от озеленяването" : `открит → −${M.fire.tank.greenLoss} м² озеленяване`}. </>}
+              Наредба № Iз-1971, чл. 27, ал. 7 и табл. 17а. [ЗА ПОТВЪРЖДЕНИЕ — въпроси 19–22]
+            </div>
+          )}
 
           {/* ПЛАНЪТ — централен елемент */}
           <div className="plan-frame plan-frame-row hero-plan">
@@ -223,6 +233,15 @@ export default function App() {
               <label className="chk"><input type="checkbox" checked={dims.frontGreen} onChange={() => setDims((d) => ({ ...d, frontGreen: !d.frontGreen }))} /> Озеленен преден двор <span style={{ color: "#777" }}>(настилка само за {dims.stallsS} паркоместа; премиум — гараж)</span></label>
               <label className="chk"><input type="checkbox" checked={dims.driveway === "tracks"} onChange={() => setDims((d) => d.driveway === "tracks" ? { ...d, driveway: "paved" } : { ...d, driveway: "tracks", frontGreen: true })} /> Тревна алея <span style={{ color: "#777" }}>(настилка само под коловозите, 2 × {dims.trackW} м на кола) [приемането като озеленяване — за потвърждение]</span></label>
               <label className="chk"><input type="checkbox" checked={!dims.terracePaved} onChange={() => setDims((d) => ({ ...d, terracePaved: !d.terracePaved }))} /> Без тераса/декинг под навеса <span style={{ color: "#777" }}>(ивицата {dims.over} м е озеленена)</span></label>
+              <label className="chk"><input type="checkbox" checked={dims.fireTurn} onChange={() => setDims((d) => ({ ...d, fireTurn: !d.fireTurn }))} /> Пожарна площадка за обръщане {dims.turnSize} × {dims.turnSize} м <span style={{ color: "#777" }}>(ако вътрешният път е задънен над 45 м) [за потвърждение]</span></label>
+              <label className="chk">Противопожарен воден запас:&nbsp;
+                <select value={dims.fireTank} onChange={(e) => setDims((d) => ({ ...d, fireTank: Number(e.target.value) }))}>
+                  <option value={0}>няма</option>
+                  <option value={22}>22 м³ (всяка къща е отделен пожарен сектор)</option>
+                  <option value={36}>36 м³ (редът е една сграда)</option>
+                </select>
+              </label>
+              {dims.fireTank > 0 && <label className="chk"><input type="checkbox" checked={dims.fireTankBuried} onChange={() => setDims((d) => ({ ...d, fireTankBuried: !d.fireTankBuried }))} /> Резервоарът е подземен и озеленен отгоре <span style={{ color: "#777" }}>(иначе площта му се вади от озеленяването)</span></label>}
               {!G.ok && <button className="reset" onClick={greenPreset}>Покажи вариант за {G.minPct}%: път 4 м + озеленен преден двор</button>}
               <div className="metric-note">КИНТ {M.kint.toFixed(2)} · плътност {M.density}% · събира се {M.slack >= 0 ? "+" : ""}{M.slack} м · {M.yardOK ? "✓ дворове ≥72" : "⚠ двор <72"}{dims.front < 5 ? " · ⚠ преден <5 м" : ""}. [ЗА ПОТВЪРЖДЕНИЕ по виза/ПУП]</div>
             </div>

@@ -162,10 +162,27 @@ The change can be made through a new procedure after the ПУП at a cost of abo
 | Well | Закон за водите, чл. 43, ал. 2: free abstraction up to 10 m³/day, for individuals, for own needs, on property inside settlement boundaries. Чл. 44, ал. 4: built after notifying Басейнова дирекция | 6 households need about 2.7 m³/day and 12 about 5.4 (3 people × 150 l, our assumption), against 3.6 declared. Open: plot outside the village, houses built for sale, one shared well |
 | Sewage | ЗУТ, чл. 87: without a sewer, watertight pits or on-plot treatment, for low-rise housing. Чл. 47, ал. 2: pits and wells at least 3 m from plot boundaries. Закон за водите, чл. 46, ал. 4: outside settlements, discharge up to 10 m³/day and 50 equivalent inhabitants with primary treatment needs no permit | Six pits, one shared pit or a small treatment unit all look possible; yards are about 8 m wide |
 | Fire water | Наредба № Iз-1971, чл. 161–163, 181, табл. 17а: buildings over 35 m² need external fire water; with no water main, a reservoir. 22 m³ for a building or fire sector of 120–1,000 m² floor area, 36 m³ above 1,000 m². From groundwater: an 18 m³ shaft refilled at 5 l/s (чл. 163, ал. 2) | 22 m³ if each house is its own fire sector; 36 m³ or more if the row (1,130 m²) is one building. The well (0.45 l/s) cannot feed it directly |
-| Fire access | Наредба № Iз-1971, чл. 27: road at least 3.5 m wide, paved for 100 kN per axle, every ground-floor outer wall within 90 m of it along the hose route. A dead end over 45 m ends in a 12 × 12 m turning area | The internal lane is about 60 m. A turning area would take about 144 m² from the green area, more than the 100 m² spare, unless access counts from the municipal road |
+| Fire access | Наредба № Iз-1971, чл. 27: road at least 3.5 m wide, paved for 100 kN per axle, every ground-floor outer wall within 90 m of it along the hose route. A dead end over 45 m ends in a 12 × 12 m turning area | The internal lane is about 60 m. Modelled below: the green area survives, but the turning area does not physically fit |
 | Parking | Наредба № РД-02-20-2/2017, приложение № 5: 1 space per dwelling | 12 spaces today: 2 per house at 6 houses, exactly 1 each at 12 dwellings |
 
 Not checked: the copy of the parking regulation used may predate later amendments; the 150 l per person and 15 kW per house are assumptions, not norms; how a connected row is classified for fire purposes (six Ф1.4 buildings or one) is a question for the designer.
+
+### Fire reservoir and turning area in the model
+
+Both are switches in the layout controls (`fireTurn`, `fireTank`, `fireTankBuried` in `src/model.js`), off by default until the requirement is confirmed.
+
+| Case (Variant B defaults) | Green | Result |
+|---|---|---|
+| No fire measures | 794 m² (45.8%) | 100 m² spare |
+| Turning area 12 × 12 m at the end of the lane | 750 m² (43.2%) | 56 m² spare |
+| Turning area + open 22 m³ reservoir | 735 m² (42.4%) | 41 m² spare |
+| Turning area + open 36 m³ reservoir | 726 m² (41.8%) | 32 m² spare |
+| Buried reservoir planted on top, either size | no change | Counts as green (Наредба № 7, чл. 11) |
+
+- The green minimum holds in every case. The turning area takes only about 44 m² of green, because 60 m² of it lies on the lane itself and most of the rest on the end house's garage and path.
+- The turning area does not fit. The lane (5 m) plus the front yard (5 m) give 10 m of depth; the remaining 2 m run into the end premium house along 7 m of its front, and the pad covers its garage and front yard.
+- It fits only if lane plus front yard reach 12 m (for example front yard 7 m, which leaves 705 m², 40.6%, and still removes that house's garage), or if fire access is accepted from the municipal road, so that no turning area is needed inside the plot.
+- Assumptions: reservoir working depth 1.5 m (area = volume / depth); the pad is placed at the end with the wider side yard.
 
 ## Open questions for the permit consultant
 

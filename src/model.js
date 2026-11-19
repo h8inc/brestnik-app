@@ -27,6 +27,12 @@ export const baseParams = {
   stallArea: 12.5,   // настилка за едно паркомясто 2.5×5 м (маневрата е по вътрешния път)
   stallsS: 2,        // открити паркоместа на стандартна къща
   garageP: 30,       // двоен гараж на премиум (взима от предния двор)
+  // — противопожарни (Наредба № Iз-1971: чл. 27, ал. 7 и табл. 17а) — изключени по подразбиране [ЗА ПОТВЪРЖДЕНИЕ] —
+  fireTurn: false,       // площадка за обръщане в края на задънен път над 45 м
+  turnSize: 12,          // страна на площадката, м (12 × 12)
+  fireTank: 0,           // противопожарен воден запас, м³ (0 = няма · 22 · 36)
+  fireTankBuried: true,  // подземен резервоар, озеленен отгоре (брои се за озеленяване, Наредба № 7, чл. 11)
+  tankDepth: 1.5,        // работна дълбочина на резервоара, м (площ = обем / дълбочина) — допускане
 };
 
 const R = (n) => Math.round(n);
@@ -91,12 +97,34 @@ export function rowMetrics(units, leftMargin, rightMargin, p = baseParams) {
   const greenRear = R(hm.reduce((s, h) => s + h.open + (p.terracePaved ? 0 : h.covered), 0));
   const greenSide = R((leftMargin + rightMargin) * priv);
   const greenFront = p.frontGreen ? R(hm.reduce((s, h) => s + h.frontPlantable, 0)) : 0;
-  const greenTotal = greenRear + greenSide + greenFront;
+  // ПРОТИВОПОЖАРНИ — площадка за обръщане в края на пътя (при по-широката странична ивица) и резервоар.
+  // Площадката ляга върху пътя, страничната ивица и предния двор на крайната къща; каквото остане
+  // отвъд предния двор, влиза в самата къща (intoHouse) → не се побира без промяна на реда.
+  let turn = null;
+  if (p.fireTurn && hm.length) {
+    const side = leftMargin >= rightMargin ? "L" : "R";
+    const m = side === "L" ? leftMargin : rightMargin;
+    const h = side === "L" ? hm[0] : hm[hm.length - 1];
+    const dp = Math.max(0, Math.min(p.turnSize - p.road, priv));      // дълбочина извън пътя
+    const sideLoss = Math.min(m, p.turnSize) * dp;                     // от страничната ивица (цялата е зелена)
+    const fw = Math.max(0, Math.min(p.turnSize - m, h.w));             // широчина пред крайната къща
+    const share = p.frontGreen && h.front > 0 ? h.frontPlantable / h.front : 0;
+    const frontLoss = fw * Math.min(dp, p.front) * share;              // зелената част от предния ѝ двор
+    turn = { side, size: p.turnSize, greenLoss: R(sideLoss + frontLoss), paved: R(p.turnSize * dp),
+      houseW: R1(fw), intoHouse: R1(Math.max(0, p.turnSize - p.road - p.front)), type: h.type };
+  }
+  let tank = null;
+  if (p.fireTank > 0) {
+    const area = R1(p.fireTank / p.tankDepth);
+    tank = { vol: p.fireTank, area, buried: p.fireTankBuried, greenLoss: p.fireTankBuried ? 0 : R(area) };
+  }
+  const greenFire = (turn ? turn.greenLoss : 0) + (tank ? tank.greenLoss : 0);
+  const greenTotal = greenRear + greenSide + greenFront - greenFire;
   const greenNeed = R(UPI_AREA * p.greenMin);
   const green = {
-    rear: greenRear, side: greenSide, front: greenFront, total: greenTotal,
+    rear: greenRear, side: greenSide, front: greenFront, fire: greenFire, total: greenTotal,
     pct: +((greenTotal / UPI_AREA) * 100).toFixed(1), need: greenNeed, minPct: R(p.greenMin * 100),
     diff: greenTotal - greenNeed, ok: greenTotal >= greenNeed, treesNeed: R(greenNeed / 3),
   };
-  return { green, hm, totalRZP, totalZP, atticTotal, kint, density, avgRearS, stagger, minRear, yardOK, rowLen, gapSum, used, slack, upi: UPI_AREA, units: units.length };
+  return { green, fire: { turn, tank }, hm, totalRZP, totalZP, atticTotal, kint, density, avgRearS, stagger, minRear, yardOK, rowLen, gapSum, used, slack, upi: UPI_AREA, units: units.length };
 }
