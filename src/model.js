@@ -29,6 +29,7 @@ export const baseParams = {
   garageP: 30,       // двоен гараж на премиум (взима от предния двор)
   // — противопожарни (Наредба № Iз-1971: чл. 27, ал. 7 и табл. 17а) — изключени по подразбиране [ЗА ПОТВЪРЖДЕНИЕ] —
   fireTurn: false,       // площадка за обръщане в края на задънен път над 45 м
+  fireTurnSide: "E",     // "E" = източен край (дъното на задънения път при вход от запад) · "W" = западен край (при входа)
   turnSize: 12,          // страна на площадката, м (12 × 12)
   fireTank: 0,           // противопожарен воден запас, м³ (0 = няма · 22 · 36)
   fireTankBuried: true,  // подземен резервоар, озеленен отгоре (брои се за озеленяване, Наредба № 7, чл. 11)
@@ -102,7 +103,7 @@ export function rowMetrics(units, leftMargin, rightMargin, p = baseParams) {
   // отвъд предния двор, влиза в самата къща (intoHouse) → не се побира без промяна на реда.
   let turn = null;
   if (p.fireTurn && hm.length) {
-    const side = leftMargin >= rightMargin ? "L" : "R";
+    const side = p.fireTurnSide === "W" ? "L" : "R";   // планът: запад = ляво, изток = дясно
     const m = side === "L" ? leftMargin : rightMargin;
     const h = side === "L" ? hm[0] : hm[hm.length - 1];
     const dp = Math.max(0, Math.min(p.turnSize - p.road, priv));      // дълбочина извън пътя
@@ -110,8 +111,13 @@ export function rowMetrics(units, leftMargin, rightMargin, p = baseParams) {
     const fw = Math.max(0, Math.min(p.turnSize - m, h.w));             // широчина пред крайната къща
     const share = p.frontGreen && h.front > 0 ? h.frontPlantable / h.front : 0;
     const frontLoss = fw * Math.min(dp, p.front) * share;              // зелената част от предния ѝ двор
+    const into = R1(Math.max(0, p.turnSize - p.road - p.front));       // колко влиза в крайната къща, м
+    // две поправки на крайната къща, ако площадката остане: (а) скъсяване с `into` → губи РЗП на 2 нива;
+    // (б) отдръпване назад с `into` → РЗП същото, задният ѝ двор (озеленяване) намалява.
+    const rzpCut = R(totalRZP - 2 * into * h.w);
     turn = { side, size: p.turnSize, greenLoss: R(sideLoss + frontLoss), paved: R(p.turnSize * dp),
-      houseW: R1(fw), intoHouse: R1(Math.max(0, p.turnSize - p.road - p.front)), type: h.type };
+      houseW: R1(fw), intoHouse: into, type: h.type, garageLost: h.type === "P" && fw > 0,
+      rzpCut, kintCut: +(rzpCut / UPI_AREA).toFixed(2), rearLossSetback: R(into * h.w) };
   }
   let tank = null;
   if (p.fireTank > 0) {

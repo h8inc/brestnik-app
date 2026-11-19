@@ -183,16 +183,20 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
 
   // ПРОТИВОПОЖАРНИ: площадка за обръщане (в края с по-широката странична ивица) и резервоар (в другия край)
   const FIRE = "#B23A2E";
-  const turnLeft = leftMargin >= rightMargin;
+  const turnLeft = p.fireTurnSide === "W";
+  if (p.fireTurn || p.fireTank > 0) {
+    els.push(<g key="entry" transform={tr(xStart + 4, yStreet + ROAD * PXM / 2)}><text x={xStart + 4} y={yStreet + ROAD * PXM / 2 + 4} fontSize="9.5" fontWeight="700" fill={FIRE} textAnchor="start">→ вход (запад)</text></g>);
+  }
   if (p.fireTurn) {
     const ts = p.turnSize * PXM, tx = turnLeft ? xStart : xStart + rowPx - ts;
     els.push(<rect key="ft-pad" x={tx} y={yStreet} width={ts} height={ts} fill="rgba(178,58,46,0.16)" stroke={FIRE} strokeWidth="1.6" strokeDasharray="6 3" />);
     els.push(<g key="ft-lbl" transform={tr(tx + ts / 2, yStreet + ts / 2)}><rect x={tx + ts / 2 - 62} y={yStreet + ts / 2 - 10} width={124} height={26} rx={2} fill="rgba(255,255,255,0.9)" stroke={FIRE} strokeWidth="0.6" /><text x={tx + ts / 2} y={yStreet + ts / 2 + 1} fontSize="9.5" fontWeight="700" fill={FIRE} textAnchor="middle">площадка за обръщане</text><text x={tx + ts / 2} y={yStreet + ts / 2 + 12} fontSize="8.5" fill={FIRE} textAnchor="middle">{p.turnSize} × {p.turnSize} м · пожарна</text></g>);
   }
   if (p.fireTank > 0) {
-    const m = turnLeft ? rightMargin : leftMargin;
+    // резервоарът е при входа (запад), до уличната линия — пожарната кола го пълни/черпи от улицата
+    const m = leftMargin;
     const twM = Math.max(1.5, Math.min(m - 0.6, 3)), thM = (p.fireTank / p.tankDepth) / twM;
-    const tx = (turnLeft ? xRightG : xStart) + (m - twM) / 2 * PXM, ty = yFront + 6;
+    const tx = xStart + (m - twM) / 2 * PXM, ty = (p.fireTurn && turnLeft ? yStreet + p.turnSize * PXM : yFront) + 6;
     els.push(<rect key="fk" x={tx} y={ty} width={twM * PXM} height={thM * PXM} fill={p.fireTankBuried ? "none" : "#cfe1ee"} stroke={FIRE} strokeWidth="1.4" strokeDasharray={p.fireTankBuried ? "4 3" : undefined} />);
     const lx = tx + twM * PXM / 2, ly = ty + thM * PXM / 2;
     els.push(<text key="fkl" x={lx} y={ly} fontSize="8" fontWeight="700" fill={FIRE} textAnchor="middle" transform={`rotate(-90 ${lx} ${ly})`}>ПП {p.fireTank} м³</text>);

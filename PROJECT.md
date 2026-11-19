@@ -169,20 +169,26 @@ Not checked: the copy of the parking regulation used may predate later amendment
 
 ### Fire reservoir and turning area in the model
 
-Both are switches in the layout controls (`fireTurn`, `fireTank`, `fireTankBuried` in `src/model.js`), off by default until the requirement is confirmed.
+Switches in the layout controls (`fireTurn`, `fireTurnSide`, `fireTank`, `fireTankBuried` in `src/model.js`), off by default until the requirement is confirmed. The plan assumes the entrance is at the west end (municipal road to the north-west), so the lane is a dead end running east.
 
-| Case (Variant B defaults) | Green | Result |
-|---|---|---|
-| No fire measures | 794 m² (45.8%) | 100 m² spare |
-| Turning area 12 × 12 m at the end of the lane | 750 m² (43.2%) | 56 m² spare |
-| Turning area + open 22 m³ reservoir | 735 m² (42.4%) | 41 m² spare |
-| Turning area + open 36 m³ reservoir | 726 m² (41.8%) | 32 m² spare |
-| Buried reservoir planted on top, either size | no change | Counts as green (Наредба № 7, чл. 11) |
+Neither element is a building, so РЗП (1,130 m²), Кинт (0.65) and плътност (29%) do not change by themselves. What changes is the green area and the end house.
 
-- The green minimum holds in every case. The turning area takes only about 44 m² of green, because 60 m² of it lies on the lane itself and most of the rest on the end house's garage and path.
-- The turning area does not fit. The lane (5 m) plus the front yard (5 m) give 10 m of depth; the remaining 2 m run into the end premium house along 7 m of its front, and the pad covers its garage and front yard.
-- It fits only if lane plus front yard reach 12 m (for example front yard 7 m, which leaves 705 m², 40.6%, and still removes that house's garage), or if fire access is accepted from the municipal road, so that no turning area is needed inside the plot.
-- Assumptions: reservoir working depth 1.5 m (area = volume / depth); the pad is placed at the end with the wider side yard.
+| Case (Variant B defaults) | РЗП | Green | Effect on the end house |
+|---|---|---|---|
+| No fire measures | 1,130 m² | 794 m² (45.8%) | None |
+| Buried reservoir, 22 or 36 m³, planted on top | 1,130 m² | 794 m² (45.8%) | None |
+| Open reservoir, 36 m³ | 1,130 m² | 770 m² (44.4%) | None |
+| Turning area at the east end (end of the dead end) | 1,130 m² | 761 m² (43.9%) | Runs 2 m into the east premium house along 9 m; covers its garage |
+| Turning area at the west end (by the entrance) | 1,130 m² | 750 m² (43.2%) | Runs 2 m into the west premium house along 7 m; covers its garage |
+| Turning area kept, end house shortened by 2 m | 1,091 m² (Кинт 0.63) | 761 m² | Loses 39 m² of РЗП and its double garage |
+| Turning area kept, end house moved back 2 m | 1,130 m² | 741 m² (42.7%) | Loses 20 m² of rear yard and its double garage |
+
+- **Where the turning area goes.** Чл. 27, ал. 7 says a dead-end fire road over 45 m "ends" in the turning area, so by the text it belongs at the far (east) end, not at the entrance.
+- **It does not fit at either end.** Lane 5 m plus front yard 5 m give 10 m of depth against 12 m needed. Keeping it costs the end house its garage (2 of the 12 parking spaces) and either 39 m² of РЗП or 20 m² of yard.
+- **The way to avoid it.** Only dead ends over 45 m need a turning area, and every ground-floor wall must be within 90 m of the fire road. If the first 45 m of the lane are designated the fire road, the east end of the row is about 15 m further, so no turning area would be needed. This is our reading and needs the designer and the fire service to confirm (question 21).
+- **Where the reservoir goes.** At the entrance, in the west side yard next to the street line, buried and planted on top. Чл. 184, ал. 5 lets houses use a pumping and filling point placed by the street line, so the fire truck does not need to enter the plot; the reservoir must be within 150 m of the farthest part of the buildings.
+- **Green minimum.** Holds in every case (694 m² needed).
+- Assumptions: reservoir working depth 1.5 m (area = volume / depth); entrance from the west.
 
 ## Open questions for the permit consultant
 

@@ -204,7 +204,7 @@ export default function App() {
           {(M.fire.turn || M.fire.tank) && (
             <div className="metric-note fire-note">
               {M.fire.turn && <>Площадка за обръщане {M.fire.turn.size} × {M.fire.turn.size} м: взима {M.fire.turn.greenLoss} м² озеленяване и {M.fire.turn.paved} м² настилка извън пътя. {M.fire.turn.intoHouse > 0
-                ? <b>⚠ Не се побира: влиза {M.fire.turn.intoHouse} м в крайната къща по {M.fire.turn.houseW} м от фасадата ѝ и покрива предния ѝ двор{M.fire.turn.type === "P" ? " и гаража" : ""}. Трябват път + преден двор ≥ {M.fire.turn.size} м или достъп от общинския път.</b>
+                ? <b>⚠ Не се побира: влиза {M.fire.turn.intoHouse} м в крайната къща по {M.fire.turn.houseW} м от фасадата ѝ и покрива предния ѝ двор{M.fire.turn.type === "P" ? " и гаража" : ""}. Ако остане: къщата се скъсява с {M.fire.turn.intoHouse} м → РЗП {M.fire.turn.rzpCut} м² (Кинт {M.fire.turn.kintCut.toFixed(2)}), или се отдръпва назад → РЗП същото, −{M.fire.turn.rearLossSetback} м² заден двор.{M.fire.turn.garageLost ? " И в двата случая гаражът ѝ отпада (−2 паркоместа)." : ""} Без площадка: пожарен път до 45 м или достъп от общинския път.</b>
                 : <>Побира се в пътя и предния двор, но заема {M.fire.turn.houseW} м от предния двор на крайната къща.</>} </>}
               {M.fire.tank && <>Противопожарен резервоар {M.fire.tank.vol} м³ ≈ {M.fire.tank.area} м² при дълбочина {dims.tankDepth} м: {M.fire.tank.buried ? "подземен, озеленен отгоре → 0 м² от озеленяването" : `открит → −${M.fire.tank.greenLoss} м² озеленяване`}. </>}
               Наредба № Iз-1971, чл. 27, ал. 7 и табл. 17а. [ЗА ПОТВЪРЖДЕНИЕ — въпроси 19–22]
@@ -234,6 +234,12 @@ export default function App() {
               <label className="chk"><input type="checkbox" checked={dims.driveway === "tracks"} onChange={() => setDims((d) => d.driveway === "tracks" ? { ...d, driveway: "paved" } : { ...d, driveway: "tracks", frontGreen: true })} /> Тревна алея <span style={{ color: "#777" }}>(настилка само под коловозите, 2 × {dims.trackW} м на кола) [приемането като озеленяване — за потвърждение]</span></label>
               <label className="chk"><input type="checkbox" checked={!dims.terracePaved} onChange={() => setDims((d) => ({ ...d, terracePaved: !d.terracePaved }))} /> Без тераса/декинг под навеса <span style={{ color: "#777" }}>(ивицата {dims.over} м е озеленена)</span></label>
               <label className="chk"><input type="checkbox" checked={dims.fireTurn} onChange={() => setDims((d) => ({ ...d, fireTurn: !d.fireTurn }))} /> Пожарна площадка за обръщане {dims.turnSize} × {dims.turnSize} м <span style={{ color: "#777" }}>(ако вътрешният път е задънен над 45 м) [за потвърждение]</span></label>
+              {dims.fireTurn && <label className="chk">Къде е площадката:&nbsp;
+                <select value={dims.fireTurnSide} onChange={(e) => setDims((d) => ({ ...d, fireTurnSide: e.target.value }))}>
+                  <option value="E">източен край — дъното на пътя (вход от запад)</option>
+                  <option value="W">западен край — при входа</option>
+                </select>
+              </label>}
               <label className="chk">Противопожарен воден запас:&nbsp;
                 <select value={dims.fireTank} onChange={(e) => setDims((d) => ({ ...d, fireTank: Number(e.target.value) }))}>
                   <option value={0}>няма</option>
