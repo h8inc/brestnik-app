@@ -43,7 +43,7 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
 
   // улица (споделена)
   els.push(<rect key="road" x={xStart} y={yStreet} width={rowPx} height={ROAD * PXM} fill="#ededed" stroke="#bbb" />);
-  els.push(<text key="roadt" x={xStart + rowPx / 2} y={yStreet + ROAD * PXM / 2 + 4} fontSize="12" fill="#777" textAnchor="middle" transform={tr(xStart + rowPx / 2, yStreet + ROAD * PXM / 2 + 4)}>Улица / достъп — север · {ROAD.toFixed(1)} м</text>);
+  els.push(<text key="roadt" x={xStart + rowPx / 2} y={yStreet + ROAD * PXM / 2 + 4} fontSize="12" fill="#777" textAnchor="middle" transform={tr(xStart + rowPx / 2, yStreet + ROAD * PXM / 2 + 4)}>{p.laneStreet ? "Задънена улица (чл. 81 ЗУТ) — общинска" : "Вътрешен път — част от УПИ"} · {ROAD.toFixed(1)} м</text>);
 
   // странични дворове (крайни единици) — пълна частна дълбочина
   const sideTop = yFront, sideH = yBottom - yFront;
@@ -184,7 +184,7 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
   // ПРОТИВОПОЖАРНИ: площадка за обръщане (в края с по-широката странична ивица) и резервоар (в другия край)
   const FIRE = "#B23A2E";
   const turnLeft = p.fireTurnSide === "W";
-  if (p.fireTurn || p.fireTank > 0) {
+  if (p.fireTurn || p.fireTank > 0 || p.showUtil) {
     els.push(<g key="entry" transform={tr(xStart + 4, yStreet + ROAD * PXM / 2)}><text x={xStart + 4} y={yStreet + ROAD * PXM / 2 + 4} fontSize="9.5" fontWeight="700" fill={FIRE} textAnchor="start">→ вход (запад)</text></g>);
   }
   if (p.fireTurn) {
@@ -196,10 +196,36 @@ export default function RowPlan({ units, leftMargin, rightMargin, params = baseP
     // резервоарът е при входа (запад), до уличната линия — пожарната кола го пълни/черпи от улицата
     const m = leftMargin;
     const twM = Math.max(1.5, Math.min(m - 0.6, 3)), thM = (p.fireTank / p.tankDepth) / twM;
-    const tx = xStart + (m - twM) / 2 * PXM, ty = (p.fireTurn && turnLeft ? yStreet + p.turnSize * PXM : yFront) + 6;
-    els.push(<rect key="fk" x={tx} y={ty} width={twM * PXM} height={thM * PXM} fill={p.fireTankBuried ? "none" : "#cfe1ee"} stroke={FIRE} strokeWidth="1.4" strokeDasharray={p.fireTankBuried ? "4 3" : undefined} />);
-    const lx = tx + twM * PXM / 2, ly = ty + thM * PXM / 2;
-    els.push(<text key="fkl" x={lx} y={ly} fontSize="8" fontWeight="700" fill={FIRE} textAnchor="middle" transform={`rotate(-90 ${lx} ${ly})`}>ПП {p.fireTank} м³</text>);
+    if (p.fireTankBuried) {
+      // подземен: под пътя при входа (не взима от дворовете), устройство за пълнене на уличната линия
+      const bw = Math.min(2.5, ROAD - 1), bl = (p.fireTank / p.tankDepth) / bw;
+      const bx = xStart + 7.5 * PXM, by = yStreet + (ROAD - bw) / 2 * PXM;
+      els.push(<rect key="fk" x={bx} y={by} width={bl * PXM} height={bw * PXM} fill="rgba(178,58,46,0.08)" stroke={FIRE} strokeWidth="1.4" strokeDasharray="4 3" />);
+      els.push(<text key="fkl" x={bx + bl * PXM / 2} y={by + bw * PXM / 2 + 3} fontSize="8.5" fontWeight="700" fill={FIRE} textAnchor="middle" transform={tr(bx + bl * PXM / 2, by + bw * PXM / 2 + 3)}>ПП резервоар {p.fireTank} м³</text>);
+    } else {
+      const tx = xStart + (m - twM) / 2 * PXM, ty = (p.fireTurn && turnLeft ? yStreet + p.turnSize * PXM : yFront) + 6;
+      els.push(<rect key="fk" x={tx} y={ty} width={twM * PXM} height={thM * PXM} fill="#cfe1ee" stroke={FIRE} strokeWidth="1.4" />);
+      const lx = tx + twM * PXM / 2, ly = ty + thM * PXM / 2;
+      els.push(<text key="fkl" x={lx} y={ly} fontSize="8" fontWeight="700" fill={FIRE} textAnchor="middle" transform={`rotate(-90 ${lx} ${ly})`}>ПП {p.fireTank} м³</text>);
+    }
+  }
+
+  // ИНФРАСТРУКТУРА: сондаж (ЮЗ), пречиствателно съоръжение (под пътя, изток), пожарен път до 45 м
+  if (p.showUtil) {
+    const BLUE = "#1f5f99", BROWN = "#7a4b1e", e = p.edgeMin;
+    const wx = xStart + (e + 0.5) * PXM, wy = yBottom - (e + 0.5) * PXM;
+    els.push(<circle key="ut-w" cx={wx} cy={wy} r={6} fill="#fff" stroke={BLUE} strokeWidth="2" />);
+    els.push(<circle key="ut-w2" cx={wx} cy={wy} r={2} fill={BLUE} />);
+    els.push(<g key="ut-wl" transform={tr(wx + 10, wy + 3)}><text x={wx + 10} y={wy + 3} fontSize="9" fontWeight="700" fill={BLUE} textAnchor="start">сондаж</text></g>);
+    const tl = 6 * PXM, tw = 2 * PXM, ttx = xStart + rowPx - (e + 6) * PXM, tty = yStreet + e * PXM;
+    els.push(<rect key="ut-t" x={ttx} y={tty} width={tl} height={tw} rx="3" fill="rgba(122,75,30,0.14)" stroke={BROWN} strokeWidth="1.5" strokeDasharray="4 3" />);
+    els.push(<text key="ut-tl" x={ttx + tl / 2} y={tty + tw / 2 + 3} fontSize="8.5" fontWeight="700" fill={BROWN} textAnchor="middle" transform={tr(ttx + tl / 2, tty + tw / 2 + 3)}>пречиствателно</text>);
+    if (!p.laneStreet) {
+      const fl = Math.min(p.fireRoadLen, totalW) * PXM, fy = yStreet + 5;
+      els.push(<line key="ut-f" x1={xStart} y1={fy} x2={xStart + fl} y2={fy} stroke={FIRE} strokeWidth="2.2" />);
+      els.push(<line key="ut-f2" x1={xStart + fl} y1={fy - 5} x2={xStart + fl} y2={fy + 5} stroke={FIRE} strokeWidth="2.2" />);
+      els.push(<g key="ut-fl" transform={tr(xStart + fl - 4, fy + 12)}><text x={xStart + fl - 4} y={fy + 12} fontSize="8.5" fontWeight="700" fill={FIRE} textAnchor="end">пожарен път {Math.min(p.fireRoadLen, totalW)} м</text></g>);
+    }
   }
 
   // пунктирани парцели на крайните (маркер на ъгловия парцел: премиум + страничен двор)

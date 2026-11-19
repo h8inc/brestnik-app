@@ -28,6 +28,10 @@ export const baseParams = {
   stallsS: 2,        // открити паркоместа на стандартна къща
   garageP: 30,       // двоен гараж на премиум (взима от предния двор)
   // — противопожарни (Наредба № Iз-1971: чл. 27, ал. 7 и табл. 17а) — изключени по подразбиране [ЗА ПОТВЪРЖДЕНИЕ] —
+  laneStreet: false,     // true = пътят е задънена улица по чл. 81 ЗУТ (общинска, ИЗВЪН УПИ) → без площадка до 100 м
+  showUtil: true,        // чертае сондажа, пречиствателното съоръжение, ПП резервоара и пожарния път
+  fireRoadLen: 45,       // дължина на пожарния път от входа, м (задънен до 45 м → без площадка, чл. 27, ал. 7)
+  edgeMin: 3,            // мин. отстояние на кладенци и ями от границите на имота, м (ЗУТ, чл. 47, ал. 2)
   fireTurn: false,       // площадка за обръщане в края на задънен път над 45 м
   fireTurnSide: "E",     // "E" = източен край (дъното на задънения път при вход от запад) · "W" = западен край (при входа)
   turnSize: 12,          // страна на площадката, м (12 × 12)
@@ -79,8 +83,10 @@ export function rowMetrics(units, leftMargin, rightMargin, p = baseParams) {
   const totalRZP = R(hm.reduce((s, h) => s + h.RZP, 0));
   const totalZP = R(hm.reduce((s, h) => s + h.footprint, 0));
   const atticTotal = R(hm.reduce((s, h) => s + h.attic, 0));
-  const kint = +(totalRZP / UPI_AREA).toFixed(2);
-  const density = R((totalZP / UPI_AREA) * 100);
+  // УПИ: целият имот, или без пътя, ако той е задънена улица по чл. 81 ЗУТ (общината я придобива)
+  const upi = p.laneStreet ? R((PLOT.W - p.road) * PLOT.D) : UPI_AREA;
+  const kint = +(totalRZP / upi).toFixed(2);
+  const density = R((totalZP / upi) * 100);
   const sUnits = hm.filter((h) => h.type === "S");
   const pick = (arr, key) => (arr.length ? R(arr.reduce((s, h) => s + h[key], 0) / arr.length) : 0);
   const avgRearS = pick(sUnits, "rear");
@@ -117,7 +123,7 @@ export function rowMetrics(units, leftMargin, rightMargin, p = baseParams) {
     const rzpCut = R(totalRZP - 2 * into * h.w);
     turn = { side, size: p.turnSize, greenLoss: R(sideLoss + frontLoss), paved: R(p.turnSize * dp),
       houseW: R1(fw), intoHouse: into, type: h.type, garageLost: h.type === "P" && fw > 0,
-      rzpCut, kintCut: +(rzpCut / UPI_AREA).toFixed(2), rearLossSetback: R(into * h.w) };
+      rzpCut, kintCut: +(rzpCut / upi).toFixed(2), rearLossSetback: R(into * h.w) };
   }
   let tank = null;
   if (p.fireTank > 0) {
@@ -126,11 +132,32 @@ export function rowMetrics(units, leftMargin, rightMargin, p = baseParams) {
   }
   const greenFire = (turn ? turn.greenLoss : 0) + (tank ? tank.greenLoss : 0);
   const greenTotal = greenRear + greenSide + greenFront - greenFire;
-  const greenNeed = R(UPI_AREA * p.greenMin);
+  const greenNeed = R(upi * p.greenMin);
   const green = {
     rear: greenRear, side: greenSide, front: greenFront, fire: greenFire, total: greenTotal,
-    pct: +((greenTotal / UPI_AREA) * 100).toFixed(1), need: greenNeed, minPct: R(p.greenMin * 100),
+    pct: +((greenTotal / upi) * 100).toFixed(1), need: greenNeed, minPct: R(p.greenMin * 100),
     diff: greenTotal - greenNeed, ok: greenTotal >= greenNeed, treesNeed: R(greenNeed / 3),
   };
-  return { green, fire: { turn, tank }, hm, totalRZP, totalZP, atticTotal, kint, density, avgRearS, stagger, minRear, yardOK, rowLen, gapSum, used, slack, upi: UPI_AREA, units: units.length };
+  // ИНФРАСТРУКТУРА — препоръчителни места (м от СЗ ъгъл: x → изток, y → юг). Вход от запад.
+  //  · ПП резервоар: под пътя при входа, с устройство за пълнене на уличната линия (Iз-1971, чл. 184, ал. 5)
+  //  · пречиствателно съоръжение: под пътя в източния край (достъп за цистерна), ≥ edgeMin от границите
+  //  · сондаж: ЮЗ ъгъл, в западния страничен двор — най-далеч от пречиствателното
+  const e = p.edgeMin;
+  const well = { x: R1(e + 0.5), y: R1(PLOT.W - e - 0.5), ok: leftMargin >= e + 1 };
+  const wwtp = { l: 6, w: 2, x: R1(PLOT.D - e - 6), y: e, ok: p.road >= e + 2 };   // 6 × 2 м, компактно съоръжение — допускане
+  const wellToWwtp = R(Math.hypot(wwtp.x + wwtp.l / 2 - well.x, wwtp.y + wwtp.w / 2 - well.y));
+  // пожарен път до fireRoadLen от входа: най-далечната стена на партера по трасе на шланга
+  // (по пътя до източния страничен двор, надолу покрай калкана, по задната фасада на крайната къща)
+  const last = hm[hm.length - 1];
+  const hose = hm.length ? R(Math.max(0, PLOT.D - rightMargin / 2 - Math.min(p.fireRoadLen, PLOT.D)) + p.front + last.d + last.w) : 0;
+  const util = { well, wwtp, wellToWwtp, fireRoad: { len: Math.min(p.fireRoadLen, PLOT.D), hose, ok: hose <= 90, padNeeded: !p.laneStreet && p.fireRoadLen > 45 } };
+  // ако пътят е улица, всяка къща може да е отделен УПИ с лице към нея → показатели на парцел
+  const plotOf = (h, margin) => {
+    const area = R((h.w + margin) * priv);
+    const g = R(h.open + (p.terracePaved ? 0 : h.covered) + (p.frontGreen ? h.frontPlantable : 0) + margin * priv);
+    return { area, kint: +(h.RZP / area).toFixed(2), density: R((h.footprint / area) * 100), green: g, greenPct: R((g / area) * 100) };
+  };
+  const mid = hm.find((h) => h.type === "S") || hm[0];
+  const perPlot = hm.length ? { mid: plotOf(mid, 0), endL: plotOf(hm[0], leftMargin), endR: plotOf(last, rightMargin) } : null;
+  return { green, fire: { turn, tank }, util, perPlot, hm, totalRZP, totalZP, atticTotal, kint, density, avgRearS, stagger, minRear, yardOK, rowLen, gapSum, used, slack, upi, units: units.length };
 }

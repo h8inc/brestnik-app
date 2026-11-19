@@ -185,68 +185,91 @@ Neither element is a building, so РЗП (1,130 m²), Кинт (0.65) and плъ
 
 - **Where the turning area goes.** Чл. 27, ал. 7 says a dead-end fire road over 45 m "ends" in the turning area, so by the text it belongs at the far (east) end, not at the entrance.
 - **It does not fit at either end.** Lane 5 m plus front yard 5 m give 10 m of depth against 12 m needed. Keeping it costs the end house its garage (2 of the 12 parking spaces) and either 39 m² of РЗП or 20 m² of yard.
-- **The way to avoid it.** Only dead ends over 45 m need a turning area, and every ground-floor wall must be within 90 m of the fire road. If the first 45 m of the lane are designated the fire road, the east end of the row is about 15 m further, so no turning area would be needed. This is our reading and needs the designer and the fire service to confirm (question 21).
+- **The way to avoid it.** Only dead ends over 45 m need a turning area, and every ground-floor wall must be within 90 m of the fire road. If the first 45 m of the lane are designated the fire road, the east end of the row is about 15 m further, so no turning area would be needed. This is our reading and needs the designer and the fire service to confirm (question 22).
 - **Where the reservoir goes.** At the entrance, in the west side yard next to the street line, buried and planted on top. Чл. 184, ал. 5 lets houses use a pumping and filling point placed by the street line, so the fire truck does not need to enter the plot; the reservoir must be within 150 m of the farthest part of the buildings.
 - **Green minimum.** Holds in every case (694 m² needed).
 - Assumptions: reservoir working depth 1.5 m (area = volume / depth); entrance from the west.
 
+### Where the well, treatment plant, reservoir and turning area go
+
+Drawn on the row plan (switch "Покажи инфраструктурата", on by default; `util` in `rowMetrics()`). Coordinates assume the entrance is at the west end.
+
+| Element | Place | Why |
+|---|---|---|
+| Fire reservoir, 22 m³, buried | Under the lane, just inside the entrance | Takes nothing from the yards; the filling point sits at the street line so the fire truck need not enter (Наредба № Iз-1971, чл. 184, ал. 5) |
+| Treatment plant | Under the lane at the east end, 3 m from the boundaries | Lorry access for sludge from the lane; as far as possible from the well; common land, not a private yard |
+| Well | South-west corner, in the west side yard, 3.5 m from the boundaries | About 55 m from the treatment plant; the 5 m side yard is the only strip wide enough to keep 3 m from the boundary (ЗУТ, чл. 47, ал. 2); drilling rig can reach it |
+| Turning area | None | See below |
+
+The turning area is avoidable three ways:
+
+1. **Fire road of 45 m.** Only dead ends over 45 m need a turning area (чл. 27, ал. 7). With the first 45 m of the lane as the fire road, the farthest ground-floor wall is about 38 m away along the hose route, against 90 m allowed. Nothing else in the model changes. This is our reading.
+2. **The lane as a dead-end street under ЗУТ, чл. 81.** Чл. 27, ал. 7 exempts such streets up to 100 m, and чл. 81 itself asks for a turning widening only above 100 m; minimum width 3.5 m. The street leaves the УПИ (the municipality acquires it), so the УПИ becomes 1,433 m²: Кинт 0.79, плътност 35%, green 794 m² = 55.4%. Each house can then be its own УПИ with frontage on the street: a middle house gets 194 m² (Кинт 0.91, плътност 40%, green 51%), the end houses 351 and 303 m² (green 64% and 58%). All pass the Жм limits per plot, which the earlier one-УПИ note did not expect; that note was written before the grass driveway and with the lane inside the plot.
+3. **Access from the municipal road.** If the road runs along the long north side rather than touching only the north-west corner, no internal fire road is needed at all. The cadastral sketch settles this; we could not determine it from public maps.
+
+If a turning area is imposed anyway, the cheapest version is at the east end with the end house moved back 2 m and built without a garage (РЗП unchanged, 20 m² less rear yard, 2 parking spaces lost).
+
+Not found: a national figure for the minimum distance between a well and a treatment plant or pit; the designer and РЗИ set it. Not known: groundwater flow direction; the well should be upstream of the treatment plant, so the two may need to swap ends. A treatment plant instead of watertight pits is another departure from the РИОСВ filing. Option 2 changes Кинт against a 1.0 cap for the 12-dwelling variant (1,628 / 1,433 = 1.14).
+
 ## Open questions for the permit consultant
 
-The same 30 questions are on the site in Bulgarian (section „Въпроси", `src/Questions.jsx`), with a button that copies them as plain text.
+The same 32 questions are on the site in Bulgarian (section „Въпроси", `src/Questions.jsx`), with a button that copies them as plain text.
 
-**First: the three everything depends on**
+**First: the four everything depends on**
 
 1. Is there a screening decision on ОВОС-1125 yet? If not, has РИОСВ asked for more information, and what date is expected? (Public access opened 03.09.2026; nothing in the decisions list through 17.11.2026.)
 2. The filing declares 3 free-standing single-family houses; the design is 6 connected row houses. Can the proposal be amended before the decision, or is a new notification needed, and what does that do to the timeline?
 3. Has a чл. 124а ЗУТ request been filed with Общински съвет „Родопи" for the ПУП-ПРЗ? Number and date?
+4. Where exactly does the municipal road touch the plot on the cadastral sketch: only at the north-west corner, or along the whole long north side?
 
 **Filing versus design**
 
-4. We know the change from 3 to 6 houses can be made through a new procedure after the ПУП, at a cost of about 12 more months. Can that change start now: commission the ПУП-ПРЗ directly for 6 connected houses and amend the РИОСВ proposal in parallel?
-5. Are 6 connected houses in one УПИ allowed in Жм, or does it need separate УПИ or комплексно застрояване? (The row only passes the green minimum as one УПИ.)
-6. With 12 dwellings (ground-floor flat plus a two-floor home above in each house), do the buildings become multi-family, and what does that change for РИОСВ, the well and the pits? (РЗП 1,628 m², Кинт 0.94, height about 9.6 m.)
-7. Does „комплексен проект за ново строителство" in the filing mean a чл. 150 ЗУТ project (ПУП and investment project together)?
+5. We know the change from 3 to 6 houses can be made through a new procedure after the ПУП, at a cost of about 12 more months. Can that change start now: commission the ПУП-ПРЗ directly for 6 connected houses and amend the РИОСВ proposal in parallel?
+6. Are 6 connected houses in one УПИ allowed in Жм, or does it need separate УПИ or комплексно застрояване? (The row only passes the green minimum as one УПИ.)
+7. With 12 dwellings (ground-floor flat plus a two-floor home above in each house), do the buildings become multi-family, and what does that change for РИОСВ, the well and the pits? (РЗП 1,628 m², Кинт 0.94, height about 9.6 m.)
+8. Does „комплексен проект за ново строителство" in the filing mean a чл. 150 ЗУТ project (ПУП and investment project together)?
 
 **Contradictions in the filing** (table above)
 
-8. Which Кинт goes into the ПУП-ПРЗ: 1.0 or 1.2?
-9. Which well volumes and flows are correct, and what exactly was declared to Басейнова дирекция?
-10. One watertight pit for the plot or one per house, and of what volume?
-11. Do the factual errors (община Пловдив ОУП, land status, Натура 2000 zones, construction period) need correcting, and can they delay the decision?
-12. Is it an omission that point 12 does not list the ПУП-ПРЗ, the change of use and the well registration?
+9. Which Кинт goes into the ПУП-ПРЗ: 1.0 or 1.2?
+10. Which well volumes and flows are correct, and what exactly was declared to Басейнова дирекция?
+11. One watertight pit for the plot or one per house, and of what volume?
+12. Do the factual errors (община Пловдив ОУП, land status, Натура 2000 zones, construction period) need correcting, and can they delay the decision?
+13. Is it an omission that point 12 does not list the ПУП-ПРЗ, the change of use and the well registration?
 
 **The change to 6 houses: electricity**
 
-13. Can the study request to Електроразпределение Юг be filed now for the final number of meters (6, or 12) instead of 3, and is it accepted while the plot is still a нива without a ПУП?
-14. What power should be requested per house, and does the nearest transformer have the capacity, or will a new transformer or cable be needed at our cost?
+14. Can the study request to Електроразпределение Юг be filed now for the final number of meters (6, or 12) instead of 3, and is it accepted while the plot is still a нива without a ПУП?
+15. What power should be requested per house, and does the nearest transformer have the capacity, or will a new transformer or cable be needed at our cost?
 
 **The change to 6 houses: water and sewage**
 
-15. Does the notification regime hold for one shared well serving 6 houses built for sale, on a plot outside the village boundary?
-16. Is a new notification to Басейнова дирекция needed with the volumes for 6 (or 12) households, and can it be filed now?
-17. Is drinking water from a dispenser accepted at commissioning and by РЗИ, including for houses built for sale?
-18. Six separate pits, one shared pit or a small treatment unit: which is easiest to get approved, and where does it fit?
+16. Does the notification regime hold for one shared well serving 6 houses built for sale, on a plot outside the village boundary?
+17. Is a new notification to Басейнова дирекция needed with the volumes for 6 (or 12) households, and can it be filed now?
+18. Is drinking water from a dispenser accepted at commissioning and by РЗИ, including for houses built for sale?
+19. Six separate pits, one shared pit or a small treatment plant under the lane at the east end: which is easiest to get approved, what distance from the well is required, and where does the treated water go?
 
 **The change to 6 houses: fire safety**
 
-19. What fire-water reserve is required, where does the reservoir go, and can it sit under planted yard?
-20. Can the well also serve for firefighting?
-21. Must the internal lane be a fire road with a turning area, or can access be provided from the municipal road?
-22. How is the row classified: six single-family buildings (Ф1.4) with fire walls between them, or one building? What changes with 12 dwellings?
+20. What fire-water reserve is required, where does the reservoir go, and can it sit under planted yard?
+21. Can the well also serve for firefighting?
+22. Can the turning area be avoided: by designating only the first 45 m of the lane as the fire road, by making the lane a dead-end street under ЗУТ чл. 81 (exempt up to 100 m), or by fire access from the municipal road?
+23. If the lane becomes a dead-end street under ЗУТ чл. 81 (municipal), can each house be its own УПИ with frontage on it?
+24. How is the row classified: six single-family buildings (Ф1.4) with fire walls between them, or one building? What changes with 12 dwellings?
 
 **Procedure**
 
-23. Has the ЗОЗЗ procedure before the commission at ОД „Земеделие" Пловдив started, what stage is it at, and roughly what is the fee for 1.8 дка of 4-та категория?
-24. What is a realistic schedule to a building permit, and which steps can run in parallel?
-25. Can you send the text of the Общински съвет „Родопи" decision with the Жм norms (number, date)? Does it set a minimum УПИ size, dwellings per УПИ, or parking?
+25. Has the ЗОЗЗ procedure before the commission at ОД „Земеделие" Пловдив started, what stage is it at, and roughly what is the fee for 1.8 дка of 4-та категория?
+26. What is a realistic schedule to a building permit, and which steps can run in parallel?
+27. Can you send the text of the Общински съвет „Родопи" decision with the Жм norms (number, date)? Does it set a minimum УПИ size, dwellings per УПИ, or parking?
 
 **Indicators for the ПУП-ПРЗ and the design**
 
-26. Do you confirm the 2.25 m strip taken on the west (УПИ about 1,735 m² of 1,800 m²) and the minimum setbacks from the side and rear boundaries?
-27. Does planted ground under the floor-2 overhang (134 m²) count as green area? Does a grass driveway with two paved wheel strips?
-28. Do you confirm 1 parking space per dwelling, and are open spaces in the front yard on a grass driveway accepted?
-29. Do the two premium garages (about 30 m² each) count in footprint and РЗП?
-30. How is height measured for a flat roof: to the top of the parapet?
+28. Do you confirm the 2.25 m strip taken on the west (УПИ about 1,735 m² of 1,800 m²) and the minimum setbacks from the side and rear boundaries?
+29. Does planted ground under the floor-2 overhang (134 m²) count as green area? Does a grass driveway with two paved wheel strips?
+30. Do you confirm 1 parking space per dwelling, and are open spaces in the front yard on a grass driveway accepted?
+31. Do the two premium garages (about 30 m² each) count in footprint and РЗП?
+32. How is height measured for a flat roof: to the top of the parapet?
 
 Other open items, not for the consultant:
 
