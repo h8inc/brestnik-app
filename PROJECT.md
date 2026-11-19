@@ -152,9 +152,24 @@ Not counted in the model: the premium garages (about 30 m² each) are left out o
 3. **Green area.** Passes at two floors with 100 m² spare; more dwellings need more parking, which uses that up.
 4. **Access.** One internal stair per house today; a separate flat needs a common stairwell.
 
+## What the change from 3 to 6 houses touches
+
+The change can be made through a new procedure after the ПУП at a cost of about 12 months. The aim is to start it now instead. These are the rules each utility track runs on, read from the texts on 19.11.2026:
+
+| Track | Rule | What it means here |
+|---|---|---|
+| Electricity | Наредба № 6/2024 (КЕВР), чл. 7–9, 15–18: the study request is filed by whoever has the right to build and states the number of future metered objects and the power. Opinion within 14 days, valid 1 year; preliminary contract valid 2 years. A later increase needs the operator's consent, at the applicant's cost (чл. 17, ал. 3) | Ask for the final count (6 or 12 meters) from the start. Working assumption: 15 kW three-phase per house, about 90 kW in total |
+| Well | Закон за водите, чл. 43, ал. 2: free abstraction up to 10 m³/day, for individuals, for own needs, on property inside settlement boundaries. Чл. 44, ал. 4: built after notifying Басейнова дирекция | 6 households need about 2.7 m³/day and 12 about 5.4 (3 people × 150 l, our assumption), against 3.6 declared. Open: plot outside the village, houses built for sale, one shared well |
+| Sewage | ЗУТ, чл. 87: without a sewer, watertight pits or on-plot treatment, for low-rise housing. Чл. 47, ал. 2: pits and wells at least 3 m from plot boundaries. Закон за водите, чл. 46, ал. 4: outside settlements, discharge up to 10 m³/day and 50 equivalent inhabitants with primary treatment needs no permit | Six pits, one shared pit or a small treatment unit all look possible; yards are about 8 m wide |
+| Fire water | Наредба № Iз-1971, чл. 161–163, 181, табл. 17а: buildings over 35 m² need external fire water; with no water main, a reservoir. 22 m³ for a building or fire sector of 120–1,000 m² floor area, 36 m³ above 1,000 m². From groundwater: an 18 m³ shaft refilled at 5 l/s (чл. 163, ал. 2) | 22 m³ if each house is its own fire sector; 36 m³ or more if the row (1,130 m²) is one building. The well (0.45 l/s) cannot feed it directly |
+| Fire access | Наредба № Iз-1971, чл. 27: road at least 3.5 m wide, paved for 100 kN per axle, every ground-floor outer wall within 90 m of it along the hose route. A dead end over 45 m ends in a 12 × 12 m turning area | The internal lane is about 60 m. A turning area would take about 144 m² from the green area, more than the 100 m² spare, unless access counts from the municipal road |
+| Parking | Наредба № РД-02-20-2/2017, приложение № 5: 1 space per dwelling | 12 spaces today: 2 per house at 6 houses, exactly 1 each at 12 dwellings |
+
+Not checked: the copy of the parking regulation used may predate later amendments; the 150 l per person and 15 kW per house are assumptions, not norms; how a connected row is classified for fire purposes (six Ф1.4 buildings or one) is a question for the designer.
+
 ## Open questions for the permit consultant
 
-The same 25 questions are on the site in Bulgarian (section „Въпроси", `src/Questions.jsx`), with a button that copies them as plain text.
+The same 30 questions are on the site in Bulgarian (section „Въпроси", `src/Questions.jsx`), with a button that copies them as plain text.
 
 **First: the three everything depends on**
 
@@ -164,7 +179,7 @@ The same 25 questions are on the site in Bulgarian (section „Въпроси", 
 
 **Filing versus design**
 
-4. We know the change from 3 to 6 houses can be made through a new procedure after the ПУП, at a cost of about 12 more months. Can that change start now: commission the ПУП-ПРЗ directly for 6 connected houses and amend the РИОСВ proposal in parallel? (The ПУП-ПРЗ is not drawn yet and no чл. 124а request was found, so the brief could be written for the final layout.)
+4. We know the change from 3 to 6 houses can be made through a new procedure after the ПУП, at a cost of about 12 more months. Can that change start now: commission the ПУП-ПРЗ directly for 6 connected houses and amend the РИОСВ proposal in parallel?
 5. Are 6 connected houses in one УПИ allowed in Жм, or does it need separate УПИ or комплексно застрояване? (The row only passes the green minimum as one УПИ.)
 6. With 12 dwellings (ground-floor flat plus a two-floor home above in each house), do the buildings become multi-family, and what does that change for РИОСВ, the well and the pits? (РЗП 1,628 m², Кинт 0.94, height about 9.6 m.)
 7. Does „комплексен проект за ново строителство" in the filing mean a чл. 150 ЗУТ project (ПУП and investment project together)?
@@ -177,27 +192,38 @@ The same 25 questions are on the site in Bulgarian (section „Въпроси", 
 11. Do the factual errors (община Пловдив ОУП, land status, Натура 2000 zones, construction period) need correcting, and can they delay the decision?
 12. Is it an omission that point 12 does not list the ПУП-ПРЗ, the change of use and the well registration?
 
-**Water, sewage, electricity**
+**The change to 6 houses: electricity**
 
-13. Does one shared well for 3, 6 or 12 households stay under the notification regime, and what happens once the houses have different owners? (12 households need roughly 5.4 m³/day against 3.6 declared.)
-14. Is drinking water from a dispenser accepted at commissioning and by РЗИ, including for houses built for sale?
-15. What clearances apply to the pits (from the well, the boundaries, the buildings), and can they sit under planted yard?
-16. Can Електроразпределение Юг be asked now for an opinion for 6 (or 12) connections, before the виза?
+13. Can the study request to Електроразпределение Юг be filed now for the final number of meters (6, or 12) instead of 3, and is it accepted while the plot is still a нива without a ПУП?
+14. What power should be requested per house, and does the nearest transformer have the capacity, or will a new transformer or cable be needed at our cost?
+
+**The change to 6 houses: water and sewage**
+
+15. Does the notification regime hold for one shared well serving 6 houses built for sale, on a plot outside the village boundary?
+16. Is a new notification to Басейнова дирекция needed with the volumes for 6 (or 12) households, and can it be filed now?
+17. Is drinking water from a dispenser accepted at commissioning and by РЗИ, including for houses built for sale?
+18. Six separate pits, one shared pit or a small treatment unit: which is easiest to get approved, and where does it fit?
+
+**The change to 6 houses: fire safety**
+
+19. What fire-water reserve is required, where does the reservoir go, and can it sit under planted yard?
+20. Can the well also serve for firefighting?
+21. Must the internal lane be a fire road with a turning area, or can access be provided from the municipal road?
+22. How is the row classified: six single-family buildings (Ф1.4) with fire walls between them, or one building? What changes with 12 dwellings?
 
 **Procedure**
 
-17. Has the ЗОЗЗ procedure before the commission at ОД „Земеделие" Пловдив started, what stage is it at, and roughly what is the fee for 1.8 дка of 4-та категория?
-18. What is a realistic schedule to a building permit, and which steps can run in parallel?
-19. Can you send the text of the Общински съвет „Родопи" decision with the Жм norms (number, date)? Does it set a minimum УПИ size, dwellings per УПИ, or parking?
+23. Has the ЗОЗЗ procedure before the commission at ОД „Земеделие" Пловдив started, what stage is it at, and roughly what is the fee for 1.8 дка of 4-та категория?
+24. What is a realistic schedule to a building permit, and which steps can run in parallel?
+25. Can you send the text of the Общински съвет „Родопи" decision with the Жм norms (number, date)? Does it set a minimum УПИ size, dwellings per УПИ, or parking?
 
 **Indicators for the ПУП-ПРЗ and the design**
 
-20. Do you confirm the 2.25 m strip taken on the west (УПИ about 1,735 m² of 1,800 m²) and the minimum setbacks from the side and rear boundaries?
-21. Does planted ground under the floor-2 overhang (134 m²) count as green area? Does a grass driveway with two paved wheel strips?
-22. How many parking spaces are required per dwelling, and are open spaces in the front yard accepted? (12 spaces today.)
-23. Is a 5 m internal lane enough (fire access, passing), and does it stay part of the УПИ?
-24. Do the two premium garages (about 30 m² each) count in footprint and РЗП?
-25. How is height measured for a flat roof: to the top of the parapet?
+26. Do you confirm the 2.25 m strip taken on the west (УПИ about 1,735 m² of 1,800 m²) and the minimum setbacks from the side and rear boundaries?
+27. Does planted ground under the floor-2 overhang (134 m²) count as green area? Does a grass driveway with two paved wheel strips?
+28. Do you confirm 1 parking space per dwelling, and are open spaces in the front yard on a grass driveway accepted?
+29. Do the two premium garages (about 30 m² each) count in footprint and РЗП?
+30. How is height measured for a flat roof: to the top of the parapet?
 
 Other open items, not for the consultant:
 
@@ -207,6 +233,10 @@ Other open items, not for the consultant:
 
 - [ЗУТ (lex.bg)](https://lex.bg/laws/ldoc/2135163904) — чл. 19, чл. 43, чл. 178, ДР § 5
 - [Наредба № 7 (lex.bg)](https://lex.bg/laws/ldoc/2135476546) — чл. 9–11, чл. 19–20, чл. 55
+- [Закон за водите (lex.bg)](https://lex.bg/laws/ldoc/2134673412) — чл. 43, чл. 44, чл. 46
+- [Наредба № 6/2024 за присъединяване на обекти към електрическите мрежи (copy at ЕР Юг)](https://elyug.bg/getdoc/1a58539d-b65a-4226-92d8-1bb3e69758ae/Naredba-N6.aspx) — чл. 7–9, чл. 15–18
+- [Наредба № Iз-1971 за безопасност при пожар (МВР, 2025 consolidated text)](https://mvr.bg/upload/286736/Naredba%20Iz-1971_2025_1.pdf) — чл. 27, чл. 161–163, чл. 180–181, табл. 17а
+- [Наредба № РД-02-20-2/2017 (copy at sars.gov.bg)](https://www.sars.gov.bg/wp-content/uploads/documents/test/Naredba-No-rd-02-20-2-ot-20-dekemvri-2017-g.-za-planirane.pdf) — чл. 42, приложение № 5
 - [РИОСВ Пловдив — reply to the notification, ОВОС-1125 (copy in `docs/`)](https://plovdiv.riew.gov.bg/files/_documents/otgovor_OVOS_2026_1125.docx)
 - [РИОСВ Пловдив — Приложение № 2 filing for ОВОС-1125](https://plovdiv.riew.gov.bg/files/_documents/dostap_pril_2_2026_1125.docx)
 - [РИОСВ Пловдив — screening decisions list](https://plovdiv.riew.gov.bg/documents/12/1)
