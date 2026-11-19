@@ -232,6 +232,32 @@ What triggers sampling, and how the design stays below it:
 
 Trade-offs: six wells and six infiltration points 8 m apart are hygienically worse than one well 55 m from one plant, so per-house treatment with one shared well is the middle option; the wells count against the village's quota for citizens' wells (чл. 43, ал. 4); per-house treatment units replace the watertight pits declared to РИОСВ, which is one more change to the filing. Not found: who checks a household unit after commissioning, and where the treated water may go (soakaway, irrigation). Those are questions for the designer.
 
+### Six wells and six treatment units: cost and upkeep
+
+Rough figures from Bulgarian price lists and listings, November 2026. None is a quote.
+
+| Item | One per house (× 6) | One shared |
+|---|---|---|
+| Well, 22 m, PVC casing | €1,500–2,500 each (40–80 €/m; bundled offers "up to 50 m" from €2,200) | Same well |
+| Pump and pressure tank | €400–600 each | Bigger pump, tank, pump room, ~60 m of pipe and 6 meters: about €4,000–7,000 (estimate) |
+| Notification, water test | Notification is free; a lab test from about €80 | Same, once |
+| **Water total** | **about €12,000–19,000** | **about €6,000–10,000** |
+| Treatment unit, 4–6 people | €2,500–3,500 each (EU prices for 5-person units) plus €1,000–2,000 installation | One unit for ~25 people plus ~70 m of sewer: about €11,000–20,000 (estimate) |
+| **Treatment total** | **about €21,000–33,000** | **about €11,000–20,000** |
+| Running cost per house | Compressor 50–80 W non-stop (~€100–150/year), sludge pump-out every 1–2 years | Shared, plus an owners' agreement and someone responsible |
+
+For comparison, a watertight pit for 4 people (0.6 m³/day) fills a 10 m³ tank in about 17 days: roughly 20 lorry visits a year per house. At an assumed €80–120 a visit that is €1,600–2,400 a year per household, which makes the pits declared in the filing the most expensive option to live with.
+
+The extra for going per house is about €10,000–14,000 on water and €10,000–13,000 on treatment, roughly 2% of the €1.06M build cost.
+
+Distances and practical points:
+
+- **No protection zone.** Наредба № 3/2000 on sanitary protection zones does not apply to individual local water sources (чл. 1, ал. 2).
+- **Well to treatment.** No Bulgarian figure found. In the per-house layout they are about 18 m apart on the same plot. For comparison, England's rules keep a drainage field 50 m from a drinking-water well. The well here is in the shallow Quaternary aquifer, and the filing already says drinking water comes from bottled water, so the well is for household use and irrigation. Even so, treated water should not soak away near the wells: send it to a sealed tank for irrigation or to a drain, not into the ground at the front of each house.
+- **Wells 8 m apart.** Six small wells at household rates (well under 1 m³/day each against 0.45 l/s design flow) should not interfere noticeably in a porous aquifer. Not verified by a hydrogeologist.
+- **Drilling access.** The row has no gaps, so a rig cannot reach the middle rear yards once the houses stand. Drill all six wells before construction starts.
+- **Maintenance.** A 22 m well needs a pump replaced every 8–12 years and occasional cleaning (airlift from about €350). Treatment units need a service visit about once a year and sludge removal every 1–2 years; each owner arranges their own.
+
 ## Open questions for the permit consultant
 
 The same 32 questions are on the site in Bulgarian (section „Въпроси", `src/Questions.jsx`), with a button that copies them as plain text.
