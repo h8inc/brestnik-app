@@ -185,7 +185,7 @@ Neither element is a building, so РЗП (1,130 m²), Кинт (0.65) and плъ
 
 - **Where the turning area goes.** Чл. 27, ал. 7 says a dead-end fire road over 45 m "ends" in the turning area, so by the text it belongs at the far (east) end, not at the entrance.
 - **It does not fit at either end.** Lane 5 m plus front yard 5 m give 10 m of depth against 12 m needed. Keeping it costs the end house its garage (2 of the 12 parking spaces) and either 39 m² of РЗП or 20 m² of yard.
-- **The way to avoid it.** Only dead ends over 45 m need a turning area, and every ground-floor wall must be within 90 m of the fire road. If the first 45 m of the lane are designated the fire road, the east end of the row is about 15 m further, so no turning area would be needed. This is our reading and needs the designer and the fire service to confirm (question 22).
+- **The way to avoid it.** Only dead ends over 45 m need a turning area, and every ground-floor wall must be within 90 m of the fire road. If the first 45 m of the lane are designated the fire road, the east end of the row is about 15 m further, so no turning area would be needed. This is our reading and needs the designer and the fire service to confirm (question 24).
 - **Where the reservoir goes.** At the entrance, in the west side yard next to the street line, buried and planted on top. Чл. 184, ал. 5 lets houses use a pumping and filling point placed by the street line, so the fire truck does not need to enter the plot; the reservoir must be within 150 m of the farthest part of the buildings.
 - **Green minimum.** Holds in every case (694 m² needed).
 - Assumptions: reservoir working depth 1.5 m (area = volume / depth); entrance from the west.
@@ -258,9 +258,40 @@ Distances and practical points:
 - **Drilling access.** The row has no gaps, so a rig cannot reach the middle rear yards once the houses stand. Drill all six wells before construction starts.
 - **Maintenance.** A 22 m well needs a pump replaced every 8–12 years and occasional cleaning (airlift from about €350). Treatment units need a service visit about once a year and sludge removal every 1–2 years; each owner arranges their own.
 
+### Wells at 30 m: what the depth changes
+
+The consultant says the wells need to be 30 m deep and that this needs a specific environmental report. The filing declared 22 m.
+
+**The depth itself is not the trigger.** The Закон за водите has no depth limit for citizens' wells. A well is free, needs only a notification to Басейнова дирекция and goes on its register when all of these hold (чл. 43, ал. 2–3; чл. 44, ал. 4–5; guidance from БД „Черноморски район"):
+
+- the owner is a natural person, the plot is inside the settlement boundary, and the water is for that household only;
+- it draws from **the first groundwater body from the surface**;
+- it takes no more than 10 m³/day, within the settlement's maximum volume and well count set in the river-basin plan.
+
+The notification must state the depth. If any condition fails, Басейнова дирекция tells the owner that a **permit for water abstraction through a new facility** is needed. That route needs hydrogeological documentation, which is most likely the "report" meant. The well is also a 6th-category structure that needs a building permit either way (Наредба № 1/2007, чл. 89, ал. 4, т. 1).
+
+So the real question is whether 30 m is still in the first water body under this plot. If it is, 30 m changes nothing but the drilling bill (8 m more at 40–80 €/m, about €300–650 per well). If it is not, every well goes the permit route.
+
+I did not find a 30 m threshold at РИОСВ. РИОСВ Пловдив has answered a single-family house with a 30 m well by letter, without a screening procedure. A well is part of the investment proposal the filing already covers.
+
+**What this does to six wells.** If 30 m means a permit and a report per well, six wells mean six studies, six permits and six permit holders, while the developer still owns the plot. One shared well means one study, one permit and one water meter, with a sub-meter per house. The shared well also loses nothing on sampling: Наредба № 9 exempts both individual and public local sources unless the water is used for drinking in a commercial or social activity (чл. 2, ал. 1, т. 4).
+
+**Spacing in the yards.** The middle rear yards are 8.21 m wide and about 10 m deep (7.7 m behind the covered terrace).
+
+| Layout | Distance between neighbouring wells |
+|---|---|
+| Centred in each yard (current model) | 8.2 m |
+| Same corner in every yard | 8.2 m: corners do not help |
+| Alternating corners | Pairs end up 1–2 m apart across the party line |
+| Zig-zag in depth (one near the rear boundary, the next behind the terrace) | About 9 m |
+
+There is no legal minimum distance between two wells. Басейнова дирекция's guidance only says to keep a well away from a neighbour's boundary. Corners are the worst place on both counts. If the houses become separate plots, ЗУТ чл. 47 ал. 2 keeps a well 3 m from each boundary, which leaves a 2.2 m-wide band in the middle of a middle yard.
+
+**Recommendation.** If the 30 m requirement holds, use one shared well in the west side yard (south-west corner, 5 m margin, already in the model). It can be drilled at any time from the public road with no rig access through the row, and it needs one permit instead of six. Keep a treatment unit per house. If Басейнова дирекция confirms that 30 m is still the first water body, per-house wells remain possible, but must still be drilled before construction.
+
 ## Open questions for the permit consultant
 
-The same 32 questions are on the site in Bulgarian (section „Въпроси", `src/Questions.jsx`), with a button that copies them as plain text.
+The same 34 questions are on the site in Bulgarian (section „Въпроси", `src/Questions.jsx`), with a button that copies them as plain text.
 
 **First: the four everything depends on**
 
@@ -295,28 +326,30 @@ The same 32 questions are on the site in Bulgarian (section „Въпроси", 
 17. Is a new notification to Басейнова дирекция needed with the volumes for 6 (or 12) households, and can it be filed now?
 18. Is drinking water from a dispenser accepted at commissioning and by РЗИ, including for houses built for sale?
 19. Six separate pits, one shared pit or a small treatment plant under the lane at the east end: which is easiest to get approved, what distance from the well is required, and where does the treated water go?
+20. Where does the 30 m requirement come from, and what is the report: hydrogeological documentation for a permit under the Закон за водите, or information for РИОСВ under the Наредба за ОВОС? Is a 30 m well still in the first groundwater body from the surface under this plot? If so, the notification regime should still apply.
+21. If 30 m needs a permit and a report, can one shared well serve all 6 houses under one permit, with a sub-meter per house, instead of 6 procedures? Who holds the permit while the developer owns the plot, and how does it pass to the buyers?
 
 **The change to 6 houses: fire safety**
 
-20. What fire-water reserve is required, where does the reservoir go, and can it sit under planted yard?
-21. Can the well also serve for firefighting?
-22. Can the turning area be avoided: by designating only the first 45 m of the lane as the fire road, by making the lane a dead-end street under ЗУТ чл. 81 (exempt up to 100 m), or by fire access from the municipal road?
-23. If the lane becomes a dead-end street under ЗУТ чл. 81 (municipal), can each house be its own УПИ with frontage on it?
-24. How is the row classified: six single-family buildings (Ф1.4) with fire walls between them, or one building? What changes with 12 dwellings?
+22. What fire-water reserve is required, where does the reservoir go, and can it sit under planted yard?
+23. Can the well also serve for firefighting?
+24. Can the turning area be avoided: by designating only the first 45 m of the lane as the fire road, by making the lane a dead-end street under ЗУТ чл. 81 (exempt up to 100 m), or by fire access from the municipal road?
+25. If the lane becomes a dead-end street under ЗУТ чл. 81 (municipal), can each house be its own УПИ with frontage on it?
+26. How is the row classified: six single-family buildings (Ф1.4) with fire walls between them, or one building? What changes with 12 dwellings?
 
 **Procedure**
 
-25. Has the ЗОЗЗ procedure before the commission at ОД „Земеделие" Пловдив started, what stage is it at, and roughly what is the fee for 1.8 дка of 4-та категория?
-26. What is a realistic schedule to a building permit, and which steps can run in parallel?
-27. Can you send the text of the Общински съвет „Родопи" decision with the Жм norms (number, date)? Does it set a minimum УПИ size, dwellings per УПИ, or parking?
+27. Has the ЗОЗЗ procedure before the commission at ОД „Земеделие" Пловдив started, what stage is it at, and roughly what is the fee for 1.8 дка of 4-та категория?
+28. What is a realistic schedule to a building permit, and which steps can run in parallel?
+29. Can you send the text of the Общински съвет „Родопи" decision with the Жм norms (number, date)? Does it set a minimum УПИ size, dwellings per УПИ, or parking?
 
 **Indicators for the ПУП-ПРЗ and the design**
 
-28. Do you confirm the 2.25 m strip taken on the west (УПИ about 1,735 m² of 1,800 m²) and the minimum setbacks from the side and rear boundaries?
-29. Does planted ground under the floor-2 overhang (134 m²) count as green area? Does a grass driveway with two paved wheel strips?
-30. Do you confirm 1 parking space per dwelling, and are open spaces in the front yard on a grass driveway accepted?
-31. Do the two premium garages (about 30 m² each) count in footprint and РЗП?
-32. How is height measured for a flat roof: to the top of the parapet?
+30. Do you confirm the 2.25 m strip taken on the west (УПИ about 1,735 m² of 1,800 m²) and the minimum setbacks from the side and rear boundaries?
+31. Does planted ground under the floor-2 overhang (134 m²) count as green area? Does a grass driveway with two paved wheel strips?
+32. Do you confirm 1 parking space per dwelling, and are open spaces in the front yard on a grass driveway accepted?
+33. Do the two premium garages (about 30 m² each) count in footprint and РЗП?
+34. How is height measured for a flat roof: to the top of the parapet?
 
 Other open items, not for the consultant:
 
