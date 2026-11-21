@@ -335,9 +335,22 @@ Checked 2026-11-21 from public notices and what the owner saw in КАИС.
 - **What a ПУП-ПП means.** It fixes the route and the servitude strip on paper; it is not construction. The investor (the owners of the nine УПИ) pays and builds, after connection contracts with ВиК and ЕРП Юг and a building permit. No public record of contracts, permits or construction was found.
 - **Why it matters here.** Road widening or a servitude along the street can take land or restrict building and planting in the front yards and the internal road. If the water main and cable are built, connecting to them could replace the well. Until then the filing (well, pits) stays the correct description.
 
+Nearby plots checked in КАИС on 2026-11-21 (distances are straight lines between plot centres, from map coordinates):
+
+| Plot | Местност | Status in КАИС | Area | Old number | From 06447.28.20 |
+|---|---|---|---|---|---|
+| 06447.28.612 | Бозалъка | Urbanised, low-rise (up to 10 m), parcel „жил. стр." | 500 m² | 28.10 | about 175 m |
+| 06447.28.524 | Бозалъка | Urbanised, low-rise (up to 10 m), parcel „жил. стр." | 635 m² | 28.8 | about 225 m |
+| 06447.27.177 | Горни брантии | Agricultural territory, НТП „за складова база"; one 99 m² single-storey administrative building | 1,719 m² | 27.100 | about 390 m |
+
+- 28.612 and 28.524 have completed the change of use, so each had an approved ПУП with electricity and water schemes. They sit in groups of new parcels (28.611–28.615, 28.523–28.528). Their ПУП shows where the nearest supply comes from.
+- The owner reports a small transformer by 27.177. КАИС shows no transformer on that plot. Its owner (ЕРП Юг or private) and free capacity are not public; only a connection study from ЕРП Юг answers that. About 390 m on low voltage for six houses is at the limit because of voltage drop.
+- КАИС application 01-696829 of 04.10.2026 (about 300 m away, per the owner) could not be opened. It was filed the same day as 01-696836, seven numbers apart, so the two are probably related. Not confirmed.
+- No transformer on our own plot: the owner rules it out.
+
 ## Open questions for the permit consultant
 
-The same 38 questions are on the site in Bulgarian (section „Въпроси", `src/Questions.jsx`), with a button that copies them as plain text.
+The same 41 questions are on the site in Bulgarian (section „Въпроси", `src/Questions.jsx`), with a button that copies them as plain text.
 
 **First: the four everything depends on**
 
@@ -403,6 +416,9 @@ The same 38 questions are on the site in Bulgarian (section „Въпроси", 
 36. Under Заповед № 446/21.01.2025 (nine УПИ from former 28.145 and 28.163), where do the electricity and water routes of the ПУП-ПП run? Along our street, and with a servitude on our plot?
 37. How wide is the road after the widening and how much is taken from our plot? Does it match the 2.25 m strip in the model?
 38. Can we connect to that water main and cable? Are there contracts with ВиК Пловдив and ЕРП Юг and a build date? If so, should the well be replaced by a ВиК connection, and how is that reflected in the РИОСВ file?
+39. Where do 06447.28.612 and 06447.28.524 (already urbanised, 175–225 m away) take electricity and water under their ПУП, and does that route pass 06447.28.20?
+40. Who owns the transformer by 06447.27.177 (about 390 m away), what is its free capacity, and can it supply 6 houses at that distance without a transformer on our plot?
+41. Are КАИС applications 01-696829 and 01-696836 (both of 04.10.2026) the same project?
 
 Other open items, not for the consultant:
 
