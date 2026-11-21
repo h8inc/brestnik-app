@@ -5,7 +5,7 @@ import RowPlan from "./RowPlan.jsx";
 import Finance from "./Finance.jsx";
 import Questions from "./Questions.jsx";
 import { ground, floor2, attic, groundP, floor2P, atticP } from "./plans.js";
-import { rowMetrics, houseMetrics, PLOT } from "./model.js";
+import { rowMetrics, houseMetrics, PLOT, PLOT_ID } from "./model.js";
 import { VARIANTS, defaultsFor } from "./variants.js";
 
 const FLOORS = {
@@ -166,7 +166,7 @@ export default function App() {
       <header className="hdr">
         <div className="hdr-title">
           <h1>Брестник</h1>
-          <span>редови къщи · {v.label}</span>
+          <span>редови къщи · {v.label} · ПИ {PLOT_ID} · м. Бозалъка</span>
         </div>
         <nav className="navlinks">
           {NAV.map(([id, label]) => <a key={id} href={"#" + id}>{label}</a>)}

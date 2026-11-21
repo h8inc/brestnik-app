@@ -1,5 +1,7 @@
 # Брестник — project context
 
+**Имот: ПИ 06447.28.20** (стар номер 028020), местност „Бозалъка", с. Брестник, община Родопи, област Пловдив.
+
 Housing development in с. Брестник, община Родопи, област Пловдив.
 This file records the plot, the zoning limits, where the ПУП procedure stands, and how the current design sits against all of it.
 Last updated 2026-11-19. Nothing here replaces the approved ПУП-ПРЗ, the виза, or a licensed architect.
