@@ -348,9 +348,27 @@ Nearby plots checked in КАИС on 2026-11-21 (distances are straight lines bet
 - КАИС application 01-696829 of 04.10.2026 (about 300 m away, per the owner) could not be opened. It was filed the same day as 01-696836, seven numbers apart, so the two are probably related. Not confirmed.
 - No transformer on our own plot: the owner rules it out.
 
+### Possible sewer and water route to the main road
+
+The owner reports that the Куклен sewer runs at the main road about 950 m north, reached along the same municipal road, and that the ground falls from our plot towards it. Plots along the route, checked in КАИС on 2026-11-21:
+
+| Plot | What it is | Ownership | Whose consent |
+|---|---|---|---|
+| КАИС project 01-696836 | The road in front of our plot, in procedure | — | Община Родопи |
+| 06447.21.5 | Irrigation canal, 10,859 m² | State private | The canal operator (probably „Напоителни системи" ЕАД; not confirmed) |
+| 06447.21.4 | Agricultural / service road, 1,341 m² | Municipal public | Община Родопи |
+| КАИС project 01-595643 of 22.08.2026 | In procedure; could not be opened | — | Unknown |
+| 06447.21.2 | Road of the national road network, 46,905 m² | Exclusive state | АПИ |
+
+- The route runs entirely over public plots, so no private servitudes are needed.
+- The slope down to the north is what a gravity sewer needs. It does not stop a water main, which runs under pressure; about 1 bar is lost per 10 m of rise.
+- The canal is one crossing, done by drilling under it with the operator's consent. It does not block the route.
+- Rough estimate, not a quote: about 950 m of street sewer at €100–200 per metre is €95,000–190,000, plus €10,000–30,000 for the canal crossing, plus design and fees. This only makes sense shared with the other new parcels along the road.
+- Not checked: elevations along the route, the capacity of the collector at 21.2, and whether ВиК Пловдив accepts a connection there.
+
 ## Open questions for the permit consultant
 
-The same 41 questions are on the site in Bulgarian (section „Въпроси", `src/Questions.jsx`), with a button that copies them as plain text.
+The same 43 questions are on the site in Bulgarian (section „Въпроси", `src/Questions.jsx`), with a button that copies them as plain text.
 
 **First: the four everything depends on**
 
@@ -419,6 +437,8 @@ The same 41 questions are on the site in Bulgarian (section „Въпроси", 
 39. Where do 06447.28.612 and 06447.28.524 (already urbanised, 175–225 m away) take electricity and water under their ПУП, and does that route pass 06447.28.20?
 40. Who owns the transformer by 06447.27.177 (about 390 m away), what is its free capacity, and can it supply 6 houses at that distance without a transformer on our plot?
 41. Are КАИС applications 01-696829 and 01-696836 (both of 04.10.2026) the same project?
+42. Does ВиК Пловдив accept a sewer connection to the Куклен collector at the main road (ПИ 06447.21.2), about 950 m north along the municipal road, and a water connection from the same point? Is the pressure enough at our elevation?
+43. Has any neighbour already filed or planned a sewer or water route along that road (КАИС projects 01-595643 and 01-696836), so the cost can be shared? What do the canal operator (ПИ 06447.21.5) and АПИ require for the crossings?
 
 Other open items, not for the consultant:
 
