@@ -4,7 +4,7 @@
 
 Housing development in с. Брестник, община Родопи, област Пловдив.
 This file records the plot, the zoning limits, where the ПУП procedure stands, and how the current design sits against all of it.
-Last updated 2026-11-19. Nothing here replaces the approved ПУП-ПРЗ, the виза, or a licensed architect.
+Last updated 2026-11-21. Nothing here replaces the approved ПУП-ПРЗ, the виза, or a licensed architect.
 
 ## The plot
 
@@ -326,9 +326,18 @@ There is no legal minimum distance between two wells. Басейнова дир�
 
 **Recommendation.** If the 30 m requirement holds, use one shared well in the west side yard (south-west corner, 5 m margin, already in the model). It can be drilled at any time from the public road with no rig access through the row, and it needs one permit instead of six. Keep a treatment unit per house. If Басейнова дирекция confirms that 30 m is still the first water body, per-house wells remain possible, but must still be drilled before construction.
 
+## The street: neighbouring ПУП and the cadastre project
+
+Checked 2026-11-21 from public notices and what the owner saw in КАИС.
+
+- **Neighbouring ПУП, same масив 28.** Заповед № 446 от 21.01.2025 г. на община Родопи approved a ПУП-ПРЗ for former plots 06447.28.145 and 06447.28.163 in м. „Бозалъка": nine residential УПИ (28.623 to 28.631), a dead-end street and widening of the field road. With it came a ПУП-ПП (парцеларен план) for electricity and water routes to those nine УПИ. Plot 28.145 no longer exists in КАИС; the new plots are entered.
+- **Cadastre project on the street.** КАИС shows „Проект 01-696836-04.10.2026" covering all plots along the street. Its type and applicant are not visible. It may be the cadastral step of the plan above. Not confirmed.
+- **What a ПУП-ПП means.** It fixes the route and the servitude strip on paper; it is not construction. The investor (the owners of the nine УПИ) pays and builds, after connection contracts with ВиК and ЕРП Юг and a building permit. No public record of contracts, permits or construction was found.
+- **Why it matters here.** Road widening or a servitude along the street can take land or restrict building and planting in the front yards and the internal road. If the water main and cable are built, connecting to them could replace the well. Until then the filing (well, pits) stays the correct description.
+
 ## Open questions for the permit consultant
 
-The same 34 questions are on the site in Bulgarian (section „Въпроси", `src/Questions.jsx`), with a button that copies them as plain text.
+The same 38 questions are on the site in Bulgarian (section „Въпроси", `src/Questions.jsx`), with a button that copies them as plain text.
 
 **First: the four everything depends on**
 
@@ -388,12 +397,20 @@ The same 34 questions are on the site in Bulgarian (section „Въпроси", 
 33. Do the two premium garages (about 30 m² each) count in footprint and РЗП?
 34. How is height measured for a flat roof: to the top of the parapet?
 
+**The street: neighbouring ПУП and the cadastre project**
+
+35. Is КАИС application 01-696836 of 04.10.2026 (a project covering all plots along the street) ours? If not, whose is it, what does it change, and does it affect ПИ 06447.28.20 (strip taken, servitude)?
+36. Under Заповед № 446/21.01.2025 (nine УПИ from former 28.145 and 28.163), where do the electricity and water routes of the ПУП-ПП run? Along our street, and with a servitude on our plot?
+37. How wide is the road after the widening and how much is taken from our plot? Does it match the 2.25 m strip in the model?
+38. Can we connect to that water main and cable? Are there contracts with ВиК Пловдив and ЕРП Юг and a build date? If so, should the well be replaced by a ВиК connection, and how is that reflected in the РИОСВ file?
+
 Other open items, not for the consultant:
 
 - `brestnik-homes` quotes 1,170 m² / Кинт 0.67 and calls the 6-house layout "Variant A"; this repo says 1,130 m² / 0.65 and "Variant B". Align them.
 
 ## Sources
 
+- [Община Родопи — съобщение от 08.04.2025 г. за Заповед № 446/2025 (ПУП-ПРЗ и ПП, м. Бозалъка)](https://rodopi.bg/saobshtenie-na-osnovanie-chl-18-al-10-ot-apk-75/)
 - [ЗУТ (lex.bg)](https://lex.bg/laws/ldoc/2135163904) — чл. 19, чл. 43, чл. 178, ДР § 5
 - [Наредба № 7 (lex.bg)](https://lex.bg/laws/ldoc/2135476546) — чл. 9–11, чл. 19–20, чл. 55
 - [Закон за водите (lex.bg)](https://lex.bg/laws/ldoc/2134673412) — чл. 43, чл. 44, чл. 46
