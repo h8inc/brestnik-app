@@ -153,9 +153,53 @@ The current default depends on two things the municipality has to accept:
 
 The 100 m² spare is the budget for any other hard surface in the yards, about 16 m² per house.
 
-Keep the row on one УПИ. ЗУТ чл. 19, ал. 5 lets the ПУП set plot sizes freely for low connected housing in more than two plots, so six plots are possible, but the indicators then apply per plot and each middle house falls below 40% on its own.
+One УПИ is the easiest way to pass the indicators. ЗУТ чл. 19, ал. 5 lets the ПУП set plot sizes freely for low connected housing in more than two plots, so six plots are possible, but the indicators then apply per plot and each middle house falls below 40% on its own. Three УПИ of two houses each do pass; see the next section.
 
 Not counted in the model: the premium garages (about 30 m² each) are left out of footprint and РЗП. If they are built garages, footprint is about 558 m² (32%) and РЗП about 1,190 m² (Кинт 0.69).
+
+### One УПИ or three: financial flexibility
+
+Financing, investor, обезщетение and the timing of sales are all undecided, and the market may be weaker by 2029. The plan is therefore to keep options open: **design one row of 6 houses and put 3 УПИ of 2 houses each in the ПУП, with свързано застрояване on the two inner boundaries.** The houses are the same either way.
+
+- Three УПИ: each is a separate property that can be sold or mortgaged alone, with its own building permit and commissioning. One building site for all three is still possible.
+- One УПИ: a part can only be sold as ideal parts of the land plus право на строеж, and a mortgage sits on the whole plot.
+- Merging 3 УПИ into 1 later is an amendment of the ПУП under ЗУТ чл. 134, ал. 2, т. 6 at the owner's request, roughly 3–6 months when all three have the same owner (not checked for община Родопи). It has to happen before any of them is sold or mortgaged. Splitting one built УПИ later is much harder.
+- The boundaries cannot be moved: with houses на калкан the boundary runs along the party wall, so the split is fixed at 2 + 2 + 2.
+
+Indicators per УПИ (Variant B defaults: grass driveway, no terrace under the overhang):
+
+| | УПИ 1 (west) | УПИ 2 (middle) | УПИ 3 (east) |
+|---|---|---|---|
+| Frontage | 23.01 m | 16.42 m | 21.01 m |
+| РЗП | 388 m² | 354 m² | 388 m² |
+| **Lane inside the УПИ** | | | |
+| Area | 660 m² | 471 m² | 603 m² |
+| Плътност | 25.9% | 33.1% | 28.4% |
+| Кинт | 0.59 | 0.75 | 0.64 |
+| Green | 48.7% | 42.0% (9 m² spare) | 45.5% |
+| **Lane separate** | | | |
+| Area | 545 m² | 389 m² | 498 m² |
+| Плътност | 31.4% | 40.1% | 34.4% |
+| Кинт | 0.71 | 0.91 | 0.78 |
+| Green | 59.0% | 50.9% (42 m² spare) | 55.0% |
+
+Green on the middle УПИ if the two assumptions from the green-area section are not accepted:
+
+| Case | Lane inside | Lane separate |
+|---|---|---|
+| Both accepted | 42.0% | 50.9% |
+| Paved under the cars | 36.5%, fails | 44.2% |
+| Overhang strip not counted | 33.1%, fails | 40.1%, no spare |
+| Neither accepted | 27.6%, fails | 33.4%, fails |
+
+With the lane inside and the overhang strip not counted, УПИ 3 fails as well (37.8%).
+
+- **Preferred: 3 УПИ with the lane separate** (a dead-end street under ЗУТ чл. 81 or a shared plot). It survives the loss of either assumption.
+- 3 УПИ with the lane inside works only if the municipality accepts both assumptions.
+- Fallback: 2 УПИ of 3 houses each with the lane separate pass even with neither assumption (44.3% and 40.4%), but give two pieces to sell instead of three.
+- With the lane separate, an attic as a third level on the middle УПИ (about 440 m² РЗП) fits only at Кинт 1.2 (ceiling 467 m²; 389 m² at Кинт 1.0).
+
+Moving the land into the new company does not depend on this choice. To ask: whether to transfer after the ПУП is in force so documents are not reissued midway, апорт or sale, and ДДС on later sales of УПИ.
 
 ## Question: a separate flat on a third floor of each house
 
@@ -380,7 +424,7 @@ The same 43 questions are on the site in Bulgarian (section „Въпроси", 
 **Filing versus design**
 
 5. We know the change from 3 to 6 houses can be made through a new procedure after the ПУП, at a cost of about 12 more months. Can that change start now: commission the ПУП-ПРЗ directly for 6 connected houses and amend the РИОСВ proposal in parallel?
-6. Are 6 connected houses in one УПИ allowed in Жм, or does it need separate УПИ or комплексно застрояване? (The row only passes the green minimum as one УПИ.)
+6. Are 6 connected houses in one УПИ allowed in Жм, or does it need separate УПИ or комплексно застрояване? We prefer 3 УПИ of 2 houses each with свързано застрояване on the inner boundaries and the lane as a separate plot or street: is that acceptable, and how long does merging them into one УПИ take later?
 7. With 12 dwellings (ground-floor flat plus a two-floor home above in each house), do the buildings become multi-family, and what does that change for РИОСВ, the well and the pits? (РЗП 1,628 m², Кинт 0.94, height about 9.6 m.)
 8. Does „комплексен проект за ново строителство" in the filing mean a чл. 150 ЗУТ project (ПУП and investment project together)?
 
