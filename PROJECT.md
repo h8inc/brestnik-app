@@ -61,9 +61,28 @@ Found on re-reading the Приложение № 2 text (ОВОС-1125-8/21.08.2
 
 Caveats:
 - The council norms come from a local news report, not the decision text.
-- The filing contradicts itself on Кинт (1.0 vs 1.2). The ПУП-ПРЗ will fix the real value.
+- The filing contradicts itself on Кинт (1.0 vs 1.2). The ПУП-ПРЗ will fix the real value; our target is 1.2 (see below).
 - The filing says the indicators follow other approved ПУП in the same zone and Наредба № 7.
 - Not found: minimum УПИ size, limit on dwellings per УПИ, parking rules.
+
+### Target: Кинт 1.2
+
+**We want Кинт 1.2 in the ПУП-ПРЗ.** Кинт is not assigned by the municipality on its own: it is proposed in the assignment under чл. 124а ЗУТ and in the ПУП-ПРЗ project, and the municipality approves it or lowers it. It will not approve more than what is requested. 1.2 is the ceiling for Жм (Наредба № 7, чл. 19).
+
+Maximum РЗП on the 1,735 m² УПИ:
+
+| | Кинт 1.0 | Кинт 1.2 (target) |
+|---|---|---|
+| Maximum РЗП allowed | 1,735 m² | 2,082 m² |
+| Variant B today, 2 floors (1,130 m², Кинт 0.65) | 605 m² spare | 952 m² spare |
+| + third floor on the ground footprint (1,628 m², Кинт 0.94) | Fits, 107 m² spare | Fits, 454 m² spare |
+| + third floor matching floor 2, with the overhang (1,762 m², Кинт 1.02) | **Does not fit**, 27 m² over | Fits, 320 m² spare |
+| Same, counting the two premium garages (1,822 m², Кинт 1.05) | **Does not fit**, 87 m² over | Fits, 260 m² spare |
+
+- Within the current footprints, three floors give at most about 1,820 m² (Кинт 1.05). The 2,082 m² ceiling cannot be reached: a fourth floor is ruled out by the 10 m height limit, and a larger footprint eats the green area.
+- Плътност is not a constraint: 29% today (32% with the garages) against 60%.
+- Balconies and terraces on upper floors count in РЗП with their full area (ЗУТ, ДР § 5, т. 18).
+- The ceilings scale with the УПИ area the ПУП ends up with. If the lane leaves the plot (УПИ 1,433 m², see the dead-end street option below) they become 1,433 m² and 1,720 m², and Кинт 1.2 is then needed even for the third floor on the ground footprint.
 
 ## Where the ПУП procedure stands
 
@@ -99,7 +118,7 @@ Limits of this check: Басейнова дирекция's site could not be re
 | Indicator | Design | Limit | Status |
 |---|---|---|---|
 | РЗП | 1,130 m² | 1,735 m² at Кинт 1.0 · 2,082 m² at Кинт 1.2 | OK either way |
-| Кинт | 0.65 | 1.0 or 1.2 | OK |
+| Кинт | 0.65 | 1.2 requested (1.0 if lowered) | OK |
 | Пзастр | 29% | 60% | OK |
 | Height | ~6.5 m | 10 m | OK |
 | Позел | 45.8% (794 m²) with the current defaults | 40% = 694 m² | OK, on two assumptions (see below) |
@@ -325,7 +344,7 @@ The same 34 questions are on the site in Bulgarian (section „Въпроси", 
 
 **Contradictions in the filing** (table above)
 
-9. Which Кинт goes into the ПУП-ПРЗ: 1.0 or 1.2?
+9. We want Кинт 1.2 in the чл. 124а assignment and the ПУП-ПРЗ. Why does the filing show 1.0 in point „а)", and does that need correcting with РИОСВ?
 10. Which well volumes and flows are correct, and what exactly was declared to Басейнова дирекция?
 11. One watertight pit for the plot or one per house, and of what volume?
 12. Do the factual errors (община Пловдив ОУП, land status, Натура 2000 zones, construction period) need correcting, and can they delay the decision?
