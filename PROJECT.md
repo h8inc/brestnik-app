@@ -460,7 +460,7 @@ Central case about **€90,000–110,000**. For comparison, the Брестови
 - **Fire water.** A hydrant (DN ≥ 80) on the main, within 200–300 m of the houses, giving 5 l/s at 0.14 MPa, normally covers the external fire-water requirement for a village under 5,000 people (Наредба Iз-1971, чл. 166, 170, табл. 15а). That would **remove the 22–36 m³ fire reservoir** and its turning area from the plot. To confirm with the fire-safety designer and РДПБЗН.
 - **Wells.** With a ВиК connection, the 30 m well question and the Басейнова дирекция notifications fall away, apart from an optional irrigation well. The РИОСВ filing declares a well, so that is another change to it.
 - **Pressure.** Head loss over 540 m is about 3 m at 5 l/s for d110 (about 8 m for d90). A booster is needed only if the pressure at the tie-in, minus the rise to the plot, falls below about 14 m during fire flow. Ask for the pressure figure explicitly.
-- **Cost sharing.** No legal mechanism refunds the investor when others connect later; the main is municipal after handover. Options are a private co-financing agreement with neighbouring owners before construction, or asking Община Родопи to put it in its investment programme (it co-funds networks in Брестовица).
+- **Cost sharing.** No legal mechanism refunds the investor when others connect later; the main is municipal after handover. Options are a co-financing agreement with the neighbouring owners before construction (see "Sharing the cost with the neighbours" below), or asking Община Родопи to put it in its investment programme (it co-funds networks in Брестовица).
 
 ### Electricity: the pole at 240 m or the grid at 540–600 m
 
@@ -498,7 +498,7 @@ Design practice is about 5% on the feeder. So 240 m works for 6 or 12 dwellings 
 - The operator pays for and owns medium-voltage installations and low-voltage lines up to the meters (чл. 28, ал. 5; чл. 35; чл. 37). The applicant pays the regulated connection fee only.
 - **That applies inside the строителни граници.** Outside them the price is set by individual project, which means actual cost (€30,000–110,000 above). Whether the plot counts as inside after the ПУП-ПРЗ is the single biggest electricity cost question.
 - The applicant may design and build the facilities and sell them to ЕРП Юг at "взаимно признати разходи", offset against the connection price (чл. 28, ал. 6–8; чл. 29). Recognised costs are often well below what was spent.
-- No formal way to make neighbours share; only a private agreement or a joint ПУП-ПП.
+- No formal way to make neighbours share; only a private agreement or a joint ПУП-ПП (see "Sharing the cost with the neighbours" below).
 
 **ЕРП Юг fees** (excl. VAT; old tariffs converted to euros, likely to rise as КЕВР raised ЕРМ Запад's by 68–239% in 2024–25):
 
@@ -521,6 +521,51 @@ One 90 kW connection at 240 m is about €6,200 (at 600 m about €12,300); six 
 | Electricity at 600 m instead | — | €45,000–75,000 | €110,000 |
 
 Against the wells, treatment units and fire reservoir already in this file, the water main is the larger cost but removes the fire reservoir and the well permits. Filing the ЕРП Юг study and the ВиК изходни данни now costs under €200 together and turns most of these ranges into numbers.
+
+### Sharing the cost with the neighbours
+
+The owner reports (2026-11-23) 4–5 neighbouring owners on the route, each with a residential project of several dwellings: about 25–30 households in total. None of the law found here makes later connections repay the first investor, so the split has to be agreed by contract before anything is built. Figures are estimates.
+
+**What the larger group changes**
+
+- **Electricity:** 28 dwellings at 15 kW is about 420 kW installed, roughly 150–170 kW at the same time. That is more than any existing village transformer is likely to spare, so plan on one new pole or kiosk transformer of 250–400 kVA for the whole group, about €40,000–60,000 if paid by the investors. One shared transformer is far cheaper per household than each project asking for its own.
+- **Water:** a d110 main carries 28 households easily; the diameter and cost hardly change. One hydrant serves everyone within 200–300 m.
+- **Procedure:** one ПУП-ПП, one design and one contractor for the whole route instead of several. Check first whether a neighbour already has an approved ПУП-ПП (the nine УПИ under Заповед № 446/2025 came with one for electricity and water): reusing or extending it saves 4–9 months.
+
+**Ways to split**
+
+| Key | How it works | Fits |
+|---|---|---|
+| Per household | Shared cost ÷ number of dwellings | Simplest; fair if everyone is about the same distance from the source |
+| By capacity | Electricity by kW requested, water by number of meters or l/s | When projects differ in size; matches what each one asks ЕРП Юг and ВиК for |
+| By segment | Each stretch of pipe or cable is split only among the households it serves; whoever is nearest the source pays for less | When plots sit at very different distances along the 540 m |
+| **Hybrid (recommended)** | Common items (tie-in, transformer, ПУП-ПП, design, fees, supervision, hydrant) per household; pipe and cable by segment; each project pays its own service connections and meters | Fair and still easy to calculate |
+
+**Rough share per household** (25–30 households; common water main €70,000–100,000 without the service connections, transformer and cable €40,000–60,000):
+
+| | Per household | Our 6 dwellings | Our 12 dwellings |
+|---|---|---|---|
+| Water main | €2,300–4,000 | €14,000–24,000 | €28,000–48,000 |
+| Electricity (if the investors pay) | €1,300–2,400 | €8,000–14,000 | €16,000–29,000 |
+| Own service connections and meters | €800–2,000 per meter for water; electricity fee per meter | paid by each project | |
+
+If the plots end up inside the строителни граници, ЕРП Юг builds the electricity network and the investors pay only the regulated fee per meter.
+
+**How to set it up**
+
+1. **Letter of intent** from all owners: the number of dwellings and kW each one needs, and agreement to file together.
+2. **One joint request** to ВиК (изходни данни) and to ЕРП Юг (становище) with the total for all 25–30 households, so the network is sized once. Each owner still signs their own connection contract later.
+3. **A civil partnership (ДЗЗД under чл. 357 ЗЗД)** or a written agreement with one lead investor who contracts on everyone's behalf. It should fix:
+   - the split key and how it is recalculated if the final dwelling counts change;
+   - staged payments into a dedicated account (design, ПУП-ПП, construction), with a deposit at signing;
+   - what happens if someone does not pay or drops out: their share is redistributed or they lose the right to connect through the group, and the deposit is forfeited;
+   - a late-joiner fee for any of the signatories who connects later, paid back to the others pro rata;
+   - who manages it, how decisions are taken (majority by share), and who signs with the designer, contractor, ВиК and ЕРП Юг;
+   - how any amount ЕРП Юг pays for facilities built by the group (взаимно признати разходи) is shared back.
+4. **One designer and one contractor** chosen jointly, with 2–3 quotes on a bill of quantities.
+5. **Ask Община Родопи** to co-fund or include the main in its investment programme: 25–30 new households is a stronger case than one project.
+
+Risks: projects move at different speeds (the ЕРП Юг study is valid 1 year, the preliminary contract 2), one owner dropping out raises everyone else's share, and outsiders who never signed can later connect to the public main for the standard fee only.
 
 ## Open questions for the permit consultant
 
