@@ -553,7 +553,7 @@ If the plots end up inside the строителни граници, ЕРП Юг 
 
 **How to set it up**
 
-1. **Letter of intent** from all owners: the number of dwellings and kW each one needs, and agreement to file together.
+1. **Letter of intent** from all owners: the number of dwellings and kW each one needs, and agreement to file together. Draft in Bulgarian, with a signature table and a note on how to find the owners (from public ПУП and РИОСВ notices, the Имотен регистър, the кметство and the designers working nearby): [Писмо за намерение](https://claude.ai/artifact/SJkPjhe37fphcQHdH6f5wK) (private Claude doc; export to Word or PDF to print).
 2. **One joint request** to ВиК (изходни данни) and to ЕРП Юг (становище) with the total for all 25–30 households, so the network is sized once. Each owner still signs their own connection contract later.
 3. **A civil partnership (ДЗЗД under чл. 357 ЗЗД)** or a written agreement with one lead investor who contracts on everyone's behalf. It should fix:
    - the split key and how it is recalculated if the final dwelling counts change;
