@@ -4,7 +4,7 @@
 
 Housing development in с. Брестник, община Родопи, област Пловдив.
 This file records the plot, the zoning limits, where the ПУП procedure stands, and how the current design sits against all of it.
-Last updated 2026-11-21. Nothing here replaces the approved ПУП-ПРЗ, the виза, or a licensed architect.
+Last updated 2026-11-23. Nothing here replaces the approved ПУП-ПРЗ, the виза, or a licensed architect.
 
 ## The plot
 
@@ -16,6 +16,8 @@ Last updated 2026-11-21. Nothing here replaces the approved ПУП-ПРЗ, the �
 | Buildable УПИ in the model | 28.7 × 60.45 m ≈ 1,735 m² (after the 2.25 m strip taken on the west) |
 | Approximate location | 42.0666 N, 24.7624 E |
 | Access | Existing municipal road north-west of the plot |
+| Water main | Nearest main about 540 m away, next to ПИ 06447.21.250 (owner, 2026-11-23); none at the plot |
+| Electricity | Pole about 240 m away, line reported as "14 kV" (to be identified; see below); more network near ПИ 06447.21.250, 540–600 m away (owner, 2026-11-23) |
 
 ## The main problem: the filing and the design describe different projects
 
@@ -92,7 +94,7 @@ Steps for building on agricultural land, with what public records show as of 18.
 
 | Step | Authority | Status |
 |---|---|---|
-| Opinion on water supply | ВиК Пловдив | Done — no public water main available (cited in the filing) |
+| Opinion on water supply | ВиК Пловдив | Done — no public water main available at the plot (cited in the filing). Owner reports the nearest main about 540 m away, by ПИ 06447.21.250 |
 | Opinion on the well and flood risk | Басейнова дирекция ИБР | Done — letter ПУ-01-683-3/29.06.2026: admissible; outside flood-risk areas; well for own household needs is under notification regime |
 | Notification of the investment proposal | РИОСВ Пловдив | Done — ОВОС-1125/24.04.2026, extra information 12.06.2026 |
 | РИОСВ reply | РИОСВ Пловдив | Done — 17.07.2026: screening for ОВОС required, plus Натура 2000 check for BG0001033 „Брестовица" |
@@ -101,7 +103,7 @@ Steps for building on agricultural land, with what public records show as of 18.
 | Permission to prepare the ПУП-ПРЗ (чл. 124а ЗУТ) | Общински съвет „Родопи" | Not found — the plot ID does not appear in any 2025–2026 council decision |
 | Site approval and change of use (чл. 17 ЗОЗЗ) | Комисия при ОД „Земеделие" Пловдив | Not confirmed — decisions are published without plot details in the titles; contents not checked |
 | ПУП-ПРЗ project, announcement, approval | Община Родопи | Not found in 2026 municipal notices |
-| Electricity | Електроразпределение Юг | Planned after the виза (per the filing) |
+| Electricity | Електроразпределение Юг | Planned after the виза (per the filing). The study request can be filed now (see the utilities section) |
 | Виза, design, building permit | Община Родопи | Later |
 
 Reading: the environmental track is waiting on the РИОСВ screening decision; nothing public shows the municipal ПУП track has started. For comparison, a neighbouring Брестник case (ПИ 06447.36.62) took about 14 weeks from its public-access notice to its decision, which would put this one around mid-December 2026. That is one data point, not a forecast.
@@ -410,9 +412,119 @@ The owner reports that the Куклен sewer runs at the main road about 950 m 
 - Rough estimate, not a quote: about 950 m of street sewer at €100–200 per metre is €95,000–190,000, plus €10,000–30,000 for the canal crossing, plus design and fees. This only makes sense shared with the other new parcels along the road.
 - Not checked: elevations along the route, the capacity of the collector at 21.2, and whether ВиК Пловдив accepts a connection there.
 
+## Water main and electricity: distances, cost and procedure
+
+Reported by the owner on 2026-11-23, not yet checked with ВиК or ЕРП Юг:
+
+- **Water:** the nearest public main is about 540 m away, next to ПИ 06447.21.250.
+- **Electricity:** a pole about 240 m away, on a line the owner calls "14 kV". More network is near ПИ 06447.21.250, 540–600 m away.
+
+Researched 2026-11-23. BGN figures converted at 1.95583. Construction costs are estimates built from published prices and a few real projects, not quotes; fees are from the operators' price lists.
+
+### Water: a 540 m main from ПИ 06447.21.250
+
+ВиК Пловдив may refuse a connection when there is no main next to the plot (Наредба № 4/2004, чл. 14а, т. 2), which is why the earlier answer was "no main". The fix is a new public main, paid for by the investor, which becomes municipal property after handover and is operated by ВиК.
+
+**Procedure** (about 9–18 months, the ПУП-ПП can run in parallel with the ПУП-ПРЗ):
+
+1. Изходни данни from „ВиК" ЕООД Пловдив, within 14 days. They must state the main's diameter and material and the available pressure (свободен напор) at the tie-in (чл. 13).
+2. ПУП-ПП for the route, if it crosses field roads or the canal rather than regulated streets: about 4–9 months, approved by Общински съвет „Родопи".
+3. Design, part ВиК, with hydraulic calculation; ВиК checks it within 14 days (чл. 14б).
+4. Building permit for the линеен обект, then a permit to dig and restore the road.
+5. Connection contract, offered within 14 days of the approved projects (чл. 14в).
+6. Construction, Акт 16 and handover: about 2–4 months.
+
+**Pipe size.** At least 75 mm internal diameter (Наредба РД-02-20-2/2024, чл. 134). PE d110 SDR17 (about 97 mm) is the safe choice; d90 SDR17 just passes; d90 SDR11 does not. The price difference is only €2–5 per metre.
+
+**Cost estimate (EUR, excl. VAT):**
+
+| Item | Low | High |
+|---|---|---|
+| 540 m PE100 d110 in trench, 70–170 €/m (gravel road at the low end, asphalt at the high end) | 37,800 | 91,800 |
+| Tie-in to the existing main | 1,500 | 4,000 |
+| 1–2 fire hydrants | 1,500 | 6,000 |
+| Canal crossing by drilling, if needed | 3,000 | 9,000 |
+| Service connection, meter pit and meter: 6 (low) to 12 (high), €800–2,000 each | 4,800 | 24,000 |
+| ПУП-ПП and ВиК design | 4,000 | 10,000 |
+| Supervision, as-built survey, cadastre entry | 2,500 | 6,000 |
+| Fees | 600 | 1,500 |
+| Contingency 10–15% | 5,600 | 22,800 |
+| **Total** | **about 61,000** | **about 175,000** |
+
+Central case about **€90,000–110,000**. For comparison, the Брестовица high-zone network (8.4 km PE d90–d160 with connections and hydrants, 2024) came to about €165 per metre, and the Строево replacement (2026) to about €290 per metre.
+
+**ВиК Пловдив fees** (with VAT): изходни данни for connection €80, изходни данни for a ПУП €80, approval of the ПУП €55, approval of the ВиК project €55, opinion for Акт 16 €200, meter account €17. No КЕВР-regulated connection fee for water. Община Родопи's fees for the ПУП-ПП and the permit were not found online; probably a few hundred euros.
+
+**What a public main changes here:**
+
+- **Fire water.** A hydrant (DN ≥ 80) on the main, within 200–300 m of the houses, giving 5 l/s at 0.14 MPa, normally covers the external fire-water requirement for a village under 5,000 people (Наредба Iз-1971, чл. 166, 170, табл. 15а). That would **remove the 22–36 m³ fire reservoir** and its turning area from the plot. To confirm with the fire-safety designer and РДПБЗН.
+- **Wells.** With a ВиК connection, the 30 m well question and the Басейнова дирекция notifications fall away, apart from an optional irrigation well. The РИОСВ filing declares a well, so that is another change to it.
+- **Pressure.** Head loss over 540 m is about 3 m at 5 l/s for d110 (about 8 m for d90). A booster is needed only if the pressure at the tie-in, minus the rise to the plot, falls below about 14 m during fire flow. Ask for the pressure figure explicitly.
+- **Cost sharing.** No legal mechanism refunds the investor when others connect later; the main is municipal after handover. Options are a private co-financing agreement with neighbouring owners before construction, or asking Община Родопи to put it in its investment programme (it co-funds networks in Брестовица).
+
+### Electricity: the pole at 240 m or the grid at 540–600 m
+
+**What "14 kV" is.** Bulgaria has no 14 kV level. The pole carries one of:
+
+- **0.4 kV, low voltage:** one black twisted cable (САВТ), or 4–5 wires stacked down the side of the pole on small insulators; house service drops and often street lights on the same poles.
+- **20 kV (or 10 kV), medium voltage:** only 3 bare wires on a cross-arm at the top, long insulators (25–35 cm), taller poles with danger signs, no house drops. Around Plovdiv most likely 20 kV.
+- A pole transformer (МТП) on a platform between two poles marks the change: the 3-wire side is medium voltage, the 4–5-wire or САВТ side is low voltage.
+
+The cheapest sure answer is ЕРП Юг's "информация от техническа картотека", €17.90 with VAT; the study (становище) settles it anyway.
+
+**Voltage drop on low voltage** (estimate; cos φ 0.95, simultaneous load 55 kW for 6 dwellings, 100 kW for 12; the drop already on the existing feeder is not included):
+
+| Route | 6 dwellings, 4×150 | 6, 4×240 | 12, 4×150 | 12, 4×240 |
+|---|---|---|---|---|
+| 240 m | 2.3% | 1.6% | 4.2% | 2.8% |
+| 600 m | 5.7% | 3.9% | 10.5% | 7.0% |
+
+Design practice is about 5% on the feeder. So 240 m works for 6 or 12 dwellings on a 4×240 cable; 600 m is marginal for 6 and not acceptable for 12. On low voltage the real limit is usually the free capacity of the existing village transformer, which only the ЕРП Юг study answers.
+
+**Options (EUR, excl. VAT, actual cost if paid by us):**
+
+| Option | What gets built | Cost | Works for | Time |
+|---|---|---|---|---|
+| **A, low voltage at 240 m** | 240 m underground cable 4×240 (or САВТ on new poles), meter boards | €10,000–17,000 | 6; 12 only if the transformer has spare capacity | 12–20 months |
+| **A, medium voltage at 240 m** | Tap on the 20 kV line, pole transformer 160–250 kVA on public land by the road, 240 m low-voltage cable | €30,000–50,000 | 6 and 12 | 18–30 months |
+| B, low voltage at 600 m | 600 m cable, possibly two in parallel | €25,000–42,000 | Marginal for 6, not 12 | 15–24 months |
+| B, medium voltage to the plot | 550–600 m 20 kV extension, pole transformer near the plot, short low-voltage cable | €45,000–75,000 overhead, €65,000–110,000 cable | 6 and 12 | 24–36 months |
+| B, new transformer at the far end | Transformer by the existing grid, 600 m low-voltage feeder | €45,000–75,000 | Voltage drop remains | 20–30 months |
+
+**The pole at 240 m is the better route either way.** The 540–600 m route is only worth it if ЕРП Юг says the 240 m line cannot take the load. ЕРП Юг itself quoted €50,000 in 2026 for a new kiosk transformer for a single house near Бургас, so at 90–180 kW a new transformer is likely to be prescribed.
+
+**Who pays** (Наредба № 6/2024):
+
+- The operator pays for and owns medium-voltage installations and low-voltage lines up to the meters (чл. 28, ал. 5; чл. 35; чл. 37). The applicant pays the regulated connection fee only.
+- **That applies inside the строителни граници.** Outside them the price is set by individual project, which means actual cost (€30,000–110,000 above). Whether the plot counts as inside after the ПУП-ПРЗ is the single biggest electricity cost question.
+- The applicant may design and build the facilities and sell them to ЕРП Юг at "взаимно признати разходи", offset against the connection price (чл. 28, ал. 6–8; чл. 29). Recognised costs are often well below what was spent.
+- No formal way to make neighbours share; only a private agreement or a joint ПУП-ПП.
+
+**ЕРП Юг fees** (excl. VAT; old tariffs converted to euros, likely to rise as КЕВР raised ЕРМ Запад's by 68–239% in 2024–25):
+
+| Group | Fee | Per metre over 25 m |
+|---|---|---|
+| II, 7–15 kW (per house) | €296.55 | — |
+| IV, 51–100 kW | €2,505.33 | €17.04 |
+| V, 101–200 kW | €4,090.33 | €17.04 |
+
+One 90 kW connection at 240 m is about €6,200 (at 600 m about €12,300); six separate 15 kW connections about €1,800, twelve about €3,600. Study fee €59 (51–100 kW) or €93 (101–200 kW).
+
+**Procedure:** study within 14 days, valid 1 year; preliminary contract valid 2 years; project approval 10 working days; the connection contract needs the building permit and the approved part Електро; energising within 7 days of the access contracts. Realistic total 1–1.5 years on low voltage, 1.5–3 years if a transformer is needed. An amendment to Наредба № 6 was in draft in 2026.
+
+### Both together
+
+| | Low | Central | High |
+|---|---|---|---|
+| Water main 540 m | €61,000 | €90,000–110,000 | €175,000 |
+| Electricity at 240 m | €2,000 (fees only, operator builds) | €30,000–50,000 (transformer, we pay) | €50,000 |
+| Electricity at 600 m instead | — | €45,000–75,000 | €110,000 |
+
+Against the wells, treatment units and fire reservoir already in this file, the water main is the larger cost but removes the fire reservoir and the well permits. Filing the ЕРП Юг study and the ВиК изходни данни now costs under €200 together and turns most of these ranges into numbers.
+
 ## Open questions for the permit consultant
 
-The same 43 questions are on the site in Bulgarian (section „Въпроси", `src/Questions.jsx`), with a button that copies them as plain text.
+The same 48 questions are on the site in Bulgarian (section „Въпроси", `src/Questions.jsx`), with a button that copies them as plain text.
 
 **First: the four everything depends on**
 
@@ -484,6 +596,14 @@ The same 43 questions are on the site in Bulgarian (section „Въпроси", 
 42. Does ВиК Пловдив accept a sewer connection to the Куклен collector at the main road (ПИ 06447.21.2), about 950 m north along the municipal road, and a water connection from the same point? Is the pressure enough at our elevation?
 43. Has any neighbour already filed or planned a sewer or water route along that road (КАИС projects 01-595643 and 01-696836), so the cost can be shared? What do the canal operator (ПИ 06447.21.5) and АПИ require for the crossings?
 
+**Water main and electricity from the grid**
+
+44. Is there a ВиК main next to ПИ 06447.21.250? What diameter, material and available pressure, and will ВиК Пловдив accept a 540 m d110 extension to our plot as a public main?
+45. Does that route need a ПУП-ПП, and can it run in parallel with our ПУП-ПРЗ? Would a hydrant on it replace the 22–36 m³ fire reservoir? Can neighbours co-finance it, or would Община Родопи include it in its programme?
+46. Is the line on the pole about 240 m away 0.4 kV or 20 kV? Does the nearest transformer have capacity for 90 kW (6 dwellings) or 180 kW (12)?
+47. After the ПУП-ПРЗ, does the plot count as inside the строителни граници for ЕРП Юг's regulated connection price, or is the price set by individual project at actual cost?
+48. If a new transformer is needed, where can it stand on public land by the road, who builds it, and at what recognised cost would ЕРП Юг take it over?
+
 Other open items, not for the consultant:
 
 - `brestnik-homes` quotes 1,170 m² / Кинт 0.67 and calls the 6-house layout "Variant A"; this repo says 1,130 m² / 0.65 and "Variant B". Align them.
@@ -494,6 +614,14 @@ Other open items, not for the consultant:
 - [ЗУТ (lex.bg)](https://lex.bg/laws/ldoc/2135163904) — чл. 19, чл. 43, чл. 178, ДР § 5
 - [Наредба № 7 (lex.bg)](https://lex.bg/laws/ldoc/2135476546) — чл. 9–11, чл. 19–20, чл. 55
 - [Закон за водите (lex.bg)](https://lex.bg/laws/ldoc/2134673412) — чл. 43, чл. 44, чл. 46
+- [Наредба № 4/2004 за присъединяване към ВиК системите](https://www.dker.bg/uploads/normative_docs/naredbi/Naredba_4_MRRB.pdf) — чл. 12–14в
+- [„ВиК" ЕООД Пловдив — услуги и цени](https://vik.bg/services/)
+- [Наредба № Iз-1971 (2025)](https://mvr.bg/upload/286736/Naredba%20Iz-1971_2025_1.pdf) — чл. 163–170, табл. 15а
+- [Брестовица, водопровод висока зона (plovdivnews)](https://plovdivnews.bg/obshtestvo/item/152161-mrrb-otpuska-nad-2-7-miliona-leva-za-vodoprovodnata-mrezha-na-brestovitsa/) and [length (plovdiv24)](https://www.plovdiv24.bg/novini/regionalni/Sled-godini-chakane-ministur-napravi-purvata-kopka-na-vazhen-proekt-v-plovdivsko-selo-2448126)
+- [Строево, водопровод 2026 (24plovdiv)](https://www.24plovdiv.bg/novini/article/23363818)
+- [ЕРП Юг — договор за присъединяване и цени](https://www.elyug.bg/Customers/Services/New_accession/Dogovor_Prisaediniavane.aspx) and [ценоразпис](https://www.elyug.bg/getdoc/5fa95e40-aa0f-496a-8f10-bf24e41be87a/Prices-EP-Yug.aspx)
+- [КЕВР, протокол 352/11.12.2024](https://www.dker.bg/uploads/protokoli/zz/2024/prot-zz-352-11dec2024.pdf) — actual connection costs, ЕРМ Запад
+- [ЕРП Юг quote for a БКТП, Бургас 2026 (e-burgas)](https://e-burgas.com/post/76-637-leva-za-dostap-do-mrejata-taka-izglejda-monopolat-na-er-yug-9444)
 - [Наредба № 6/2024 за присъединяване на обекти към електрическите мрежи (copy at ЕР Юг)](https://elyug.bg/getdoc/1a58539d-b65a-4226-92d8-1bb3e69758ae/Naredba-N6.aspx) — чл. 7–9, чл. 15–18
 - [Наредба № Iз-1971 за безопасност при пожар (МВР, 2025 consolidated text)](https://mvr.bg/upload/286736/Naredba%20Iz-1971_2025_1.pdf) — чл. 27, чл. 161–163, чл. 180–181, табл. 17а
 - [Наредба № РД-02-20-2/2017 (copy at sars.gov.bg)](https://www.sars.gov.bg/wp-content/uploads/documents/test/Naredba-No-rd-02-20-2-ot-20-dekemvri-2017-g.-za-planirane.pdf) — чл. 42, приложение № 5
