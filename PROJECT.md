@@ -14,10 +14,41 @@ Last updated 2026-11-23. Nothing here replaces the approved ПУП-ПРЗ, the �
 | Cadastral ID | ПИ 06447.28.20 (old number 028020) |
 | Status | Земеделска територия, нива, 4-та категория, 1,800 m² — needs a ПУП-ПРЗ and change of use before building |
 | Buildable УПИ in the model | 28.7 × 60.45 m ≈ 1,735 m² (after the 2.25 m strip taken on the west) |
-| Approximate location | 42.0666 N, 24.7624 E |
+| Location (centre) | 42.066637 N, 24.762383 E (cadastre geometry, see below) |
 | Access | Existing municipal road north-west of the plot |
 | Water main | Nearest main about 540 m away, next to ПИ 06447.21.250 (owner, 2026-11-23); none at the plot |
 | Electricity | Pole about 240 m away, line reported as "14 kV" (to be identified; see below); more network near ПИ 06447.21.250, 540–600 m away (owner, 2026-11-23) |
+
+### Real orientation and sun
+
+Geometry of ПИ 06447.28.20 from the public INSPIRE cadastral service of АГКК, read 2026-11-24 (WGS84):
+
+| Corner | Latitude | Longitude |
+|---|---|---|
+| North-west | 42.066731 | 24.762148 |
+| North-east | 42.066846 | 24.762458 |
+| South-east | 42.066341 | 24.762799 |
+| South-west | 42.066226 | 24.762488 |
+
+- **Shape.** A rectangle 28.71 × 62.70 m, 1,800 m². The model's 60.45 m is the length after the 2.25 m strip at the road end.
+- **Orientation.** The long sides run on a bearing of 153° / 333°, so the long axis is 27° off north–south, from north-north-west to south-south-east. The short sides run 63° / 243°.
+- **Neighbours.** NNW short end: the road, 06447.27.146. ENE long side: 06447.28.17 (1,800 m²). WSW long side: 06447.28.21 (6,749 m²). SSE short end: 06447.28.18 (1,899 m²).
+- **How the drawings map to it.** In the model and the plans, "north" (the internal lane, entrances, parking) is really ENE at 63°; "south" (living rooms and yards) is WSW at 243°; "west" (the public road) is NNW at 333°; "east" is SSE at 153°. This assumes the plan is not mirrored: which long side takes the lane is our choice.
+
+Sun at this latitude (noon altitude 71.4° on 21 June, 47.9° at the equinoxes, 24.5° on 21 December; sunrise at bearing 58° in June and 122° in December). Hours of direct sun on each side, in solar time; solar noon is about 12:20 winter time and 13:20 summer time:
+
+| Date | ENE side (lane) | WSW side (yards) | SSE end |
+|---|---|---|---|
+| 21 June | 6.9 h, sunrise to about 11:30 | 8.2 h, 11:30 to sunset | 9.0 h |
+| Equinoxes | 4.8 h, to about 10:50 | 7.2 h, 10:50 to sunset | 9.6 h |
+| 21 December | 2.7 h, to about 10:10 | 6.2 h, 10:10 to sunset | 8.9 h |
+
+- **Decision: keep the lane on the sunrise side (ENE) and the living rooms and yards on WSW.** The living rooms get 6.2 h of sun in December against 2.7 h if turned around, the yards have evening sun, and the bedrooms on the lane side get morning sun and stay cool in the evening.
+- **The cost is summer afternoons.** Low sun from the west gets under any overhang from about 16:00 to sunset. West-facing glazing on floors 2 and 3 needs external blinds or shutters, the roof terraces need pergolas, and the yards need deciduous trees along the WSW boundary.
+- **The short ends.** The SSE end is the sunniest wall (8.9 h in December) and takes large windows; the NNW end towards the road is the cold side and takes small ones.
+- **Solar panels** face south at 30–35° regardless of the building, since the roof is flat.
+- **Not chosen:** two short rows across the plot facing SSE have better sun but fit about 1,700 m² РЗП and need a lane along the length of the plot.
+- Not verified on site: the bearings come from cadastre coordinates only.
 
 ## The main problem: the filing and the design describe different projects
 
@@ -161,7 +192,14 @@ Not counted in the model: the premium garages (about 30 m² each) are left out o
 
 ### One УПИ or three: financial flexibility
 
-Financing, investor, обезщетение and the timing of sales are all undecided, and the market may be weaker by 2029. The plan is therefore to keep options open: **design one row of 6 houses and put 3 УПИ of 2 houses each in the ПУП, with свързано застрояване on the two inner boundaries.** The houses are the same either way.
+**Decision (2026-11-21): the project is designed on one УПИ of 1,735 m², with the lane as a private internal alley inside it.** All indicators are taken on the whole plot: Кинт 1.2 gives a РЗП ceiling of 2,082 m² (1,735 m² at Кинт 1.0). Three УПИ remain an option for financing only, to be merged back into one.
+
+Why keep the option: financing, investor, обезщетение and the timing of sales are all undecided, and the market may be weaker by 2029. The row of 6 houses is the same either way; a split into 3 УПИ of 2 houses each needs свързано застрояване on the two inner boundaries.
+
+Two conditions follow from designing on one УПИ:
+
+- The lane must stay private. If it becomes a municipal dead-end street under ЗУТ чл. 81, its 302 m² leave the plot for good and the ceiling drops to 1,433 / 1,720 m²; merging cannot bring it back.
+- Anything that passes only on the whole plot (more РЗП on the middle houses, the green minimum without both assumptions) can get a building permit only while the plot is one УПИ. If the ПУП starts with three, merge first, then apply.
 
 - Three УПИ: each is a separate property that can be sold or mortgaged alone, with its own building permit and commissioning. One building site for all three is still possible.
 - One УПИ: a part can only be sold as ideal parts of the land plus право на строеж, and a mortgage sits on the whole plot.
@@ -196,9 +234,11 @@ Green on the middle УПИ if the two assumptions from the green-area section ar
 
 With the lane inside and the overhang strip not counted, УПИ 3 fails as well (37.8%).
 
-- **Preferred: 3 УПИ with the lane separate** (a dead-end street under ЗУТ чл. 81 or a shared plot). It survives the loss of either assumption.
-- 3 УПИ with the lane inside works only if the municipality accepts both assumptions.
-- Fallback: 2 УПИ of 3 houses each with the lane separate pass even with neither assumption (44.3% and 40.4%), but give two pieces to sell instead of three.
+If the plot is split, how the lane is handled decides the outcome:
+
+- 3 УПИ with the lane inside each (право на преминаване across the others) keep the full 1,735 m² for Кинт, but the middle УПИ passes the green minimum only if the municipality accepts both assumptions. Whether община Родопи accepts УПИ without their own street frontage is not checked.
+- 3 УПИ with the lane as a separate private plot survive the loss of either assumption, at the cost of 302 m² of plot area for Кинт while split. A private plot can be merged back; a municipal street cannot.
+- 2 УПИ of 3 houses each with the lane separate pass even with neither assumption (44.3% and 40.4%), but give two pieces to sell instead of three.
 - With the lane separate, an attic as a third level on the middle УПИ (about 440 m² РЗП) fits only at Кинт 1.2 (ceiling 467 m²; 389 m² at Кинт 1.0).
 
 Moving the land into the new company does not depend on this choice. To ask: whether to transfer after the ПУП is in force so documents are not reissued midway, апорт or sale, and ДДС on later sales of УПИ.
@@ -259,7 +299,7 @@ Neither element is a building, so РЗП (1,130 m²), Кинт (0.65) and плъ
 
 ### Where the well, treatment plant, reservoir and turning area go
 
-Drawn on the row plan (switch "Покажи инфраструктурата", on by default; `util` in `rowMetrics()`). The public road runs along the west boundary, left of Premium 1 (confirmed by the owner, 19.11.2026). The plan's "north" is a drawing convention and does not match the plot's real orientation. Today's parcel is 1,800 m²; the model's 1,735 m² is the УПИ after the 2.25 m strip on the west.
+Drawn on the row plan (switch "Покажи инфраструктурата", on by default; `util` in `rowMetrics()`). The public road runs along the west boundary, left of Premium 1 (confirmed by the owner, 19.11.2026). The plan's "north" is a drawing convention: it is really ENE at 63° (see "Real orientation and sun"). Today's parcel is 1,800 m²; the model's 1,735 m² is the УПИ after the 2.25 m strip on the west.
 
 | Element | Place | Why |
 |---|---|---|
@@ -581,7 +621,7 @@ The same 48 questions are on the site in Bulgarian (section „Въпроси", 
 **Filing versus design**
 
 5. We know the change from 3 to 6 houses can be made through a new procedure after the ПУП, at a cost of about 12 more months. Can that change start now: commission the ПУП-ПРЗ directly for 6 connected houses and amend the РИОСВ proposal in parallel?
-6. Are 6 connected houses in one УПИ allowed in Жм, or does it need separate УПИ or комплексно застрояване? We prefer 3 УПИ of 2 houses each with свързано застрояване on the inner boundaries and the lane as a separate plot or street: is that acceptable, and how long does merging them into one УПИ take later?
+6. Are 6 connected houses in one УПИ allowed in Жм, or does it need separate УПИ or комплексно застрояване? We design on one УПИ with the lane as a private internal alley. Can the ПУП instead set 3 УПИ of 2 houses each with свързано застрояване on the inner boundaries, reached by право на преминаване or a private lane plot, and how long does merging them into one УПИ take later?
 7. With 12 dwellings (ground-floor flat plus a two-floor home above in each house), do the buildings become multi-family, and what does that change for РИОСВ, the well and the pits? (РЗП 1,628 m², Кинт 0.94, height about 9.6 m.)
 8. Does „комплексен проект за ново строителство" in the filing mean a чл. 150 ЗУТ project (ПУП and investment project together)?
 
